@@ -6,8 +6,6 @@ import net.jwn.mod.stuff.MyStuff;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFound;
 import net.jwn.mod.stuff.StuffIFoundProvider;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -54,5 +52,21 @@ public class ModEvents {
         if (!event.player.level().isClientSide && cool_time > 0 && event.phase == TickEvent.Phase.END) {
             event.player.getPersistentData().putInt("cool_time", cool_time - 1);
         }
+    }
+
+    @SubscribeEvent
+    public static void onClone(PlayerEvent.Clone event) {
+        event.getOriginal().reviveCaps();
+        event.getOriginal().getCapability(MyStuffProvider.MY_STUFF).ifPresent(oldStore -> {
+            event.getEntity().getCapability(MyStuffProvider.MY_STUFF).ifPresent(newStore -> {
+                newStore.copyFrom(oldStore);
+            });
+        });
+        event.getOriginal().getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(oldStore -> {
+            event.getEntity().getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(newStore -> {
+                newStore.copyFrom(oldStore);
+            });
+        });
+        event.getOriginal().invalidateCaps();
     }
 }
