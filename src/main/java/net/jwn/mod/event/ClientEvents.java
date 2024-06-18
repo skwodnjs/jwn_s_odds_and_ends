@@ -1,6 +1,9 @@
 package net.jwn.mod.event;
 
 import net.jwn.mod.Main;
+import net.jwn.mod.networking.ModMessages;
+import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
+import net.jwn.mod.networking.packet.UseSkillC2SPacket;
 import net.jwn.mod.util.ActiveSkill;
 import net.jwn.mod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
@@ -28,23 +31,9 @@ public class ClientEvents {
             } else if (KeyBinding.TEST_4_KEY.consumeClick()) {
 
             } else if (KeyBinding.ACTIVE_SKILL_KEY.consumeClick()) {
-                ActiveSkill.useSkill(player);
+                ModMessages.sendToServer(new UseSkillC2SPacket());
             } else if (KeyBinding.ACTIVE_STUFF_SWITCH_KEY.consumeClick()) {
-//                MyStuff.switchMainActiveStuff(player);
-//                player.sendSystemMessage(Component.literal(
-//                        String.valueOf(player.getPersistentData().getInt("main_active_stuff_id"))));
-            }
-        }
-
-        @SubscribeEvent
-        public static void onClientTickEvent(TickEvent.ClientTickEvent event) {
-            Player player = Minecraft.getInstance().player;
-            if (player != null) {
-                // cool_time
-//                int cool_time = player.getPersistentData().getInt("cool_time");
-//                if (cool_time > 0 && event.phase == TickEvent.Phase.END) {
-//                    player.getPersistentData().putInt("cool_time", cool_time - 1);
-//                }
+                ModMessages.sendToServer(new MainActiveSwitchC2SPacket());
             }
         }
     }

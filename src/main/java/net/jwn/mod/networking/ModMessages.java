@@ -1,8 +1,9 @@
 package net.jwn.mod.networking;
 
 import net.jwn.mod.Main;
-import net.jwn.mod.networking.active.PoopSkillC2SPacket;
 import net.jwn.mod.networking.packet.ExS2CPacket;
+import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
+import net.jwn.mod.networking.packet.UseSkillC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -26,16 +27,21 @@ public class ModMessages {
 
         INSTANCE = net;
 
+        net.messageBuilder(UseSkillC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(UseSkillC2SPacket::new)
+                .encoder(UseSkillC2SPacket::toBytes)
+                .consumerMainThread(UseSkillC2SPacket::handle)
+                .add();
+        net.messageBuilder(MainActiveSwitchC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MainActiveSwitchC2SPacket::new)
+                .encoder(MainActiveSwitchC2SPacket::toBytes)
+                .consumerMainThread(MainActiveSwitchC2SPacket::handle)
+                .add();
+        // ------------------------- test -------------------------
         net.messageBuilder(ExS2CPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(ExS2CPacket::new)
                 .encoder(ExS2CPacket::toBytes)
                 .consumerMainThread(ExS2CPacket::handle)
-                .add();
-        // ------------------- skills -------------------
-        net.messageBuilder(PoopSkillC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(PoopSkillC2SPacket::new)
-                .encoder(PoopSkillC2SPacket::toBytes)
-                .consumerMainThread(PoopSkillC2SPacket::handle)
                 .add();
     }
     public static <MSG> void sendToServer(MSG message) {

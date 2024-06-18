@@ -6,10 +6,13 @@ import net.jwn.mod.stuff.MyStuff;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFound;
 import net.jwn.mod.stuff.StuffIFoundProvider;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,6 +44,15 @@ public class ModEvents {
             if (!event.getObject().getCapability(MyStuffProvider.MY_STUFF).isPresent()) {
                 event.addCapability(new ResourceLocation(Main.MOD_ID, "my_stuff"), new MyStuffProvider());
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
+        // cool time
+        int cool_time = event.player.getPersistentData().getInt("cool_time");
+        if (!event.player.level().isClientSide && cool_time > 0 && event.phase == TickEvent.Phase.END) {
+            event.player.getPersistentData().putInt("cool_time", cool_time - 1);
         }
     }
 }

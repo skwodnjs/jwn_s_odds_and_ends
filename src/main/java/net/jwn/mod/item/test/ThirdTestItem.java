@@ -22,6 +22,7 @@ public class ThirdTestItem extends Item {
         pPlayer.sendSystemMessage(Component.literal("reset"));
         pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(MyStuff::reset);
         pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(StuffIFound::reset);
+        pPlayer.getPersistentData().putInt("cool_time", 0);
 
         return super.use(pLevel, pPlayer, pUsedHand);
     }

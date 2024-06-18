@@ -59,6 +59,29 @@ public class MyStuff {
         myPassiveStuffIds = Functions.resize(myPassiveStuffIds, MAX_PASSIVE_STUFF);
         myPassiveStuffLevels = Functions.resize(myPassiveStuffLevels, MAX_PASSIVE_STUFF);
     }
+    public void mainActiveSwitch() {
+        for (int i = 0; i < myActiveStuffIds.length; i++) {
+            if (myActiveStuffIds[i] == 0) {
+                myActiveStuffIds[i] = myActiveStuffIds[0];
+                myActiveStuffLevels[i] = myActiveStuffLevels[0];
+                break;
+            }
+        }
+        Functions.remove(myActiveStuffIds, 0);
+        Functions.remove(myActiveStuffLevels, 0);
+        mainActiveStuffId = myActiveStuffIds[0];
+    }
+    public int getMainActiveStuffId() {
+        return mainActiveStuffId;
+    }
+    public int getMainActiveStuffLevel() {
+        for (int i = 0; i < myActiveStuffIds.length; i++) {
+            if (myActiveStuffIds[i] == mainActiveStuffId) {
+                return myActiveStuffLevels[i];
+            }
+        }
+        return 0;
+    }
     public void copyFrom(MyStuff myStuff) {
         this.myActiveStuffIds = myStuff.myActiveStuffIds;
         this.myActiveStuffLevels = myStuff.myActiveStuffLevels;
