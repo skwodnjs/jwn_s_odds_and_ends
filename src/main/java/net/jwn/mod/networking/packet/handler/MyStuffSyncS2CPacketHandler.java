@@ -10,7 +10,7 @@ public class MyStuffSyncS2CPacketHandler {
     public static void handlePacket(Supplier<NetworkEvent.Context> supplier, int[] myActiveStuffIds, int[] myActiveStuffLevels,
                                     int[] myPassiveStuffIds, int[] myPassiveStuffLevels, int mainActiveStuffId) {
         Player player = Minecraft.getInstance().player;
-        assert player != null : "stuff load S2C packet, player null";
+        assert player != null : "my stuff sync S2C packet, player null";
         player.getPersistentData().putIntArray("my_active_stuff_ids", myActiveStuffIds);
         player.getPersistentData().putIntArray("my_active_stuff_levels", myActiveStuffLevels);
         player.getPersistentData().putIntArray("my_passive_stuff_ids", myPassiveStuffIds);

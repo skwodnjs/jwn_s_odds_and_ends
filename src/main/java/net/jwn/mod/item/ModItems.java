@@ -24,6 +24,10 @@ public class ModItems {
     public static final RegistryObject<Item> POOP = ITEMS.register("poop",
             () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10, 0));
 
+
+    public static final RegistryObject<Item> CELL_PHONE = ITEMS.register("cell_phone",
+            () -> new ActiveStuff(new Item.Properties(), 32, StuffRank.EPIC, 100, 20));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

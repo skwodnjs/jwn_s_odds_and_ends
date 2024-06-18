@@ -22,6 +22,7 @@ public class KeyBinding {
     public static final String KEY_TEST_3 = "key." + Main.MOD_ID + ".test_3";
     public static final String KEY_TEST_4 = "key." + Main.MOD_ID + ".test_4";
     public static final String KEY_ACTIVE_SKILL = "key." + Main.MOD_ID + ".active_skill";
+    public static final String KEY_ACTIVE_STUFF_SWITCH = "key." + Main.MOD_ID + ".active_stuff_switch";
     public static final KeyMapping TEST_1_KEY = new KeyMapping(KEY_TEST_1, KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_O, KEY_CATEGORY_MOD);
     public static final KeyMapping TEST_2_KEY = new KeyMapping(KEY_TEST_2, KeyConflictContext.IN_GAME,
@@ -32,5 +33,7 @@ public class KeyBinding {
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, KEY_CATEGORY_MOD);
     public static final KeyMapping ACTIVE_SKILL_KEY = new KeyMapping(KEY_ACTIVE_SKILL, KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, KEY_CATEGORY_MOD);
+    public static final KeyMapping ACTIVE_STUFF_SWITCH_KEY = new KeyMapping(KEY_ACTIVE_STUFF_SWITCH, KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, KEY_CATEGORY_MOD);
 
 }

@@ -36,16 +36,21 @@ public class ActiveSkill {
 
             Stuff stuff = StuffIFound.ALL_OF_STUFF.get(id);
             if (stuff instanceof ActiveStuff activeStuff) {
-                COOL_TIME = activeStuff.t0 - activeStuff.weight * level;
+                COOL_TIME = activeStuff.t0 - activeStuff.weight * (level - 1);
                 System.out.println(COOL_TIME);
             }
 
             player.getPersistentData().putInt("cool_time", COOL_TIME);
             if (id == 1) skillPoop(player);
+
+            else if (id == 32) skillCellPhone(player);
         }
     }
     // ------------- SKILL -------------
     private static void skillPoop(Player player) {
         ModMessages.sendToServer(new PoopSkillC2SPacket());
+    }
+    private static void skillCellPhone(Player player) {
+        player.sendSystemMessage(Component.literal("cell phone"));
     }
 }

@@ -3,6 +3,7 @@ package net.jwn.mod.event;
 import net.jwn.mod.Main;
 import net.jwn.mod.util.ActiveSkill;
 import net.jwn.mod.util.KeyBinding;
+import net.jwn.mod.util.MyStuff;
 import net.jwn.mod.util.StuffIFound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -24,13 +25,16 @@ public class ClientEvents {
             if (KeyBinding.TEST_1_KEY.consumeClick()) {
                 player.sendSystemMessage(Component.literal(StuffIFound.print(player)));
             } else if (KeyBinding.TEST_2_KEY.consumeClick()) {
-
+                player.sendSystemMessage(Component.literal(MyStuff.print(player)));
             } else if (KeyBinding.TEST_3_KEY.consumeClick()) {
 
             } else if (KeyBinding.TEST_4_KEY.consumeClick()) {
 
             } else if (KeyBinding.ACTIVE_SKILL_KEY.consumeClick()) {
                 ActiveSkill.useSkill(player);
+            } else if (KeyBinding.ACTIVE_STUFF_SWITCH_KEY.consumeClick()) {
+                player.sendSystemMessage(Component.literal("SWITCH"));
+                MyStuff.switchMainActiveStuff(player);
             }
         }
 
@@ -56,6 +60,7 @@ public class ClientEvents {
             event.register(KeyBinding.TEST_3_KEY);
             event.register(KeyBinding.TEST_4_KEY);
             event.register(KeyBinding.ACTIVE_SKILL_KEY);
+            event.register(KeyBinding.ACTIVE_STUFF_SWITCH_KEY);
         }
     }
 }

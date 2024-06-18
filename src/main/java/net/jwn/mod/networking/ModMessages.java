@@ -1,6 +1,7 @@
 package net.jwn.mod.networking;
 
 import net.jwn.mod.Main;
+import net.jwn.mod.networking.packet.MyStuffSyncC2SPacket;
 import net.jwn.mod.networking.packet.MyStuffSyncS2CPacket;
 import net.jwn.mod.networking.packet.StuffIFoundSyncS2CPacket;
 import net.jwn.mod.networking.skill.PoopSkillC2SPacket;
@@ -36,6 +37,11 @@ public class ModMessages {
                 .decoder(StuffIFoundSyncS2CPacket::new)
                 .encoder(StuffIFoundSyncS2CPacket::toBytes)
                 .consumerMainThread(StuffIFoundSyncS2CPacket::handle)
+                .add();
+        net.messageBuilder(MyStuffSyncC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(MyStuffSyncC2SPacket::new)
+                .encoder(MyStuffSyncC2SPacket::toBytes)
+                .consumerMainThread(MyStuffSyncC2SPacket::handle)
                 .add();
 
         // ------------------- skills -------------------

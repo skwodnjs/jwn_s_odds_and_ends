@@ -1,6 +1,9 @@
 package net.jwn.mod.util;
 
 import net.jwn.mod.item.Stuff;
+import net.jwn.mod.networking.ModMessages;
+import net.jwn.mod.networking.packet.MyStuffSyncC2SPacket;
+import net.jwn.mod.networking.packet.MyStuffSyncS2CPacket;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
@@ -54,7 +57,7 @@ public class MyStuff {
             if (success) {
                 player.getPersistentData().putIntArray("my_active_stuff_ids", myActiveStuffIds);
                 player.getPersistentData().putIntArray("my_active_stuff_levels", myActiveStuffLevels);
-                if (index == 0 || myActiveStuffLevels[0] == 1) {
+                if (index == 0 && myActiveStuffLevels[0] == 1) {
                     player.getPersistentData().putInt("main_active_stuff_id", stuff.id);
                 }
             }
@@ -110,6 +113,47 @@ public class MyStuff {
         return newArray;
     }
 
+    public static void switchMainActiveStuff(Player player) {
+        int[] myActiveStuffIds = player.getPersistentData().getIntArray("my_active_stuff_ids");
+        int[] myActiveStuffLevels = player.getPersistentData().getIntArray("my_active_stuff_levels");
+        push(myActiveStuffIds);
+        push(myActiveStuffLevels);
+
+        player.getPersistentData().putIntArray("my_active_stuff_ids", myActiveStuffIds);
+        player.getPersistentData().putIntArray("my_active_stuff_levels", myActiveStuffLevels);
+        player.getPersistentData().putInt("main_active_stuff_id", myActiveStuffIds[0]);
+
+        ModMessages.sendToServer(new MyStuffSyncC2SPacket(
+                player.getPersistentData().getIntArray("my_active_stuff_ids"),
+                player.getPersistentData().getIntArray("my_active_stuff_levels"),
+                player.getPersistentData().getIntArray("my_passive_stuff_ids"),
+                player.getPersistentData().getIntArray("my_passive_stuff_levels"),
+                player.getPersistentData().getInt("main_active_stuff_id")
+        ));
+    }
+
+    private static void push(int[] arr) {
+        int firstZero = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 0) {
+                firstZero = i;
+                break;
+            }
+        }
+        arr[firstZero] = arr[0];
+        remove(arr, 0);
+    }
+
+    private static void remove(int[] arr, int index) {
+        arr[index] = 0;
+        for (int i = index + 1; i < arr.length; i++) {
+            if (arr[i] != 0) {
+                arr[i - 1] = arr[i];
+                arr[i] = 0;
+            }
+        }
+    }
+
     // --------------------- test ---------------------
 
     public static void reset(Player player) {
@@ -126,17 +170,17 @@ public class MyStuff {
         int[] myPassiveStuffIds = player.getPersistentData().getIntArray("my_passive_stuff_ids");
         int[] myPassiveStuffLevels = player.getPersistentData().getIntArray("my_passive_stuff_levels");
 
-        StringBuilder p = new StringBuilder("ACTIVE: ");
+        StringBuilder p = new StringBuilder("MAIN ACTIVE STUFF: ");
+        p.append(player.getPersistentData().getInt("main_active_stuff_id"));
+        p.append("\nACTIVE: ");
         for (int i = 0; i < myActiveStuffIds.length; i++) {
             p.append("{id: %d / lv: %d} ".formatted(myActiveStuffIds[i], myActiveStuffLevels[i]));
         }
-        p.append("\n MAIN ACTIVE STUFF: ").append(player.getPersistentData().getInt("main_active_stuff_id"));
-        p.append("\n PASSIVE: ");
+        p.append("\nPASSIVE: ");
         for (int i = 0; i < myPassiveStuffIds.length; i++) {
             p.append("{id: %d / lv: %d} ".formatted(myPassiveStuffIds[i], myPassiveStuffLevels[i]));
         }
 
         return p.toString();
     }
-
 }

@@ -17,8 +17,7 @@ public class SecondTestItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         if (!pLevel.isClientSide) {
-            pPlayer.sendSystemMessage(Component.literal("SERVER SIDE"));
-            pPlayer.sendSystemMessage(Component.literal(MyStuff.print(pPlayer)));
+
         }
 
         return super.use(pLevel, pPlayer, pUsedHand);

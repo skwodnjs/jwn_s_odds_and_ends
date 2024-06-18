@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import java.util.HashMap;
 
 public class StuffIFound {
-    private static final int MAX_STUFF = 60;
+    private static final int MAX_STUFF = 40;
     public static final HashMap<Integer, Stuff> ALL_OF_STUFF = new HashMap<>();
 
     public static void register(Player player, Stuff stuff) {
