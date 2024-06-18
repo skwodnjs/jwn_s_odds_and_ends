@@ -5,7 +5,7 @@ public enum StuffRank {
     EPIC(5),
     UNIQUE(5),
     LEGENDARY(5);
-    final int max_level;
+    public final int max_level;
     StuffRank(int max_level) {
         this.max_level = max_level;
     }

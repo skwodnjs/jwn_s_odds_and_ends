@@ -3,9 +3,10 @@ package net.jwn.mod.util;
 import net.jwn.mod.item.ActiveStuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
-import net.jwn.mod.networking.skill.PoopSkillC2SPacket;
+import net.jwn.mod.networking.active.PoopSkillC2SPacket;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 public class ActiveSkill {
     // when active skill key pressed (in client side), 1) check what is main active item 2) use skill
@@ -34,7 +35,7 @@ public class ActiveSkill {
                 level = my_active_stuff_levels[index];
             }
 
-            Stuff stuff = StuffIFound.ALL_OF_STUFF.get(id);
+            Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
             if (stuff instanceof ActiveStuff activeStuff) {
                 COOL_TIME = activeStuff.t0 - activeStuff.weight * (level - 1);
                 System.out.println(COOL_TIME);
@@ -51,6 +52,10 @@ public class ActiveSkill {
         ModMessages.sendToServer(new PoopSkillC2SPacket());
     }
     private static void skillCellPhone(Player player) {
-        player.sendSystemMessage(Component.literal("cell phone"));
+        if (player.level().dimension() == Level.OVERWORLD) {
+            player.sendSystemMessage(Component.literal("OVERWORLD!"));
+        } else {
+            player.sendSystemMessage(Component.literal("NETHER!"));
+        }
     }
 }

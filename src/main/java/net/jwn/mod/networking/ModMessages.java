@@ -1,10 +1,8 @@
 package net.jwn.mod.networking;
 
 import net.jwn.mod.Main;
-import net.jwn.mod.networking.packet.MyStuffSyncC2SPacket;
-import net.jwn.mod.networking.packet.MyStuffSyncS2CPacket;
-import net.jwn.mod.networking.packet.StuffIFoundSyncS2CPacket;
-import net.jwn.mod.networking.skill.PoopSkillC2SPacket;
+import net.jwn.mod.networking.active.PoopSkillC2SPacket;
+import net.jwn.mod.networking.packet.ExS2CPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -28,22 +26,11 @@ public class ModMessages {
 
         INSTANCE = net;
 
-        net.messageBuilder(MyStuffSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(MyStuffSyncS2CPacket::new)
-                .encoder(MyStuffSyncS2CPacket::toBytes)
-                .consumerMainThread(MyStuffSyncS2CPacket::handle)
+        net.messageBuilder(ExS2CPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ExS2CPacket::new)
+                .encoder(ExS2CPacket::toBytes)
+                .consumerMainThread(ExS2CPacket::handle)
                 .add();
-        net.messageBuilder(StuffIFoundSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(StuffIFoundSyncS2CPacket::new)
-                .encoder(StuffIFoundSyncS2CPacket::toBytes)
-                .consumerMainThread(StuffIFoundSyncS2CPacket::handle)
-                .add();
-        net.messageBuilder(MyStuffSyncC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(MyStuffSyncC2SPacket::new)
-                .encoder(MyStuffSyncC2SPacket::toBytes)
-                .consumerMainThread(MyStuffSyncC2SPacket::handle)
-                .add();
-
         // ------------------- skills -------------------
         net.messageBuilder(PoopSkillC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(PoopSkillC2SPacket::new)

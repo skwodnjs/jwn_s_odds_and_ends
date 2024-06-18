@@ -3,10 +3,7 @@ package net.jwn.mod.event;
 import net.jwn.mod.Main;
 import net.jwn.mod.util.ActiveSkill;
 import net.jwn.mod.util.KeyBinding;
-import net.jwn.mod.util.MyStuff;
-import net.jwn.mod.util.StuffIFound;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -23,9 +20,9 @@ public class ClientEvents {
             Player player = Minecraft.getInstance().player;
             assert player != null: "Key input, (client) player is null";
             if (KeyBinding.TEST_1_KEY.consumeClick()) {
-                player.sendSystemMessage(Component.literal(StuffIFound.print(player)));
+
             } else if (KeyBinding.TEST_2_KEY.consumeClick()) {
-                player.sendSystemMessage(Component.literal(MyStuff.print(player)));
+
             } else if (KeyBinding.TEST_3_KEY.consumeClick()) {
 
             } else if (KeyBinding.TEST_4_KEY.consumeClick()) {
@@ -33,8 +30,9 @@ public class ClientEvents {
             } else if (KeyBinding.ACTIVE_SKILL_KEY.consumeClick()) {
                 ActiveSkill.useSkill(player);
             } else if (KeyBinding.ACTIVE_STUFF_SWITCH_KEY.consumeClick()) {
-                player.sendSystemMessage(Component.literal("SWITCH"));
-                MyStuff.switchMainActiveStuff(player);
+//                MyStuff.switchMainActiveStuff(player);
+//                player.sendSystemMessage(Component.literal(
+//                        String.valueOf(player.getPersistentData().getInt("main_active_stuff_id"))));
             }
         }
 
@@ -43,10 +41,10 @@ public class ClientEvents {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
                 // cool_time
-                int cool_time = player.getPersistentData().getInt("cool_time");
-                if (cool_time > 0 && event.phase == TickEvent.Phase.END) {
-                    player.getPersistentData().putInt("cool_time", cool_time - 1);
-                }
+//                int cool_time = player.getPersistentData().getInt("cool_time");
+//                if (cool_time > 0 && event.phase == TickEvent.Phase.END) {
+//                    player.getPersistentData().putInt("cool_time", cool_time - 1);
+//                }
             }
         }
     }
