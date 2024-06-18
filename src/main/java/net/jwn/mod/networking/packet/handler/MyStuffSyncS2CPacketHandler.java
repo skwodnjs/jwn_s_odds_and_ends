@@ -6,7 +6,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class StuffSyncS2CPacketHandler {
+public class MyStuffSyncS2CPacketHandler {
     public static void handlePacket(Supplier<NetworkEvent.Context> supplier, int[] myActiveStuffIds, int[] myActiveStuffLevels,
                                     int[] myPassiveStuffIds, int[] myPassiveStuffLevels, int mainActiveStuffId) {
         Player player = Minecraft.getInstance().player;

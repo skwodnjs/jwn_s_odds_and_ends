@@ -1,6 +1,7 @@
 package net.jwn.mod.item.test;
 
-import net.jwn.mod.util.MyStuffController;
+import net.jwn.mod.util.MyStuff;
+import net.jwn.mod.util.StuffIFound;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -17,7 +18,8 @@ public class ThirdTestItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         pPlayer.sendSystemMessage(Component.literal("reset"));
-        MyStuffController.reset(pPlayer);
+        MyStuff.reset(pPlayer);
+        StuffIFound.reset(pPlayer);
 
         return super.use(pLevel, pPlayer, pUsedHand);
     }

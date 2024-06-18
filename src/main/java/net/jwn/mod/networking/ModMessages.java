@@ -1,7 +1,8 @@
 package net.jwn.mod.networking;
 
 import net.jwn.mod.Main;
-import net.jwn.mod.networking.packet.StuffSyncS2CPacket;
+import net.jwn.mod.networking.packet.MyStuffSyncS2CPacket;
+import net.jwn.mod.networking.packet.StuffIFoundSyncS2CPacket;
 import net.jwn.mod.networking.skill.PoopSkillC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,10 +27,15 @@ public class ModMessages {
 
         INSTANCE = net;
 
-        net.messageBuilder(StuffSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(StuffSyncS2CPacket::new)
-                .encoder(StuffSyncS2CPacket::toBytes)
-                .consumerMainThread(StuffSyncS2CPacket::handle)
+        net.messageBuilder(MyStuffSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(MyStuffSyncS2CPacket::new)
+                .encoder(MyStuffSyncS2CPacket::toBytes)
+                .consumerMainThread(MyStuffSyncS2CPacket::handle)
+                .add();
+        net.messageBuilder(StuffIFoundSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(StuffIFoundSyncS2CPacket::new)
+                .encoder(StuffIFoundSyncS2CPacket::toBytes)
+                .consumerMainThread(StuffIFoundSyncS2CPacket::handle)
                 .add();
 
         // ------------------- skills -------------------

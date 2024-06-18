@@ -34,7 +34,7 @@ public class ActiveSkill {
                 level = my_active_stuff_levels[index];
             }
 
-            Stuff stuff = StuffIFound.dic.get(id);
+            Stuff stuff = StuffIFound.ALL_OF_STUFF.get(id);
             if (stuff instanceof ActiveStuff activeStuff) {
                 COOL_TIME = activeStuff.t0 - activeStuff.weight * level;
                 System.out.println(COOL_TIME);

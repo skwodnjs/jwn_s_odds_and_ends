@@ -1,7 +1,7 @@
 package net.jwn.mod.item;
 
 import net.jwn.mod.util.StuffIFound;
-import net.jwn.mod.util.MyStuffController;
+import net.jwn.mod.util.MyStuff;
 import net.jwn.mod.util.StuffRank;
 import net.jwn.mod.util.StuffType;
 import net.minecraft.world.InteractionHand;
@@ -17,7 +17,7 @@ public abstract class Stuff extends Item {
         this.id = id;
         this.type = type;
         this.rank = rank;
-        StuffIFound.dic.put(id, this);
+        StuffIFound.ALL_OF_STUFF.put(id, this);
     }
     public int id;
     public StuffType type;
@@ -26,7 +26,7 @@ public abstract class Stuff extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pUsedHand);
 
-        if (MyStuffController.register(pPlayer, this)) {
+        if (MyStuff.register(pPlayer, this)) {
             if (!pPlayer.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }

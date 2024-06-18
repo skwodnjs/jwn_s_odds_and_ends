@@ -3,6 +3,7 @@ package net.jwn.mod.event;
 import net.jwn.mod.Main;
 import net.jwn.mod.util.ActiveSkill;
 import net.jwn.mod.util.KeyBinding;
+import net.jwn.mod.util.StuffIFound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +22,7 @@ public class ClientEvents {
             Player player = Minecraft.getInstance().player;
             assert player != null: "Key input, (client) player is null";
             if (KeyBinding.TEST_1_KEY.consumeClick()) {
-
+                player.sendSystemMessage(Component.literal(StuffIFound.print(player)));
             } else if (KeyBinding.TEST_2_KEY.consumeClick()) {
 
             } else if (KeyBinding.TEST_3_KEY.consumeClick()) {

@@ -4,7 +4,7 @@ import net.jwn.mod.item.Stuff;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
-public class MyStuffController {
+public class MyStuff {
     private static final int MAX_ACTIVE_STUFF = 4;
     private static final int MAX_PASSIVE_STUFF = 16;
 
@@ -94,14 +94,20 @@ public class MyStuffController {
         System.out.println("MY STUFF INIT");
         System.out.println(player.level().isClientSide ? "CLIENT" : "SERVER");
         // --------------------------------------------
-        if (player.getPersistentData().getIntArray("my_active_stuff_ids").length == 0)
-            player.getPersistentData().putIntArray("my_active_stuff_ids", new int[MAX_ACTIVE_STUFF]);
-        if (player.getPersistentData().getIntArray("my_active_stuff_levels").length == 0)
-            player.getPersistentData().putIntArray("my_active_stuff_levels", new int[MAX_ACTIVE_STUFF]);
-        if (player.getPersistentData().getIntArray("my_passive_stuff_ids").length == 0)
-            player.getPersistentData().putIntArray("my_passive_stuff_ids", new int[MAX_PASSIVE_STUFF]);
-        if (player.getPersistentData().getIntArray("my_passive_stuff_levels").length == 0)
-            player.getPersistentData().putIntArray("my_passive_stuff_levels", new int[MAX_PASSIVE_STUFF]);
+        player.getPersistentData().putIntArray("my_active_stuff_ids",
+                resize(player.getPersistentData().getIntArray("my_active_stuff_ids"), MAX_ACTIVE_STUFF));
+        player.getPersistentData().putIntArray("my_active_stuff_levels",
+                resize(player.getPersistentData().getIntArray("my_active_stuff_levels"), MAX_ACTIVE_STUFF));
+        player.getPersistentData().putIntArray("my_passive_stuff_ids",
+                resize(player.getPersistentData().getIntArray("my_passive_stuff_ids"), MAX_PASSIVE_STUFF));
+        player.getPersistentData().putIntArray("my_passive_stuff_levels",
+                resize(player.getPersistentData().getIntArray("my_passive_stuff_levels"), MAX_PASSIVE_STUFF));
+    }
+
+    private static int[] resize(int[] arr, int size) {
+        int[] newArray = new int[size];
+        System.arraycopy(arr, 0, newArray, 0, Math.min(arr.length, size));
+        return newArray;
     }
 
     // --------------------- test ---------------------
@@ -124,7 +130,7 @@ public class MyStuffController {
         for (int i = 0; i < myActiveStuffIds.length; i++) {
             p.append("{id: %d / lv: %d} ".formatted(myActiveStuffIds[i], myActiveStuffLevels[i]));
         }
-        p.append("\n MAIN ACTIVE STUFF: " + player.getPersistentData().getInt("main_active_stuff_id"));
+        p.append("\n MAIN ACTIVE STUFF: ").append(player.getPersistentData().getInt("main_active_stuff_id"));
         p.append("\n PASSIVE: ");
         for (int i = 0; i < myPassiveStuffIds.length; i++) {
             p.append("{id: %d / lv: %d} ".formatted(myPassiveStuffIds[i], myPassiveStuffLevels[i]));
