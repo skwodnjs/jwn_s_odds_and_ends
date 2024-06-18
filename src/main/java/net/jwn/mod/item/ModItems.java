@@ -21,7 +21,7 @@ public class ModItems {
     public static final RegistryObject<Item> THIRD_TEST_ITEM = ITEMS.register("third_test",
             () -> new ThirdTestItem(new Item.Properties()));
 
-    public static final RegistryObject<Item> POOP = ITEMS.register("poop",
+    public static final RegistryObject<Item> POOP = ITEMS.register("poop_item",
             () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10, 0));
 
 

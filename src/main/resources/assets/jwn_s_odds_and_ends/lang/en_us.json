@@ -2,6 +2,8 @@
   "item.jwn_s_odds_and_ends.first_test": "First Test Item",
   "item.jwn_s_odds_and_ends.second_test": "Second Test Item",
   "item.jwn_s_odds_and_ends.third_test": "Third Test Item",
-  "item.jwn_s_odds_and_ends.poop": "Poop",
-  "item.jwn_s_odds_and_ends.cell_phone": "Cell Phone"
+  "item.jwn_s_odds_and_ends.poop_item": "Poop",
+  "item.jwn_s_odds_and_ends.cell_phone": "Cell Phone",
+
+  "block.jwn_s_odds_and_ends.poop_block": "Poop"
 }

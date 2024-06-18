@@ -1,5 +1,6 @@
 package net.jwn.mod.networking.packet;
 
+import net.jwn.mod.block.ModBlocks;
 import net.jwn.mod.item.ActiveStuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.stuff.MyStuffProvider;
@@ -46,10 +47,6 @@ public class UseSkillC2SPacket {
                     int id = myStuff.getMainActiveStuffId();
                     int level = myStuff.getMainActiveStuffLevel();
 
-                    // test
-                    System.out.println("id: \t\t" + id);
-                    System.out.println("level: \t\t" + level);
-
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
                     if (stuff instanceof ActiveStuff activeStuff) {
                         boolean success = false;
@@ -72,7 +69,7 @@ public class UseSkillC2SPacket {
     // -------------------------- SKILLS --------------------------
     private boolean poop(ServerPlayer player) {
         Level level = player.level();
-        level.setBlock(player.getOnPos().offset(0, 1, 0), Blocks.SAND.defaultBlockState(), 3);
+        level.setBlock(player.getOnPos().offset(0, 1, 0), ModBlocks.POOP_BLOCK.get().defaultBlockState(), 3);
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ROOTED_DIRT_BREAK,
                 SoundSource.PLAYERS, 1F, 0.2F);
         return true;
