@@ -4,6 +4,7 @@ import net.jwn.mod.block.ModBlocks;
 import net.jwn.mod.item.ActiveStuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.stuff.MyStuffProvider;
+import net.jwn.mod.util.ActiveOperator;
 import net.jwn.mod.util.AllOfStuff;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -50,47 +51,19 @@ public class UseSkillC2SPacket {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
                     if (stuff instanceof ActiveStuff activeStuff) {
                         boolean success = false;
-                        // ---------- SKILL HANDLER  ----------
+                        // ---------- ACTIVE OPERATOR  ----------
 
-                        if (id == 1) success = poop(player);
-                        else if (id == 32) success = cellPhone(player);
+                        if (id == 1) success = ActiveOperator.poop(player);
+                        else if (id == 32) success = ActiveOperator.cellPhone(player);
 
-                        // ------------------------------------
+                        // --------------------------------------
 
                         if (success) player.getPersistentData().putInt("cool_time",
                                 activeStuff.t0 - activeStuff.weight * (level - 1));
                     }
                 });
             }
-            // test
         });
         return true;
-    }
-    // -------------------------- SKILLS --------------------------
-    private boolean poop(ServerPlayer player) {
-        Level level = player.level();
-        level.setBlock(player.getOnPos().offset(0, 1, 0), ModBlocks.POOP_BLOCK.get().defaultBlockState(), 3);
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ROOTED_DIRT_BREAK,
-                SoundSource.PLAYERS, 1F, 0.2F);
-        return true;
-    }
-    private boolean cellPhone(ServerPlayer player) {
-        if (player.level().dimension() == Level.OVERWORLD) {
-            player.sendSystemMessage(Component.literal("OVERWORLD!"));
-            BlockPos pos = player.getOnPos().offset(0, 1, 0);
-            int[] posArray = {pos.getX(), pos.getY(), pos.getZ()};
-            player.getPersistentData().putIntArray("cell_phone", posArray);
-            return false;
-        } else {
-            player.sendSystemMessage(Component.literal("NO OVERWORLD!"));
-            int[] pos = player.getPersistentData().getIntArray("cell_phone");
-            if (pos.length == 3) {
-                ServerLevel overWorld = player.getServer().getLevel(Level.OVERWORLD);
-                player.teleportTo(overWorld, pos[0], pos[1], pos[2], 0, 0);
-            } else {
-                player.sendSystemMessage(Component.literal("§c먼저 오버월드에서 장소를 저장해야 합니다!§c"));
-            }
-            return true;
-        }
     }
 }

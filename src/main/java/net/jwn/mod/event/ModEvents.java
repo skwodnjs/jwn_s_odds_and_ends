@@ -6,13 +6,19 @@ import net.jwn.mod.stuff.MyStuff;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFound;
 import net.jwn.mod.stuff.StuffIFoundProvider;
+import net.jwn.mod.util.PassiveOperator;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -68,5 +74,26 @@ public class ModEvents {
             });
         });
         event.getOriginal().invalidateCaps();
+    }
+
+    @SubscribeEvent
+    public static void onLivingHurtEvent(LivingHurtEvent event) {
+        // ONLY SERVER
+
+        // 2 amulet
+        PassiveOperator.amulet(event);
+    }
+
+    @SubscribeEvent
+    public static void onBreakEvent(BlockEvent.BreakEvent event) {
+        // ONLY SERVER
+
+        // 33 four leaf clover
+        PassiveOperator.fourLeafClover(event);
+    }
+
+    @SubscribeEvent
+    public static void on(PlayerXpEvent.PickupXp event) {
+
     }
 }

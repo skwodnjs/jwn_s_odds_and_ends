@@ -82,6 +82,18 @@ public class MyStuff {
         }
         return 0;
     }
+
+    /**
+     * @return level of stuff, 0 for has not
+     */
+    public int hasPassiveStuff(int id) {
+        for (int i = 0; i < myPassiveStuffIds.length; i++) {
+            if (myPassiveStuffIds[i] == id) {
+                return myActiveStuffLevels[i];
+            }
+        }
+        return 0;
+    }
     public void copyFrom(MyStuff myStuff) {
         this.myActiveStuffIds = myStuff.myActiveStuffIds;
         this.myActiveStuffLevels = myStuff.myActiveStuffLevels;

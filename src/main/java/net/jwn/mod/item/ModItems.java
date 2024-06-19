@@ -24,9 +24,15 @@ public class ModItems {
     public static final RegistryObject<Item> POOP = ITEMS.register("poop_item",
             () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10, 0));
 
+    public static final RegistryObject<Item> AMULET = ITEMS.register("amulet",
+            () -> new PassiveStuff(new Item.Properties(), 2, StuffRank.EPIC));
+
 
     public static final RegistryObject<Item> CELL_PHONE = ITEMS.register("cell_phone",
             () -> new ActiveStuff(new Item.Properties(), 32, StuffRank.EPIC, 100, 20));
+
+    public static final RegistryObject<Item> FOUR_LEAF_CLOVER = ITEMS.register("four_leaf_clover",
+            () -> new PassiveStuff(new Item.Properties(), 33, StuffRank.RARE));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
