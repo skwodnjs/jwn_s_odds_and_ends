@@ -55,6 +55,7 @@ public class UseSkillC2SPacket {
 
                         if (id == 1) success = ActiveOperator.poop(player);
                         else if (id == 32) success = ActiveOperator.cellPhone(player);
+                        else if (id == 34) success = ActiveOperator.dynamite(player);
 
                         // --------------------------------------
 

@@ -1,6 +1,7 @@
 package net.jwn.mod.event;
 
 import net.jwn.mod.Main;
+import net.jwn.mod.gui.MyStuffScreen;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
 import net.jwn.mod.networking.packet.UseSkillC2SPacket;

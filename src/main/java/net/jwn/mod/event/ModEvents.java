@@ -93,6 +93,14 @@ public class ModEvents {
     }
 
     @SubscribeEvent
+    public static void onFarmlandTrampleEvent(BlockEvent.FarmlandTrampleEvent event) {
+        // ONLY SERVER
+
+        // 35 light feather
+        PassiveOperator.lightFeather(event);
+    }
+
+    @SubscribeEvent
     public static void on(PlayerXpEvent.PickupXp event) {
 
     }

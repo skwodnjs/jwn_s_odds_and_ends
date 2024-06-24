@@ -22,17 +22,23 @@ public class ModItems {
             () -> new ThirdTestItem(new Item.Properties()));
 
     public static final RegistryObject<Item> POOP = ITEMS.register("poop_item",
-            () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10, 0));
+            () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10 * 20, 0));
 
     public static final RegistryObject<Item> AMULET = ITEMS.register("amulet",
             () -> new PassiveStuff(new Item.Properties(), 2, StuffRank.EPIC));
 
 
     public static final RegistryObject<Item> CELL_PHONE = ITEMS.register("cell_phone",
-            () -> new ActiveStuff(new Item.Properties(), 32, StuffRank.EPIC, 100, 20));
+            () -> new ActiveStuff(new Item.Properties(), 32, StuffRank.EPIC, 300 * 20, 60 * 20));
 
     public static final RegistryObject<Item> FOUR_LEAF_CLOVER = ITEMS.register("four_leaf_clover",
             () -> new PassiveStuff(new Item.Properties(), 33, StuffRank.RARE));
+
+    public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite",
+            () -> new ActiveStuff(new Item.Properties(), 34, StuffRank.EPIC, 75 * 20, 15 * 20));
+
+    public static final RegistryObject<Item> LIGHT_FEATHER = ITEMS.register("light_feather",
+            () -> new PassiveStuff(new Item.Properties(), 35, StuffRank.RARE));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -7,7 +7,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 
 public class ActiveOperator {
     public static boolean poop(ServerPlayer player) {
@@ -39,5 +42,12 @@ public class ActiveOperator {
             }
             return true;
         }
+    }
+    public static boolean dynamite(ServerPlayer player) {
+        PrimedTnt primedtnt = new PrimedTnt(player.level(), player.position().x + 0.5D, player.position().y, player.position().z + 0.5D, player);
+        player.level().addFreshEntity(primedtnt);
+        player.level().playSound(null, primedtnt.getX(), primedtnt.getY(), primedtnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+        player.level().gameEvent(player, GameEvent.PRIME_FUSE, player.position());
+        return true;
     }
 }

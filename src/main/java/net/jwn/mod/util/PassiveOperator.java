@@ -3,6 +3,7 @@ package net.jwn.mod.util;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
@@ -18,16 +19,13 @@ public class PassiveOperator {
      * @return hurt event canceled or not
      */
     public static void amulet(LivingHurtEvent event) {
-        if (event.getEntity() instanceof Player player && event.getSource().getEntity() instanceof EnderMan) {
+        if (event.getEntity() instanceof Player player && event.getSource().getEntity() instanceof EnderMan enderMan) {
             player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
                 int level = myStuff.hasPassiveStuff(2);
                 if (level != 0) {
                     double r = Math.random();
                     if (r < 0.4 + 0.1 * level) {
-                        // 막는 소리
-                        player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
-                                SoundEvents.ALLAY_AMBIENT_WITH_ITEM, SoundSource.PLAYERS, 1, 1);
-                        event.setCanceled(true);
+                        enderMan.kill();
                     }
                 }
             });
@@ -117,5 +115,17 @@ public class PassiveOperator {
                 }
             }
         });
+    }
+
+    public static void lightFeather(BlockEvent.FarmlandTrampleEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (!player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
+                player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
+                    if (myStuff.hasPassiveStuff(35) != 0) {
+                        event.setCanceled(true);
+                    }
+                });
+            }
+        }
     }
 }
