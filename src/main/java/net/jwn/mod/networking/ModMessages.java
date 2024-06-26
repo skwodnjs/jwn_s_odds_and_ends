@@ -1,9 +1,7 @@
 package net.jwn.mod.networking;
 
 import net.jwn.mod.Main;
-import net.jwn.mod.networking.packet.ExS2CPacket;
-import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
-import net.jwn.mod.networking.packet.UseSkillC2SPacket;
+import net.jwn.mod.networking.packet.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -37,12 +35,27 @@ public class ModMessages {
                 .encoder(MainActiveSwitchC2SPacket::toBytes)
                 .consumerMainThread(MainActiveSwitchC2SPacket::handle)
                 .add();
-        // ------------------------- test -------------------------
-        net.messageBuilder(ExS2CPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(ExS2CPacket::new)
-                .encoder(ExS2CPacket::toBytes)
-                .consumerMainThread(ExS2CPacket::handle)
+        net.messageBuilder(SyncStuffS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncStuffS2CPacket::new)
+                .encoder(SyncStuffS2CPacket::toBytes)
+                .consumerMainThread(SyncStuffS2CPacket::handle)
                 .add();
+        net.messageBuilder(SyncForGUIRequestC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SyncForGUIRequestC2SPacket::new)
+                .encoder(SyncForGUIRequestC2SPacket::toBytes)
+                .consumerMainThread(SyncForGUIRequestC2SPacket::handle)
+                .add();
+        net.messageBuilder(RemoveStuffC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(RemoveStuffC2SPacket::new)
+                .encoder(RemoveStuffC2SPacket::toBytes)
+                .consumerMainThread(RemoveStuffC2SPacket::handle)
+                .add();
+        // ------------------------- test -------------------------
+//        net.messageBuilder(ExS2CPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+//                .decoder(ExS2CPacket::new)
+//                .encoder(ExS2CPacket::toBytes)
+//                .consumerMainThread(ExS2CPacket::handle)
+//                .add();
     }
     public static <MSG> void sendToServer(MSG message) {
         INSTANCE.sendToServer(message);

@@ -1,25 +1,15 @@
 package net.jwn.mod.networking.packet;
 
-import net.jwn.mod.block.ModBlocks;
 import net.jwn.mod.item.ActiveStuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.util.ActiveOperator;
 import net.jwn.mod.util.AllOfStuff;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.network.NetworkEvent;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class UseSkillC2SPacket {
@@ -38,7 +28,7 @@ public class UseSkillC2SPacket {
         context.enqueueWork(() -> {
             // HERE WE ARE ON THE SERVER!
             ServerPlayer player = context.getSender();
-            assert player != null : "use skill C2S packet, player null";
+            assert player != null;
 
             int coolTime = player.getPersistentData().getInt("cool_time");
             if (coolTime != 0) {

@@ -25,6 +25,7 @@ public abstract class Stuff extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pUsedHand);
+        System.out.println(this);
 
         if (!pLevel.isClientSide) {
             pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {

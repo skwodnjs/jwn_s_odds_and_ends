@@ -1,18 +1,17 @@
 package net.jwn.mod.stuff;
 
 import net.jwn.mod.item.Stuff;
+import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.Functions;
 import net.jwn.mod.util.StuffType;
 import net.minecraft.nbt.CompoundTag;
 
 public class MyStuff {
-    private static final int MAX_ACTIVE_STUFF = 4;
-    private static final int MAX_PASSIVE_STUFF = 16;
-    private int[] myActiveStuffIds = new int[MAX_ACTIVE_STUFF];
-    private int[] myActiveStuffLevels = new int[MAX_ACTIVE_STUFF];
-    private int[] myPassiveStuffIds = new int[MAX_PASSIVE_STUFF];
-    private int[] myPassiveStuffLevels = new int[MAX_PASSIVE_STUFF];
-    private int mainActiveStuffId;
+    public int[] myActiveStuffIds = new int[AllOfStuff.MAX_ACTIVE_STUFF];
+    public int[] myActiveStuffLevels = new int[AllOfStuff.MAX_ACTIVE_STUFF];
+    public int[] myPassiveStuffIds = new int[AllOfStuff.MAX_PASSIVE_STUFF];
+    public int[] myPassiveStuffLevels = new int[AllOfStuff.MAX_PASSIVE_STUFF];
+    public int mainActiveStuffId;
 
     /**
      * @return 0 for success, -1 for full, 1 for max level
@@ -54,21 +53,23 @@ public class MyStuff {
         return 0;
     }
     public void init() {
-        myActiveStuffIds = Functions.resize(myActiveStuffIds, MAX_ACTIVE_STUFF);
-        myActiveStuffLevels = Functions.resize(myActiveStuffLevels, MAX_ACTIVE_STUFF);
-        myPassiveStuffIds = Functions.resize(myPassiveStuffIds, MAX_PASSIVE_STUFF);
-        myPassiveStuffLevels = Functions.resize(myPassiveStuffLevels, MAX_PASSIVE_STUFF);
+        myActiveStuffIds = Functions.resize(myActiveStuffIds, AllOfStuff.MAX_ACTIVE_STUFF);
+        myActiveStuffLevels = Functions.resize(myActiveStuffLevels, AllOfStuff.MAX_ACTIVE_STUFF);
+        myPassiveStuffIds = Functions.resize(myPassiveStuffIds, AllOfStuff.MAX_PASSIVE_STUFF);
+        myPassiveStuffLevels = Functions.resize(myPassiveStuffLevels, AllOfStuff.MAX_PASSIVE_STUFF);
     }
     public void mainActiveSwitch() {
+        int wasMainActiveId = myActiveStuffIds[0];
+        int wasMainActiveLevel = myActiveStuffLevels[0];
+        Functions.remove(myActiveStuffIds, 0);
+        Functions.remove(myActiveStuffLevels, 0);
         for (int i = 0; i < myActiveStuffIds.length; i++) {
             if (myActiveStuffIds[i] == 0) {
-                myActiveStuffIds[i] = myActiveStuffIds[0];
-                myActiveStuffLevels[i] = myActiveStuffLevels[0];
+                myActiveStuffIds[i] = wasMainActiveId;
+                myActiveStuffLevels[i] = wasMainActiveLevel;
                 break;
             }
         }
-        Functions.remove(myActiveStuffIds, 0);
-        Functions.remove(myActiveStuffLevels, 0);
         mainActiveStuffId = myActiveStuffIds[0];
     }
     public int getMainActiveStuffId() {
@@ -93,6 +94,33 @@ public class MyStuff {
             }
         }
         return 0;
+    }
+
+    public void remove(int id) {
+        if (AllOfStuff.ALL_OF_STUFF.get(id).type == StuffType.ACTIVE) {
+            for (int i = 0; i < myActiveStuffIds.length; i++) {
+                if (myActiveStuffIds[i] == id) {
+                    Functions.remove(myActiveStuffIds, i);
+                    Functions.remove(myActiveStuffLevels, i);
+                }
+            }
+        } else if (AllOfStuff.ALL_OF_STUFF.get(id).type == StuffType.PASSIVE) {
+            for (int i = 0; i < myPassiveStuffIds.length; i++) {
+                if (myPassiveStuffIds[i] == id) {
+                    Functions.remove(myPassiveStuffIds, i);
+                    Functions.remove(myPassiveStuffLevels, i);
+                }
+            }
+        }
+    }
+    public void set(int[] myActiveStuffIds, int[] myActiveStuffLevels,
+                    int[] myPassiveStuffIds, int[] myPassiveStuffLevels,
+                    int mainActiveStuffId) {
+        this.myActiveStuffIds = myActiveStuffIds;
+        this.myActiveStuffLevels = myActiveStuffLevels;
+        this.myPassiveStuffIds = myPassiveStuffIds;
+        this.myPassiveStuffLevels = myPassiveStuffLevels;
+        this.mainActiveStuffId = mainActiveStuffId;
     }
     public void copyFrom(MyStuff myStuff) {
         this.myActiveStuffIds = myStuff.myActiveStuffIds;
@@ -121,10 +149,10 @@ public class MyStuff {
     // ---------------------- test ----------------------
 
     public void reset() {
-        myActiveStuffIds = new int[MAX_ACTIVE_STUFF];
-        myActiveStuffLevels = new int[MAX_ACTIVE_STUFF];
-        myPassiveStuffIds = new int[MAX_PASSIVE_STUFF];
-        myPassiveStuffLevels = new int[MAX_PASSIVE_STUFF];
+        myActiveStuffIds = new int[AllOfStuff.MAX_ACTIVE_STUFF];
+        myActiveStuffLevels = new int[AllOfStuff.MAX_ACTIVE_STUFF];
+        myPassiveStuffIds = new int[AllOfStuff.MAX_PASSIVE_STUFF];
+        myPassiveStuffLevels = new int[AllOfStuff.MAX_PASSIVE_STUFF];
         mainActiveStuffId = 0;
     }
     public String print() {

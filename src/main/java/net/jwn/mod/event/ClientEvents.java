@@ -2,6 +2,7 @@ package net.jwn.mod.event;
 
 import net.jwn.mod.Main;
 import net.jwn.mod.gui.MyStuffScreen;
+import net.jwn.mod.gui.StuffIFoundScreen;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
 import net.jwn.mod.networking.packet.UseSkillC2SPacket;
@@ -20,10 +21,12 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             Player player = Minecraft.getInstance().player;
-            assert player != null: "Key input, (client) player is null";
-            if (KeyBinding.TEST_1_KEY.consumeClick()) {
-
-            } else if (KeyBinding.TEST_2_KEY.consumeClick()) {
+            assert player != null;
+            if (KeyBinding.MY_STUFF_KEY.consumeClick()) {
+                Minecraft.getInstance().setScreen(new MyStuffScreen());
+            } else if (KeyBinding.STUFF_I_FOUND_KEY.consumeClick()) {
+                Minecraft.getInstance().setScreen(new StuffIFoundScreen());
+            } else if (KeyBinding.HINT_KEY.consumeClick()) {
 
             } else if (KeyBinding.TEST_3_KEY.consumeClick()) {
 
@@ -41,8 +44,8 @@ public class ClientEvents {
     public static class ClientModBusEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
-            event.register(KeyBinding.TEST_1_KEY);
-            event.register(KeyBinding.TEST_2_KEY);
+            event.register(KeyBinding.MY_STUFF_KEY);
+            event.register(KeyBinding.HINT_KEY);
             event.register(KeyBinding.TEST_3_KEY);
             event.register(KeyBinding.TEST_4_KEY);
             event.register(KeyBinding.ACTIVE_SKILL_KEY);

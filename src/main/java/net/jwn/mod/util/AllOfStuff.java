@@ -8,11 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AllOfStuff {
+    public static final int MAX_STUFF = 70; // id: 1 ~ MAX_STUFF, index < MAX_STUFF
+    public static final int MAX_ACTIVE_STUFF = 3;
+    public static final int MAX_PASSIVE_STUFF = 16;
     public static final Map<Integer, Stuff> ALL_OF_STUFF = new HashMap<>();
-
-    public static final ResourceLocation poop = new ResourceLocation(Main.MOD_ID, "textures/item/poop.png");
-    public static final ResourceLocation cell_phone = new ResourceLocation(Main.MOD_ID, "textures/item/cell_phone.png");
-    public static final ResourceLocation amulet = new ResourceLocation(Main.MOD_ID, "textures/item/amulet.png");
-    public static final ResourceLocation four_leaf_clover = new ResourceLocation(Main.MOD_ID, "textures/item/four_leaf_clover.png");
+    public static ResourceLocation getResources(int id) {
+        return new ResourceLocation(Main.MOD_ID, "textures/item/" + ALL_OF_STUFF.get(id) + ".png");
+    }
 
 }
