@@ -23,7 +23,7 @@ public class UseSkillC2SPacket {
     public UseSkillC2SPacket(FriendlyByteBuf buf) {
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+    public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             // HERE WE ARE ON THE SERVER!
@@ -32,11 +32,11 @@ public class UseSkillC2SPacket {
 
             int coolTime = player.getPersistentData().getInt("cool_time");
             if (coolTime != 0) {
-                player.sendSystemMessage(Component.literal("§c아직 스킬을 사용할 수 없습니다.§c"));
+                player.sendSystemMessage(Component.literal("§c아직 스킬을 사용할 수 없습니다."));
             } else {
                 player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                    int id = myStuff.getMainActiveStuffId();
-                    int level = myStuff.getMainActiveStuffLevel();
+                    int id = myStuff.myActiveStuffIds[0];
+                    int level = myStuff.myActiveStuffLevels[0];
 
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
                     if (stuff instanceof ActiveStuff activeStuff) {
@@ -52,10 +52,10 @@ public class UseSkillC2SPacket {
 
                         if (success) player.getPersistentData().putInt("cool_time",
                                 activeStuff.t0 - activeStuff.weight * (level - 1));
+                        else player.sendSystemMessage(Component.literal("§c스킬을 사용할 수 없습니다."));
                     }
                 });
             }
         });
-        return true;
     }
 }

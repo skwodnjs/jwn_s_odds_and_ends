@@ -22,17 +22,15 @@ public class RemoveStuffC2SPacket {
         id = buf.readInt();
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+    public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             // HERE WE ARE ON THE SERVER!
             ServerPlayer player = context.getSender();
             assert player != null;
-
             player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
                 myStuff.remove(id);
             });
         });
-        return true;
     }
 }

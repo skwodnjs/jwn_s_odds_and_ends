@@ -29,14 +29,13 @@ public class SyncStuffS2CPacket {
         buf.writeVarIntArray(m.myActiveStuffLevels);
         buf.writeVarIntArray(m.myPassiveStuffIds);
         buf.writeVarIntArray(m.myPassiveStuffLevels);
-        buf.writeInt(m.mainActiveStuffId);
         buf.writeVarIntArray(s.stuffIFound);
     }
 
     public SyncStuffS2CPacket(FriendlyByteBuf buf) {
         m = new MyStuff();
         s = new StuffIFound();
-        m.set(buf.readVarIntArray(), buf.readVarIntArray(), buf.readVarIntArray(), buf.readVarIntArray(), buf.readInt());
+        m.set(buf.readVarIntArray(), buf.readVarIntArray(), buf.readVarIntArray(), buf.readVarIntArray());
         s.set(buf.readVarIntArray());
     }
 

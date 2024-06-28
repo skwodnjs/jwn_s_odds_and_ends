@@ -3,7 +3,7 @@ package net.jwn.mod.gui;
 import net.jwn.mod.Main;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
-import net.jwn.mod.networking.packet.SyncForGUIRequestC2SPacket;
+import net.jwn.mod.networking.packet.SyncStuffRequestC2SPacket;
 import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.AllOfStuff;
 import net.minecraft.client.Minecraft;
@@ -18,8 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import java.util.List;
 
 public class StuffIFoundScreen extends Screen {
-    private static final ResourceLocation resourceLocation = new ResourceLocation(Main.MOD_ID, "textures/gui/stuff_i_found_gui.png");
-    private static final Player player = Minecraft.getInstance().player;
+    private static final ResourceLocation windowResource = new ResourceLocation(Main.MOD_ID, "textures/gui/stuff_i_found_gui.png");
     private int leftPos, topPos;
     private int page = 0;
     private ImageButton previousButton;
@@ -36,7 +35,7 @@ public class StuffIFoundScreen extends Screen {
         this.leftPos = (width - 256) / 2;
         this.topPos = (height - 180) / 2;
 
-        ModMessages.sendToServer(new SyncForGUIRequestC2SPacket());
+        ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
     }
 
     private String coolTimeString(int tick) {
@@ -54,8 +53,19 @@ public class StuffIFoundScreen extends Screen {
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         renderBackground(pGuiGraphics);
-        pGuiGraphics.blit(resourceLocation, leftPos, topPos, 0, 0, 256, 180,256, 256);
+        pGuiGraphics.blit(windowResource, leftPos, topPos, 0, 0, 256, 180,256, 256);
 
+        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+
+        if (previousButton != null) {
+            this.removeWidget(previousButton);
+        }
+
+        if (nextButton != null) {
+            this.removeWidget(nextButton);
+        }
+
+        Player player = Minecraft.getInstance().player;
         assert player != null;
 
         player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(s -> {
@@ -77,7 +87,7 @@ public class StuffIFoundScreen extends Screen {
                 }
                 if (stuffIFound[id - 1] != 0) {
                     pGuiGraphics.blit(AllOfStuff.getResources(id), pX, pY, 0, 0, 16, 16, 16, 16);
-                    // tooltip
+
                     if (pX <= pMouseX && pMouseX < pX + 16 && pY <= pMouseY && pMouseY < pY + 16) {
                         Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
                         String name = I18n.get("item." + Main.MOD_ID + "." + stuff);
@@ -96,34 +106,24 @@ public class StuffIFoundScreen extends Screen {
                         pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
                     }
                 } else {
-                    pGuiGraphics.blit(resourceLocation, pX, pY, 42, 181, 16, 16, 256, 256);
+                    pGuiGraphics.blit(windowResource, pX, pY, 42, 181, 16, 16, 256, 256);
                 }
             }
         });
 
-        if (previousButton != null) {
-            this.removeWidget(previousButton);
-        }
-
-        if (nextButton != null) {
-            this.removeWidget(nextButton);
-        }
-
         if (page != 0) {
             previousButton = new ArrowButton(leftPos + 26, topPos + 156, 18, 10,
-                    0, 194, 0, resourceLocation, 256, 256, pButton -> {
+                    0, 194, 0, windowResource, 256, 256, pButton -> {
                 page -= 1;
             });
             addRenderableWidget(previousButton);
         }
         if ((page + 1) * 65 + 1 <= AllOfStuff.MAX_STUFF) {
             nextButton = new ArrowButton(leftPos + 212, topPos + 156, 18, 10,
-                    0, 181, 0, resourceLocation, 256, 256, pButton -> {
+                    0, 181, 0, windowResource, 256, 256, pButton -> {
                 page += 1;
             });
             addRenderableWidget(nextButton);
         }
-
-        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 }

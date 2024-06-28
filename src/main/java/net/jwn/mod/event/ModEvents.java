@@ -7,6 +7,7 @@ import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFound;
 import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.PassiveOperator;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -74,10 +75,15 @@ public class ModEvents {
     }
     @SubscribeEvent
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
+        // BOTH SIDE
+
         // cool time
         int cool_time = event.player.getPersistentData().getInt("cool_time");
-        if (!event.player.level().isClientSide && cool_time > 0 && event.phase == TickEvent.Phase.END) {
+        if (cool_time > 0 && event.phase == TickEvent.Phase.END) {
             event.player.getPersistentData().putInt("cool_time", cool_time - 1);
+        }
+        if (event.player.level().isClientSide) {
+            event.player.sendSystemMessage(Component.literal(String.valueOf(cool_time)));
         }
     }
 
@@ -122,7 +128,7 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void on(PlayerXpEvent.PickupXp event) {
+    public static void onPickupXp(PlayerXpEvent.PickupXp event) {
 
     }
 }

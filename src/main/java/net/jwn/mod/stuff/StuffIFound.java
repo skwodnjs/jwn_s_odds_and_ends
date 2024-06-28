@@ -35,9 +35,6 @@ public class StuffIFound {
     public void reset() {
         stuffIFound = new int[AllOfStuff.MAX_STUFF];
     }
-    public void length() {
-        System.out.println(stuffIFound.length);
-    }
     public String print() {
         System.out.println("STUFF I FOUND");
         StringBuilder p = new StringBuilder();

@@ -4,10 +4,10 @@ import net.jwn.mod.Main;
 import net.jwn.mod.gui.MyStuffScreen;
 import net.jwn.mod.gui.StuffIFoundScreen;
 import net.jwn.mod.networking.ModMessages;
-import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
-import net.jwn.mod.networking.packet.UseSkillC2SPacket;
+import net.jwn.mod.networking.packet.*;
 import net.jwn.mod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -34,12 +34,12 @@ public class ClientEvents {
 
             } else if (KeyBinding.ACTIVE_SKILL_KEY.consumeClick()) {
                 ModMessages.sendToServer(new UseSkillC2SPacket());
+                ModMessages.sendToServer(new SyncCoolTimeRequestC2SPacket());
             } else if (KeyBinding.ACTIVE_STUFF_SWITCH_KEY.consumeClick()) {
                 ModMessages.sendToServer(new MainActiveSwitchC2SPacket());
             }
         }
     }
-
     @Mod.EventBusSubscriber(modid = Main.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientModBusEvents {
         @SubscribeEvent

@@ -5,6 +5,7 @@ import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.StuffRank;
 import net.jwn.mod.util.StuffType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -37,6 +38,10 @@ public abstract class Stuff extends Item {
                     if (!pPlayer.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }
+                } else if (myStuff.register(this) == 1) {
+                    pPlayer.sendSystemMessage(Component.literal("§c이미 최대로 강화하였습니다."));
+                } else if (myStuff.register(this) == -1) {
+                    pPlayer.sendSystemMessage(Component.literal("§c더 이상 아이템을 가질 수 없습니다."));
                 }
             });
         }

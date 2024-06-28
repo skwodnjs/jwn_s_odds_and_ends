@@ -1,22 +1,24 @@
 package net.jwn.mod.networking.packet;
 
-import net.jwn.mod.stuff.MyStuff;
+import net.jwn.mod.networking.ModMessages;
+import net.jwn.mod.networking.packet.SyncStuffS2CPacket;
 import net.jwn.mod.stuff.MyStuffProvider;
+import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MainActiveSwitchC2SPacket {
+public class SyncCoolTimeRequestC2SPacket {
 
-    public MainActiveSwitchC2SPacket() {
+    public SyncCoolTimeRequestC2SPacket() {
     }
 
     public void toBytes(FriendlyByteBuf buf) {
     }
 
-    public MainActiveSwitchC2SPacket(FriendlyByteBuf buf) {
+    public SyncCoolTimeRequestC2SPacket(FriendlyByteBuf buf) {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
@@ -25,7 +27,7 @@ public class MainActiveSwitchC2SPacket {
             // HERE WE ARE ON THE SERVER!
             ServerPlayer player = context.getSender();
             assert player != null;
-            player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(MyStuff::mainActiveSwitch);
+            ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(player.getPersistentData().getInt("cool_time")), player);
         });
     }
 }

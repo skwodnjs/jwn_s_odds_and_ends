@@ -40,22 +40,26 @@ public class ModMessages {
                 .encoder(SyncStuffS2CPacket::toBytes)
                 .consumerMainThread(SyncStuffS2CPacket::handle)
                 .add();
-        net.messageBuilder(SyncForGUIRequestC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(SyncForGUIRequestC2SPacket::new)
-                .encoder(SyncForGUIRequestC2SPacket::toBytes)
-                .consumerMainThread(SyncForGUIRequestC2SPacket::handle)
+        net.messageBuilder(SyncStuffRequestC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SyncStuffRequestC2SPacket::new)
+                .encoder(SyncStuffRequestC2SPacket::toBytes)
+                .consumerMainThread(SyncStuffRequestC2SPacket::handle)
                 .add();
         net.messageBuilder(RemoveStuffC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RemoveStuffC2SPacket::new)
                 .encoder(RemoveStuffC2SPacket::toBytes)
                 .consumerMainThread(RemoveStuffC2SPacket::handle)
                 .add();
-        // ------------------------- test -------------------------
-//        net.messageBuilder(ExS2CPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-//                .decoder(ExS2CPacket::new)
-//                .encoder(ExS2CPacket::toBytes)
-//                .consumerMainThread(ExS2CPacket::handle)
-//                .add();
+        net.messageBuilder(SyncCoolTimeS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncCoolTimeS2CPacket::new)
+                .encoder(SyncCoolTimeS2CPacket::toBytes)
+                .consumerMainThread(SyncCoolTimeS2CPacket::handle)
+                .add();
+        net.messageBuilder(SyncCoolTimeRequestC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SyncCoolTimeRequestC2SPacket::new)
+                .encoder(SyncCoolTimeRequestC2SPacket::toBytes)
+                .consumerMainThread(SyncCoolTimeRequestC2SPacket::handle)
+                .add();
     }
     public static <MSG> void sendToServer(MSG message) {
         INSTANCE.sendToServer(message);
