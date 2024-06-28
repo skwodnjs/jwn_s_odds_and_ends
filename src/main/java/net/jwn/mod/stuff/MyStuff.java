@@ -102,6 +102,11 @@ public class MyStuff {
                 if (myActiveStuffIds[i] == id) {
                     Functions.remove(myActiveStuffIds, i);
                     Functions.remove(myActiveStuffLevels, i);
+                    if (id == mainActiveStuffId) {
+                        System.out.println(id);
+                        System.out.println(myActiveStuffIds[0]);
+                        mainActiveStuffId = myActiveStuffIds[0];
+                    }
                 }
             }
         } else if (AllOfStuff.ALL_OF_STUFF.get(id).type == StuffType.PASSIVE) {

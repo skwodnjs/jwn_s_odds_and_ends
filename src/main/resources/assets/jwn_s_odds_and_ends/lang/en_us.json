@@ -8,9 +8,11 @@
   "item.jwn_s_odds_and_ends.four_leaf_clover": "Four-Leaf Clover",
   "item.jwn_s_odds_and_ends.dynamite": "Dynamite",
   "item.jwn_s_odds_and_ends.light_feather": "Light Feather",
+  "item.jwn_s_odds_and_ends.wormhole": "Wormhole",
 
   "block.jwn_s_odds_and_ends.poop_block": "Poop",
 
+  "tooltip.jwn_s_odds_and_ends.remove": "§cClick for Remove!",
   "tooltip.jwn_s_odds_and_ends.poop_item": "Poop",
   "tooltip.jwn_s_odds_and_ends.cell_phone": "Cell Phone",
   "tooltip.jwn_s_odds_and_ends.amulet": "Amulet",

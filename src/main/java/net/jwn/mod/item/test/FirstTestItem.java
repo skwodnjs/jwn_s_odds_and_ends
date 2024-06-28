@@ -18,8 +18,8 @@ public class FirstTestItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        if (!pLevel.isClientSide) {
-            pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(stuffIFound -> {
+        if (pLevel.isClientSide) {
+            pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
                 pPlayer.sendSystemMessage(Component.literal(stuffIFound.print()));
             });
         }

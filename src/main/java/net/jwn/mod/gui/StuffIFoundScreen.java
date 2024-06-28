@@ -35,6 +35,20 @@ public class StuffIFoundScreen extends Screen {
 
         this.leftPos = (width - 256) / 2;
         this.topPos = (height - 180) / 2;
+
+        ModMessages.sendToServer(new SyncForGUIRequestC2SPacket());
+    }
+
+    private String coolTimeString(int tick) {
+        int min;
+        int sec;
+        min = tick / (60 * 20);
+        sec = tick % (60 * 20);
+        if (min == 0) {
+            return sec + "sec";
+        } else {
+            return min + "min " + sec + "sec";
+        }
     }
 
     @Override
@@ -43,7 +57,6 @@ public class StuffIFoundScreen extends Screen {
         pGuiGraphics.blit(resourceLocation, leftPos, topPos, 0, 0, 256, 180,256, 256);
 
         assert player != null;
-        ModMessages.sendToServer(new SyncForGUIRequestC2SPacket());
 
         player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(s -> {
             int[] stuffIFound = s.stuffIFound;
@@ -70,9 +83,15 @@ public class StuffIFoundScreen extends Screen {
                         String name = I18n.get("item." + Main.MOD_ID + "." + stuff);
                         String tooltip = I18n.get("tooltip." + Main.MOD_ID + "." + stuff);
 
-                        Component[] components = {Component.literal("id: " + id),
-                                Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
-                                Component.literal(tooltip)};
+                        Component[] components;
+
+                        if (stuffIFound[id - 1] == 1) {
+                            components = new Component[] {Component.literal("??")};
+                        } else {
+                            components = new Component[] {Component.literal("id: " + id),
+                                    Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
+                                    Component.literal(tooltip)};
+                        }
 
                         pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
                     }

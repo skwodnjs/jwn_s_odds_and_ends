@@ -1,6 +1,7 @@
 package net.jwn.mod.item;
 
 import net.jwn.mod.stuff.MyStuffProvider;
+import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.StuffRank;
 import net.jwn.mod.util.StuffType;
@@ -30,6 +31,9 @@ public abstract class Stuff extends Item {
         if (!pLevel.isClientSide) {
             pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
                 if (myStuff.register(this) == 0) {
+                    pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
+                        stuffIFound.updateStuffIFoundSecondTime(this.id);
+                    });
                     if (!pPlayer.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }

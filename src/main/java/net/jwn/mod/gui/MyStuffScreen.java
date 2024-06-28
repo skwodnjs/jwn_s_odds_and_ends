@@ -67,7 +67,11 @@ public class MyStuffScreen extends Screen {
                             Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
                             Component.literal("level: " + level)};
 
-                    pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
+                    if (!removeMode) {
+                        pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
+                    } else {
+                        pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.translatable("tooltip." + Main.MOD_ID + ".remove")) , pMouseX, pMouseY);
+                    }
                 }
             }
 
@@ -89,7 +93,11 @@ public class MyStuffScreen extends Screen {
                             Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
                             Component.literal("level: " + level)};
 
-                    pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
+                    if (!removeMode) {
+                        pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
+                    } else {
+                        pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.translatable("tooltip." + Main.MOD_ID + ".remove")) , pMouseX, pMouseY);
+                    }
                 }
             }
             trashCanButton = new TrashCanButton(leftPos + 109, topPos + 156, 10, 11,

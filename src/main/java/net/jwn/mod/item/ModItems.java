@@ -29,16 +29,19 @@ public class ModItems {
 
 
     public static final RegistryObject<Item> CELL_PHONE = ITEMS.register("cell_phone",
-            () -> new ActiveStuff(new Item.Properties(), 32, StuffRank.EPIC, 300 * 20, 60 * 20));
+            () -> new ActiveStuff(new Item.Properties(), 3, StuffRank.EPIC, 300 * 20, 60 * 20));
 
     public static final RegistryObject<Item> FOUR_LEAF_CLOVER = ITEMS.register("four_leaf_clover",
-            () -> new PassiveStuff(new Item.Properties(), 33, StuffRank.RARE));
+            () -> new PassiveStuff(new Item.Properties(), 4, StuffRank.RARE));
 
     public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite",
-            () -> new ActiveStuff(new Item.Properties(), 34, StuffRank.EPIC, 75 * 20, 15 * 20));
+            () -> new ActiveStuff(new Item.Properties(), 5, StuffRank.EPIC, 75 * 20, 15 * 20));
 
     public static final RegistryObject<Item> LIGHT_FEATHER = ITEMS.register("light_feather",
-            () -> new PassiveStuff(new Item.Properties(), 35, StuffRank.RARE));
+            () -> new PassiveStuff(new Item.Properties(), 6, StuffRank.RARE));
+
+    public static final RegistryObject<Item> WORMHOLE = ITEMS.register("wormhole",
+            () -> new ActiveStuff(new Item.Properties(), 7, StuffRank.EPIC, 50 * 20, 10 * 20));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

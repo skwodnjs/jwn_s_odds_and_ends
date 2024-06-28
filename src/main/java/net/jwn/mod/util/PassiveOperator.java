@@ -14,10 +14,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.level.BlockEvent;
 
 public class PassiveOperator {
-    /**
-     * ModEvents#onLivingHurtEvent
-     * @return hurt event canceled or not
-     */
     public static void amulet(LivingHurtEvent event) {
         if (event.getEntity() instanceof Player player && event.getSource().getEntity() instanceof EnderMan enderMan) {
             player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {

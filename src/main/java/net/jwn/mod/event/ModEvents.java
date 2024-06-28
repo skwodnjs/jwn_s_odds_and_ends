@@ -14,6 +14,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -33,9 +34,32 @@ public class ModEvents {
         // ONLY SERVER
         if (event.getItem().getItem().getItem() instanceof Stuff stuff) {
             event.getEntity().getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
-                stuffIFound.updateStuffIFound(stuff.id);
+                stuffIFound.updateStuffIFoundFirstTime(stuff.id);
             });
         }
+    }
+    @SubscribeEvent
+    public static void onPlayerContainerEvent (PlayerContainerEvent event) {
+        // ONLY SERVER
+        for (int i = 0; i < event.getEntity().getInventory().getContainerSize(); i++) {
+            if (event.getEntity().getInventory().getItem(i).getItem() instanceof Stuff stuff) {
+                event.getEntity().getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
+                    stuffIFound.updateStuffIFoundFirstTime(stuff.id);
+                });
+            }
+        }
+    }
+    @SubscribeEvent
+    public static void onItemCraftedEvent (PlayerEvent.ItemCraftedEvent event) {
+        // CLIENT: 만들 때 한 번 발생
+        // SERVER: 중첩된 횟수만큼 발생
+
+//        crafted 도 container event 발생해서 굳이 안해도 될 듯
+//        if (event.getCrafting().getItem() instanceof Stuff stuff) {
+//            event.getEntity().getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
+//                stuffIFound.updateStuffIFoundFirstTime(stuff.id);
+//            });
+//        }
     }
     @SubscribeEvent
     public static void onAttachCapabilitiesEvent(AttachCapabilitiesEvent<Entity> event) {
@@ -48,7 +72,6 @@ public class ModEvents {
             }
         }
     }
-
     @SubscribeEvent
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
         // cool time

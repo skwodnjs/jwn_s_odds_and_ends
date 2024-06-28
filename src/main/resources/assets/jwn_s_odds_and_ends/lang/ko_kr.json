@@ -8,9 +8,11 @@
   "item.jwn_s_odds_and_ends.four_leaf_clover": "네잎클로버",
   "item.jwn_s_odds_and_ends.dynamite": "다이너마이트",
   "item.jwn_s_odds_and_ends.light_feather": "가벼운 깃털",
+  "item.jwn_s_odds_and_ends.wormhole": "웜홀",
 
   "block.jwn_s_odds_and_ends.poop_block": "똥",
 
+  "tooltip.jwn_s_odds_and_ends.remove": "§c삭제하려면 누르세요!",
   "tooltip.jwn_s_odds_and_ends.poop_item": "설명 1",
   "tooltip.jwn_s_odds_and_ends.cell_phone": "설명 2",
   "tooltip.jwn_s_odds_and_ends.amulet": "설명 3",
