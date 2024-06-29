@@ -60,6 +60,16 @@ public class ModMessages {
                 .encoder(SyncCoolTimeRequestC2SPacket::toBytes)
                 .consumerMainThread(SyncCoolTimeRequestC2SPacket::handle)
                 .add();
+        net.messageBuilder(SyncStatS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncStatS2CPacket::new)
+                .encoder(SyncStatS2CPacket::toBytes)
+                .consumerMainThread(SyncStatS2CPacket::handle)
+                .add();
+        net.messageBuilder(SyncStatRequestC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SyncStatRequestC2SPacket::new)
+                .encoder(SyncStatRequestC2SPacket::toBytes)
+                .consumerMainThread(SyncStatRequestC2SPacket::handle)
+                .add();
     }
     public static <MSG> void sendToServer(MSG message) {
         INSTANCE.sendToServer(message);

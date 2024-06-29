@@ -33,7 +33,7 @@ public class PassiveOperator {
             int level = myStuff.hasPassiveStuff(33);
             if (level != 0) {
                 double r = Math.random();
-                if (r < 0.3 + 0.2 * level) {
+                if (r < 0.3 + 0.1 * level) {
                     boolean success = false;
                     Block block = event.getLevel().getBlockState(event.getPos()).getBlock();
                     if (block == Blocks.COAL_ORE || block == Blocks.DEEPSLATE_COAL_ORE) {

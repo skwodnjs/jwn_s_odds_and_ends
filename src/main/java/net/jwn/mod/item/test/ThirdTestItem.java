@@ -4,9 +4,11 @@ import net.jwn.mod.stuff.MyStuff;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFound;
 import net.jwn.mod.stuff.StuffIFoundProvider;
+import net.jwn.mod.util.StatOperator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +25,8 @@ public class ThirdTestItem extends Item {
         pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(MyStuff::reset);
         pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(StuffIFound::reset);
         pPlayer.getPersistentData().putInt("cool_time", 0);
+
+        StatOperator.reset(pPlayer);
 
         return super.use(pLevel, pPlayer, pUsedHand);
     }

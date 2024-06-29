@@ -7,6 +7,8 @@ import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFound;
 import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.PassiveOperator;
+import net.jwn.mod.util.StatOperator;
+import net.jwn.mod.util.StatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -82,13 +84,12 @@ public class ModEvents {
         if (cool_time > 0 && event.phase == TickEvent.Phase.END) {
             event.player.getPersistentData().putInt("cool_time", cool_time - 1);
         }
-        if (event.player.level().isClientSide) {
-            event.player.sendSystemMessage(Component.literal(String.valueOf(cool_time)));
-        }
     }
 
     @SubscribeEvent
     public static void onClone(PlayerEvent.Clone event) {
+        // ONLY SERVER
+
         event.getOriginal().reviveCaps();
         event.getOriginal().getCapability(MyStuffProvider.MY_STUFF).ifPresent(oldStore -> {
             event.getEntity().getCapability(MyStuffProvider.MY_STUFF).ifPresent(newStore -> {
@@ -101,6 +102,8 @@ public class ModEvents {
             });
         });
         event.getOriginal().invalidateCaps();
+
+        StatOperator.reCalculate(event.getEntity());
     }
 
     @SubscribeEvent
@@ -115,7 +118,7 @@ public class ModEvents {
     public static void onBreakEvent(BlockEvent.BreakEvent event) {
         // ONLY SERVER
 
-        // 33 four leaf clover
+        // 4 four leaf clover
         PassiveOperator.fourLeafClover(event);
     }
 
@@ -123,12 +126,19 @@ public class ModEvents {
     public static void onFarmlandTrampleEvent(BlockEvent.FarmlandTrampleEvent event) {
         // ONLY SERVER
 
-        // 35 light feather
+        // 6 light feather
         PassiveOperator.lightFeather(event);
     }
 
     @SubscribeEvent
     public static void onPickupXp(PlayerXpEvent.PickupXp event) {
 
+    }
+
+    @SubscribeEvent
+    public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+        // BOTH SIDE
+
+        event.setNewSpeed(1 + 3 * event.getEntity().getPersistentData().getFloat(StatType.MINING_SPEED.name));
     }
 }

@@ -4,10 +4,12 @@ import net.jwn.mod.Main;
 import net.jwn.mod.gui.MyStuffScreen;
 import net.jwn.mod.gui.StuffIFoundScreen;
 import net.jwn.mod.networking.ModMessages;
-import net.jwn.mod.networking.packet.*;
+import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
+import net.jwn.mod.networking.packet.SyncCoolTimeRequestC2SPacket;
+import net.jwn.mod.networking.packet.SyncStatRequestC2SPacket;
+import net.jwn.mod.networking.packet.UseSkillC2SPacket;
 import net.jwn.mod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -23,6 +25,7 @@ public class ClientEvents {
             Player player = Minecraft.getInstance().player;
             assert player != null;
             if (KeyBinding.MY_STUFF_KEY.consumeClick()) {
+                ModMessages.sendToServer(new SyncStatRequestC2SPacket());
                 Minecraft.getInstance().setScreen(new MyStuffScreen());
             } else if (KeyBinding.STUFF_I_FOUND_KEY.consumeClick()) {
                 Minecraft.getInstance().setScreen(new StuffIFoundScreen());

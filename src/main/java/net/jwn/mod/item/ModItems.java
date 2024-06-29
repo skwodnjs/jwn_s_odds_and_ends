@@ -4,6 +4,8 @@ import net.jwn.mod.Main;
 import net.jwn.mod.item.test.FirstTestItem;
 import net.jwn.mod.item.test.SecondTestItem;
 import net.jwn.mod.item.test.ThirdTestItem;
+import net.jwn.mod.util.Stat;
+import net.jwn.mod.util.StatType;
 import net.jwn.mod.util.StuffRank;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -26,7 +28,7 @@ public class ModItems {
     public static final RegistryObject<Item> CELL_PHONE = ITEMS.register("cell_phone",
             () -> new ActiveStuff(new Item.Properties(), 3, StuffRank.EPIC, 300 * 20, 60 * 20));
     public static final RegistryObject<Item> FOUR_LEAF_CLOVER = ITEMS.register("four_leaf_clover",
-            () -> new PassiveStuff(new Item.Properties(), 4, StuffRank.RARE));
+            () -> new PassiveStuff(new Item.Properties(), 4, StuffRank.RARE, new Stat(StatType.LUCK, 2.2f)));
     public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite",
             () -> new ActiveStuff(new Item.Properties(), 5, StuffRank.EPIC, 75 * 20, 15 * 20));
     public static final RegistryObject<Item> LIGHT_FEATHER = ITEMS.register("light_feather",
