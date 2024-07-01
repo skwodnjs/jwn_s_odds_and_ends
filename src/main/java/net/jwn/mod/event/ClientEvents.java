@@ -6,7 +6,7 @@ import net.jwn.mod.gui.StuffIFoundScreen;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
 import net.jwn.mod.networking.packet.SyncCoolTimeRequestC2SPacket;
-import net.jwn.mod.networking.packet.SyncStatRequestC2SPacket;
+import net.jwn.mod.networking.packet.SyncStuffRequestC2SPacket;
 import net.jwn.mod.networking.packet.UseSkillC2SPacket;
 import net.jwn.mod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
@@ -25,21 +25,28 @@ public class ClientEvents {
             Player player = Minecraft.getInstance().player;
             assert player != null;
             if (KeyBinding.MY_STUFF_KEY.consumeClick()) {
-                ModMessages.sendToServer(new SyncStatRequestC2SPacket());
+                // MY STUFF SCREEN : I KEY
+                ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
                 Minecraft.getInstance().setScreen(new MyStuffScreen());
             } else if (KeyBinding.STUFF_I_FOUND_KEY.consumeClick()) {
+                // STUFF I FOUND SCREEN : O KEY
+                ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
                 Minecraft.getInstance().setScreen(new StuffIFoundScreen());
             } else if (KeyBinding.HINT_KEY.consumeClick()) {
-
+                // HINT SCREEN : H KEY
             } else if (KeyBinding.TEST_3_KEY.consumeClick()) {
 
             } else if (KeyBinding.TEST_4_KEY.consumeClick()) {
 
             } else if (KeyBinding.ACTIVE_SKILL_KEY.consumeClick()) {
+                // ACTIVE SKILL : R KEY
                 ModMessages.sendToServer(new UseSkillC2SPacket());
                 ModMessages.sendToServer(new SyncCoolTimeRequestC2SPacket());
+                ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
             } else if (KeyBinding.ACTIVE_STUFF_SWITCH_KEY.consumeClick()) {
+                // ACTIVE STUFF SWITCH : Z KEY
                 ModMessages.sendToServer(new MainActiveSwitchC2SPacket());
+                ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
             }
         }
     }

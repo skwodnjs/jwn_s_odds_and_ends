@@ -3,9 +3,11 @@ package net.jwn.mod.gui;
 import net.jwn.mod.Main;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
+import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
 import net.jwn.mod.networking.packet.SyncStuffRequestC2SPacket;
 import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.AllOfStuff;
+import net.jwn.mod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -27,29 +29,13 @@ public class StuffIFoundScreen extends Screen {
     public StuffIFoundScreen() {
         super(Component.literal("STUFF I FOUND"));
     }
-
     @Override
     protected void init() {
         super.init();
 
         this.leftPos = (width - 256) / 2;
         this.topPos = (height - 180) / 2;
-
-        ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
     }
-
-    private String coolTimeString(int tick) {
-        int min;
-        int sec;
-        min = tick / (60 * 20);
-        sec = tick % (60 * 20);
-        if (min == 0) {
-            return sec + "sec";
-        } else {
-            return min + "min " + sec + "sec";
-        }
-    }
-
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         renderBackground(pGuiGraphics);
@@ -97,6 +83,10 @@ public class StuffIFoundScreen extends Screen {
 
                         if (stuffIFound[id - 1] == 1) {
                             components = new Component[] {Component.literal("??")};
+                        } else if (stuffIFound[id - 1] == 2) {
+                            components = new Component[] {Component.literal("id: " + id),
+                                    Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
+                                    Component.literal("??")};
                         } else {
                             components = new Component[] {Component.literal("id: " + id),
                                     Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
@@ -125,5 +115,13 @@ public class StuffIFoundScreen extends Screen {
             });
             addRenderableWidget(nextButton);
         }
+    }
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        if (pKeyCode == KeyBinding.STUFF_I_FOUND_KEY.getKey().getValue()) {
+            this.onClose();
+            return true;
+        }
+        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 }

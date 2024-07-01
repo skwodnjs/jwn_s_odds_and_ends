@@ -29,6 +29,8 @@ public class SyncStatRequestC2SPacket {
             ServerPlayer player = context.getSender();
             assert player != null;
 
+            StatOperator.reCalculate(player);
+
             Map<String, Float> map = new HashMap<>();
 
             for (StatType type : StatType.values()) {

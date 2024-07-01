@@ -2,17 +2,12 @@ package net.jwn.mod.networking.packet;
 
 import net.jwn.mod.networking.packet.handler.SyncStuffS2CPacketHandler;
 import net.jwn.mod.stuff.MyStuff;
-import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFound;
-import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 public class SyncStuffS2CPacket {

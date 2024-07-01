@@ -1,12 +1,17 @@
 package net.jwn.mod.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.jwn.mod.Main;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
+import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
 import net.jwn.mod.networking.packet.RemoveStuffC2SPacket;
+import net.jwn.mod.networking.packet.SyncStatRequestC2SPacket;
 import net.jwn.mod.networking.packet.SyncStuffRequestC2SPacket;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.util.AllOfStuff;
+import net.jwn.mod.util.KeyBinding;
+import net.jwn.mod.util.StatType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -28,30 +33,79 @@ public class MyStuffScreen extends Screen {
     public MyStuffScreen() {
         super(Component.literal("MY STUFF"));
     }
-
     @Override
     protected void init() {
         super.init();
 
         this.leftPos = (width - 146) / 2;
         this.topPos = (height - 180) / 2;
-
-        ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
     }
-
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         renderBackground(pGuiGraphics);
-        pGuiGraphics.blit(windowResource, leftPos, topPos, 0, 0, 146, 180);
+        pGuiGraphics.blit(windowResource, leftPos, topPos, 0, 0, 146, 180, 256, 256);
+
+        RenderSystem.enableBlend();
+
+        // STAT IMAGE
+        pGuiGraphics.blit(new ResourceLocation(Main.MOD_ID, "textures/gui/health.png"),
+                leftPos + 21, topPos + 41, 0, 0, 6, 6, 6, 6);
+        pGuiGraphics.blit(new ResourceLocation(Main.MOD_ID, "textures/gui/speed.png"),
+                leftPos + 47, topPos + 41, 0, 0, 6, 6, 6, 6);
+        pGuiGraphics.blit(new ResourceLocation(Main.MOD_ID, "textures/gui/mining_speed.png"),
+                leftPos + 73, topPos + 41, 0, 0, 6, 6, 6, 6);
+        pGuiGraphics.blit(new ResourceLocation(Main.MOD_ID, "textures/gui/attack_damage.png"),
+                leftPos + 21, topPos + 47, 0, 0, 6, 6, 6, 6);
+        pGuiGraphics.blit(new ResourceLocation(Main.MOD_ID, "textures/gui/knockback_resistance.png"),
+                leftPos + 47, topPos + 47, 0, 0, 6, 6, 6, 6);
+        pGuiGraphics.blit(new ResourceLocation(Main.MOD_ID, "textures/gui/luck.png"),
+                leftPos + 73, topPos + 47, 0, 0, 6, 6, 6, 6);
+
+        if (topPos + 41 <= pMouseY && pMouseY < topPos + 41 + 6) {
+            if (leftPos + 21 <= pMouseX && pMouseX < leftPos + 21 + 20) {
+                pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.literal("체력")), pMouseX, pMouseY);
+            } else if (leftPos + 47 <= pMouseX && pMouseX < leftPos + 47 + 20) {
+                pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.literal("속도")), pMouseX, pMouseY);
+            } else if (leftPos + 73 <= pMouseX && pMouseX < leftPos + 73 + 20) {
+                pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.literal("채굴 속도")), pMouseX, pMouseY);
+            }
+        } else if (topPos + 47 <= pMouseY && pMouseY < topPos + 47 + 6) {
+            if (leftPos + 21 <= pMouseX && pMouseX < leftPos + 21 + 20) {
+                pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.literal("공격력")), pMouseX, pMouseY);
+            } else if (leftPos + 47 <= pMouseX && pMouseX < leftPos + 47 + 20) {
+                pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.literal("넉백 저항")), pMouseX, pMouseY);
+            } else if (leftPos + 73 <= pMouseX && pMouseX < leftPos + 73 + 20) {
+                pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.literal("행운")), pMouseX, pMouseY);
+            }
+        }
 
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+
+        Player player = Minecraft.getInstance().player;
+        assert player != null;
+
+        // STAT NUMBER & COOL TIME
+        float scale = 0.5f;
+        pGuiGraphics.pose().pushPose();
+        pGuiGraphics.pose().scale(scale, scale, scale);
+
+        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.HEALTH.name) / 2), (leftPos + 21 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.SPEED.name)), (leftPos + 47 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.MINING_SPEED.name)), (leftPos + 73 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.ATTACK_DAMAGE.name)), (leftPos + 21 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.KNOCKBACK_RESISTANCE.name)), (leftPos + 47 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.LUCK.name)), (leftPos + 73 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
+
+        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("%.1f sec", player.getPersistentData().getInt("cool_time") / 20f), (leftPos + 55) / scale, (topPos + 62) / scale, 0xFFdecc99, false);
+
+        pGuiGraphics.pose().popPose();
+
+        // STUFF IMAGE & TOOLTIPS
 
         if (trashCanButton != null) {
             removeWidget(trashCanButton);
         }
 
-        Player player = Minecraft.getInstance().player;
-        assert player != null;
         player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
             for (int i = 0; i < myStuff.myActiveStuffIds.length; i++) {
                 int id = myStuff.myActiveStuffIds[i];
@@ -60,7 +114,8 @@ public class MyStuffScreen extends Screen {
                     break;
                 }
                 int pX = leftPos + 21 + (i % 7) * 15;
-                int pY = topPos + 60;
+                int pY = topPos + 69;
+                // STUFF IMAGE & LEVEL
                 pGuiGraphics.blit(AllOfStuff.getResources(id), pX, pY, 0, 0, 12, 12, 12, 12);
                 pGuiGraphics.blit(levelResource, pX + 8, pY + 7, (level - 1) * 5, 0, 5, 6, 25, 6);
 
@@ -78,7 +133,6 @@ public class MyStuffScreen extends Screen {
                     }
                 }
             }
-
             for (int i = 0; i < myStuff.myPassiveStuffIds.length; i++) {
                 int id = myStuff.myPassiveStuffIds[i];
                 int level = myStuff.myPassiveStuffLevels[i];
@@ -87,6 +141,7 @@ public class MyStuffScreen extends Screen {
                 }
                 int pX = leftPos + 21 + (i % 7) * 15;
                 int pY = topPos + 97 + (i / 7) * 15;
+                // STUFF IMAGE & LEVEL
                 pGuiGraphics.blit(AllOfStuff.getResources(id), pX, pY, 0, 0, 12, 12, 12, 12);
                 pGuiGraphics.blit(levelResource, pX + 8, pY + 7, (level - 1) * 5, 0, 5, 6, 25, 6);
                 if (pX <= pMouseX && pMouseX < pX + 16 && pY <= pMouseY && pMouseY < pY + 16) {
@@ -110,8 +165,9 @@ public class MyStuffScreen extends Screen {
             });
             addRenderableWidget(trashCanButton);
         });
-    }
 
+        RenderSystem.disableBlend();
+    }
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         if (removeMode) {
@@ -146,10 +202,23 @@ public class MyStuffScreen extends Screen {
                 if (removeId != 0) {
                     ModMessages.sendToServer(new RemoveStuffC2SPacket(removeId));
                     ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
+
+                    ModMessages.sendToServer(new SyncStatRequestC2SPacket());
                     removeMode = !removeMode;
                 }
             });
         }
         return super.mouseClicked(pMouseX, pMouseY, pButton);
+    }
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        if (pKeyCode == KeyBinding.MY_STUFF_KEY.getKey().getValue()) {
+            this.onClose();
+            return true;
+        } else if (pKeyCode == KeyBinding.ACTIVE_STUFF_SWITCH_KEY.getKey().getValue()) {
+            ModMessages.sendToServer(new MainActiveSwitchC2SPacket());
+            ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
+        }
+        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 }

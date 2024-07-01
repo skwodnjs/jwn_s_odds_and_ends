@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AllOfStuff {
-    public static final int MAX_STUFF = 70; // id: 1 ~ MAX_STUFF, index < MAX_STUFF
+    public static final int MAX_STUFF = 66; // id: 1 ~ MAX_STUFF, index < MAX_STUFF
     public static final int MAX_ACTIVE_STUFF = 3;
     public static final int MAX_PASSIVE_STUFF = 16;
     public static final Map<Integer, Stuff> ALL_OF_STUFF = new HashMap<>();

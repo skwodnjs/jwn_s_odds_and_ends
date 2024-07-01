@@ -3,6 +3,7 @@ package net.jwn.mod.networking.packet;
 import net.jwn.mod.item.ActiveStuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.stuff.MyStuffProvider;
+import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.ActiveOperator;
 import net.jwn.mod.util.AllOfStuff;
 import net.minecraft.network.FriendlyByteBuf;
@@ -50,9 +51,13 @@ public class UseSkillC2SPacket {
 
                         // --------------------------------------
 
-                        if (success) player.getPersistentData().putInt("cool_time",
-                                activeStuff.t0 - activeStuff.weight * (level - 1));
-                        else player.sendSystemMessage(Component.literal("§c스킬을 사용할 수 없습니다."));
+                        if (success) {
+                            player.getPersistentData().putInt("cool_time", activeStuff.t0 - activeStuff.weight * (level - 1));
+                        }
+
+                        player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
+                            stuffIFound.updateStuffIFound(id, 3);
+                        });
                     }
                 });
             }

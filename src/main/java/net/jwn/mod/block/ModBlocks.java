@@ -15,8 +15,10 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Main.MOD_ID);
+    // CUSTOM BLOCKS
     public static final RegistryObject<Block> POOP_BLOCK = registerBlock("poop_block",
             () -> new Block(BlockBehaviour.Properties.of().noOcclusion()));
+    // REGISTER METHODS
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

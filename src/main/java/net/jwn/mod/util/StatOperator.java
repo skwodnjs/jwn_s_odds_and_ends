@@ -25,6 +25,7 @@ public class StatOperator {
     private static final UUID LUCK_UUID = UUID.fromString("bd852fbd-d3c2-4cdb-aca4-ba0e27e3a7b0");
 
     public static void reCalculate(Player player) {
+        player.sendSystemMessage(Component.literal("reCalculate"));
         player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
             Map<String, Float> map = new HashMap<>();
             for (StatType type : StatType.values()) {
@@ -84,7 +85,7 @@ public class StatOperator {
         }
 
         float speed = player.getPersistentData().getFloat(StatType.SPEED.name);
-        AttributeModifier movementSpeedModifier = new AttributeModifier(MOVEMENT_SPEED_UUID, "Movement speed", speed * 0.6 / 20, AttributeModifier.Operation.ADDITION);
+        AttributeModifier movementSpeedModifier = new AttributeModifier(MOVEMENT_SPEED_UUID, "Movement speed", speed * 0.06 / 20, AttributeModifier.Operation.ADDITION);
         player.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(movementSpeedModifier);
         AttributeModifier swimSpeedModifier = new AttributeModifier(SWIM_SPEED_UUID, "Swim speed", speed * 1.5 / 20, AttributeModifier.Operation.ADDITION);
         player.getAttribute(ForgeMod.SWIM_SPEED.get()).addPermanentModifier(swimSpeedModifier);
@@ -103,7 +104,7 @@ public class StatOperator {
         AttributeModifier damageModifier = new AttributeModifier(ATTACK_DAMAGE_UUID, "Attack damage", damage * 6 / 20, AttributeModifier.Operation.ADDITION);
         player.getAttribute(Attributes.ATTACK_DAMAGE).addPermanentModifier(damageModifier);
 
-        // ATTACK DAMAGE
+        // KNOCKBACK RESISTANCE
         if (player.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getModifier(KNOCKBACK_RESISTANCE_UUID) != null) {
             player.getAttribute(Attributes.KNOCKBACK_RESISTANCE).removeModifier(KNOCKBACK_RESISTANCE_UUID);
         }
@@ -123,15 +124,16 @@ public class StatOperator {
         AttributeModifier luckModifier = new AttributeModifier(LUCK_UUID, "Luck", luck * 5 / 20, AttributeModifier.Operation.ADDITION);
         player.getAttribute(Attributes.LUCK).addPermanentModifier(luckModifier);
     }
-    // TEST
-    public static void print(Player player) {
+
+    // ------------------------------------ TEST ------------------------------------
+    public static void printStat(Player player) {
         for (StatType type : StatType.values()) {
             player.sendSystemMessage(Component.literal(
                     type.name.toUpperCase() + ": " + player.getPersistentData().getFloat(type.name)
             ));
         }
     }
-    public static void print2(Player player) {
+    public static void printAttribute(Player player) {
         player.sendSystemMessage(Component.literal(
                 "MAX_HEALTH: " + player.getAttribute(Attributes.MAX_HEALTH).getValue()
         ));

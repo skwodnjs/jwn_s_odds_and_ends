@@ -4,6 +4,7 @@ import net.jwn.mod.Main;
 import net.jwn.mod.item.test.FirstTestItem;
 import net.jwn.mod.item.test.SecondTestItem;
 import net.jwn.mod.item.test.ThirdTestItem;
+import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.Stat;
 import net.jwn.mod.util.StatType;
 import net.jwn.mod.util.StuffRank;
@@ -21,6 +22,14 @@ public class ModItems {
             () -> new SecondTestItem(new Item.Properties()));
     public static final RegistryObject<Item> THIRD_TEST_ITEM = ITEMS.register("third_test",
             () -> new ThirdTestItem(new Item.Properties()));
+    public static final RegistryObject<Item> MAX_STAT_ITEM = ITEMS.register("max_stat_item",
+            () -> new PassiveStuff(new Item.Properties(), AllOfStuff.MAX_STUFF, StuffRank.RARE,
+                    new Stat(StatType.HEALTH, 40f),
+                    new Stat(StatType.SPEED, 20f),
+                    new Stat(StatType.MINING_SPEED, 20f),
+                    new Stat(StatType.ATTACK_DAMAGE, 20f),
+                    new Stat(StatType.KNOCKBACK_RESISTANCE, 20f),
+                    new Stat(StatType.LUCK, 20f)));
     public static final RegistryObject<Item> POOP = ITEMS.register("poop_item",
             () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10 * 20, 0));
     public static final RegistryObject<Item> AMULET = ITEMS.register("amulet",

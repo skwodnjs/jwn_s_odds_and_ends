@@ -9,12 +9,8 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 public class StuffIFound {
     
     public int[] stuffIFound = new int[AllOfStuff.MAX_STUFF];
-
-    public void updateStuffIFoundFirstTime(int id) {
-        stuffIFound[id - 1] = stuffIFound[id - 1] == 0 ? 1 : stuffIFound[id - 1];
-    }
-    public void updateStuffIFoundSecondTime(int id) {
-        stuffIFound[id - 1] = Math.max(stuffIFound[id - 1], 2);
+    public void updateStuffIFound(int id, int max) {
+        stuffIFound[id - 1] = Math.max(stuffIFound[id - 1], max);
     }
     public void init() {
         stuffIFound = Functions.resize(stuffIFound, AllOfStuff.MAX_STUFF);

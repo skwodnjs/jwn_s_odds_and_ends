@@ -1,9 +1,6 @@
 package net.jwn.mod.networking.packet;
 
 import net.jwn.mod.networking.ModMessages;
-import net.jwn.mod.networking.packet.SyncStuffS2CPacket;
-import net.jwn.mod.stuff.MyStuffProvider;
-import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
