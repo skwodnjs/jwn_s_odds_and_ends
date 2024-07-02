@@ -44,6 +44,23 @@ public class ModItems {
             () -> new PassiveStuff(new Item.Properties(), 6, StuffRank.RARE));
     public static final RegistryObject<Item> WORMHOLE = ITEMS.register("wormhole",
             () -> new ActiveStuff(new Item.Properties(), 7, StuffRank.EPIC, 50 * 20, 10 * 20));
+    public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon",
+            () -> new PassiveStuff(new Item.Properties(), 8, StuffRank.RARE));
+    public static final RegistryObject<Item> LEATHER_WALLET = ITEMS.register("leather_wallet",
+            () -> new PassiveStuff(new Item.Properties(), 9, StuffRank.RARE));
+    public static final RegistryObject<Item> CAN = ITEMS.register("can",
+            () -> new PassiveStuff(new Item.Properties(), 10, StuffRank.RARE));
+    public static final RegistryObject<Item> TURTLE_SHELL = ITEMS.register("turtle_shell",
+            () -> new PassiveStuff(new Item.Properties(), 11, StuffRank.RARE, new Stat(StatType.SPEED, -2.0f)));
+    public static final RegistryObject<Item> PUFFER_SKIN = ITEMS.register("puffer_skin",
+            () -> new PassiveStuff(new Item.Properties(), 12, StuffRank.RARE));
+    public static final RegistryObject<Item> PHANTOM_EYE = ITEMS.register("phantom_eye",
+            () -> new PassiveStuff(new Item.Properties(), 13, StuffRank.RARE));
+    public static final RegistryObject<Item> HOGLIN_TUSK = ITEMS.register("hoglin_tusk",
+            () -> new PassiveStuff(new Item.Properties(), 14, StuffRank.RARE));
+    public static final RegistryObject<Item> PIG_NOSE = ITEMS.register("pig_nose",
+            () -> new PassiveStuff(new Item.Properties(), 15, StuffRank.RARE));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

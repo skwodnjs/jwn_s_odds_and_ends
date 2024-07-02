@@ -25,7 +25,6 @@ public class StatOperator {
     private static final UUID LUCK_UUID = UUID.fromString("bd852fbd-d3c2-4cdb-aca4-ba0e27e3a7b0");
 
     public static void reCalculate(Player player) {
-        player.sendSystemMessage(Component.literal("reCalculate"));
         player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
             Map<String, Float> map = new HashMap<>();
             for (StatType type : StatType.values()) {
@@ -76,6 +75,8 @@ public class StatOperator {
         AttributeModifier healthModifier = new AttributeModifier(HEALTH_UUID, "Health", health, AttributeModifier.Operation.ADDITION);
         player.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(healthModifier);
 
+        player.setHealth(Math.min((float) player.getAttribute(Attributes.MAX_HEALTH).getValue(), player.getHealth()));
+
         // SPEED
         if (player.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(MOVEMENT_SPEED_UUID) != null) {
             player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(MOVEMENT_SPEED_UUID);
@@ -85,7 +86,7 @@ public class StatOperator {
         }
 
         float speed = player.getPersistentData().getFloat(StatType.SPEED.name);
-        AttributeModifier movementSpeedModifier = new AttributeModifier(MOVEMENT_SPEED_UUID, "Movement speed", speed * 0.06 / 20, AttributeModifier.Operation.ADDITION);
+        AttributeModifier movementSpeedModifier = new AttributeModifier(MOVEMENT_SPEED_UUID, "Movement speed", speed * 0.05 / 20, AttributeModifier.Operation.ADDITION);
         player.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(movementSpeedModifier);
         AttributeModifier swimSpeedModifier = new AttributeModifier(SWIM_SPEED_UUID, "Swim speed", speed * 1.5 / 20, AttributeModifier.Operation.ADDITION);
         player.getAttribute(ForgeMod.SWIM_SPEED.get()).addPermanentModifier(swimSpeedModifier);

@@ -22,11 +22,9 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -141,6 +139,14 @@ public class ModEvents {
         if (cool_time > 0 && event.phase == TickEvent.Phase.END) {
             event.player.getPersistentData().putInt("cool_time", cool_time - 1);
         }
+
+        if (!event.player.level().isClientSide && event.phase == TickEvent.Phase.START) {
+            // 10 : CAN
+            PassiveOperator.can(event);
+
+            // 15 : PIG NOSE
+            PassiveOperator.pig_nose(event);
+        }
     }
     @SubscribeEvent
     public static void onLivingHurtEvent(LivingHurtEvent event) {
@@ -148,6 +154,12 @@ public class ModEvents {
 
         // 2 : AMULET
         PassiveOperator.amulet(event);
+
+        // 12 : PUFFER SKIN
+        PassiveOperator.puffer_skin(event);
+
+        // 14 : HOGLIN'S TUSK
+        PassiveOperator.hoglin_tusk(event);
     }
     @SubscribeEvent
     public static void onBreakEvent(BlockEvent.BreakEvent event) {
@@ -218,10 +230,29 @@ public class ModEvents {
         }
 
         System.out.println((event.getEntity().level().isClientSide ? "CLIENT: " : "SERVER: ") + event.getNewSpeed());
-        System.out.println(speedMultiplier);
+        System.out.println("NEW SPEED: "+ speedMultiplier);
+        event.setNewSpeed(speedMultiplier);
+    }
+    @SubscribeEvent
+    public static void onLivingDeathEvent(LivingDeathEvent event) {
+        // ONLY SERVER
+
+        // 8 : LIGHT FEATHER
+        PassiveOperator.balloon(event);
     }
     @SubscribeEvent
     public static void onPickupXp(PlayerXpEvent.PickupXp event) {
+        // ONLY SERVER
 
+        // 9 : LEATHER WALLET
+        PassiveOperator.leather_wallet(event);
+    }
+    @SubscribeEvent
+    public static void onPlayerSleepInBedEvent(PlayerSleepInBedEvent event) {
+        // ONLY SERVER
+//        System.out.println(event.getEntity().level().isClientSide ? "CLIENT" : "SERVER");
+
+        // 13 : PHANTOM'S EYE
+        PassiveOperator.phantom_eye(event);
     }
 }

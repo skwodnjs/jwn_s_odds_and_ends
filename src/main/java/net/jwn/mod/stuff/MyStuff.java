@@ -76,7 +76,7 @@ public class MyStuff {
     public int hasPassiveStuff(int id) {
         for (int i = 0; i < myPassiveStuffIds.length; i++) {
             if (myPassiveStuffIds[i] == id) {
-                return myActiveStuffLevels[i];
+                return myPassiveStuffLevels[i];
             }
         }
         return 0;

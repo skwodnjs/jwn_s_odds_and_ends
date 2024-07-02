@@ -11,8 +11,6 @@ public class SyncStatS2CPacketHandler {
         Player player = Minecraft.getInstance().player;
         assert player != null;
 
-        player.sendSystemMessage(Component.literal("sync stat"));
-
         for (Map.Entry<String, Float> entry : map.entrySet()) {
             player.getPersistentData().putFloat(entry.getKey(), entry.getValue());
         }

@@ -9,6 +9,14 @@
   "item.jwn_s_odds_and_ends.dynamite": "Dynamite",
   "item.jwn_s_odds_and_ends.light_feather": "Light Feather",
   "item.jwn_s_odds_and_ends.wormhole": "Wormhole",
+  "item.jwn_s_odds_and_ends.balloon": "Balloon",
+  "item.jwn_s_odds_and_ends.can": "Can",
+  "item.jwn_s_odds_and_ends.turtle_shell": "Turtle's Shell",
+  "item.jwn_s_odds_and_ends.puffer_skin": "Puffer's Skin",
+  "item.jwn_s_odds_and_ends.phantom_eye": "Phantom's eye",
+  "item.jwn_s_odds_and_ends.hoglin_tusk": "Hoglin's Tusk",
+  "item.jwn_s_odds_and_ends.pig_nose": "Pig nose",
+
   "item.jwn_s_odds_and_ends.max_stat_item": "Max Stat Item",
 
   "block.jwn_s_odds_and_ends.poop_block": "Poop",
@@ -19,5 +27,12 @@
   "tooltip.jwn_s_odds_and_ends.amulet": "Amulet",
   "tooltip.jwn_s_odds_and_ends.four_leaf_clover": "Four-Leaf Clover",
   "tooltip.jwn_s_odds_and_ends.dynamite": "Dynamite",
-  "tooltip.jwn_s_odds_and_ends.light_feather": "Light Feather"
+  "tooltip.jwn_s_odds_and_ends.light_feather": "Light Feather",
+  "tooltip.jwn_s_odds_and_ends.balloon": "Balloon",
+  "tooltip.jwn_s_odds_and_ends.leather_wallet": "Leather Wallet",
+  "tooltip.jwn_s_odds_and_ends.can": "Can",
+  "tooltip.jwn_s_odds_and_ends.turtle_shell": "Turtle's Shell",
+  "tooltip.jwn_s_odds_and_ends.puffer_skin": "Puffer's Skin",
+  "tooltip.jwn_s_odds_and_ends.hoglin_tusk": "Hoglin's Tusk",
+  "tooltip.jwn_s_odds_and_ends.pig_nose": "Pig nose"
 }

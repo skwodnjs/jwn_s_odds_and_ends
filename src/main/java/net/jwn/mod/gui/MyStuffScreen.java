@@ -89,12 +89,30 @@ public class MyStuffScreen extends Screen {
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().scale(scale, scale, scale);
 
-        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.HEALTH.name) / 2), (leftPos + 21 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
-        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.SPEED.name)), (leftPos + 47 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
-        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.MINING_SPEED.name)), (leftPos + 73 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
-        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.ATTACK_DAMAGE.name)), (leftPos + 21 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
-        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.KNOCKBACK_RESISTANCE.name)), (leftPos + 47 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
-        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("+%.1f", player.getPersistentData().getFloat(StatType.LUCK.name)), (leftPos + 73 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font,
+                (player.getPersistentData().getFloat(StatType.HEALTH.name) >= 0 ? "+" : "")
+                        + "%.1f".formatted(player.getPersistentData().getFloat(StatType.HEALTH.name) / 2),
+                (leftPos + 21 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font,
+                (player.getPersistentData().getFloat(StatType.SPEED.name) >= 0 ? "+" : "")
+                        + "%.1f".formatted(player.getPersistentData().getFloat(StatType.SPEED.name)),
+                (leftPos + 47 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font,
+                (player.getPersistentData().getFloat(StatType.MINING_SPEED.name) >= 0 ? "+" : "")
+                        + "%.1f".formatted(player.getPersistentData().getFloat(StatType.MINING_SPEED.name)),
+                (leftPos + 73 + 8) / scale, (topPos + 41 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font,
+                (player.getPersistentData().getFloat(StatType.ATTACK_DAMAGE.name) >= 0 ? "+" : "")
+                        + "%.1f".formatted(player.getPersistentData().getFloat(StatType.ATTACK_DAMAGE.name)),
+                (leftPos + 21 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font,
+                (player.getPersistentData().getFloat(StatType.KNOCKBACK_RESISTANCE.name) >= 0 ? "+" : "")
+                        + "%.1f".formatted(player.getPersistentData().getFloat(StatType.KNOCKBACK_RESISTANCE.name)),
+                (leftPos + 47 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
+        pGuiGraphics.drawString(Minecraft.getInstance().font,
+                (player.getPersistentData().getFloat(StatType.LUCK.name) >= 0 ? "+" : "")
+                        + "%.1f".formatted(player.getPersistentData().getFloat(StatType.LUCK.name)),
+                (leftPos + 73 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
 
         pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("%.1f sec", player.getPersistentData().getInt("cool_time") / 20f), (leftPos + 55) / scale, (topPos + 62) / scale, 0xFFdecc99, false);
 
@@ -165,7 +183,6 @@ public class MyStuffScreen extends Screen {
             });
             addRenderableWidget(trashCanButton);
         });
-
         RenderSystem.disableBlend();
     }
     @Override
