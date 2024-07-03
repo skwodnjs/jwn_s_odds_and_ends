@@ -13,7 +13,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -28,7 +27,7 @@ public class PassiveOperator {
     public static void amulet(LivingHurtEvent event) {
         if (event.getEntity() instanceof Player player && event.getSource().getEntity() instanceof EnderMan enderMan) {
             player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                int level = myStuff.hasPassiveStuff(2);
+                int level = myStuff.getLevel(2);
                 if (level != 0) {
                     double r = Math.random();
                     if (r < 0.4 + 0.1 * level) {
@@ -40,7 +39,7 @@ public class PassiveOperator {
     }
     public static void fourLeafClover(BlockEvent.BreakEvent event) {
         event.getPlayer().getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-            int level = myStuff.hasPassiveStuff(4);
+            int level = myStuff.getLevel(4);
             if (level != 0) {
                 double r = Math.random();
                 if (r < 0.3 + 0.1 * level) {
@@ -126,7 +125,7 @@ public class PassiveOperator {
         if (event.getEntity() instanceof Player player) {
             if (!player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
                 player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                    if (myStuff.hasPassiveStuff(6) != 0) {
+                    if (myStuff.getLevel(6) != 0) {
                         event.setCanceled(true);
                     }
                 });
@@ -136,7 +135,7 @@ public class PassiveOperator {
     public static void balloon(LivingDeathEvent event) {
         if (event.getEntity() instanceof Player player && event.getSource() == player.level().damageSources().fall()) {
             player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                int level = myStuff.hasPassiveStuff(8);
+                int level = myStuff.getLevel(8);
                 System.out.println(level);
                 if (level != 0) {
                     double r = Math.random();
@@ -151,7 +150,7 @@ public class PassiveOperator {
     }
     public static void leather_wallet(PlayerXpEvent.PickupXp event) {
         event.getEntity().getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-            int stuffLevel = myStuff.hasPassiveStuff(9);
+            int stuffLevel = myStuff.getLevel(9);
             int playerLevel = event.getEntity().experienceLevel;
 
             ExperienceOrb orb = event.getOrb();
@@ -166,7 +165,7 @@ public class PassiveOperator {
     public static void can(TickEvent.PlayerTickEvent event) {
         if (event.player.hasEffect(MobEffects.HUNGER)) {
             event.player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                int level = myStuff.hasPassiveStuff(10);
+                int level = myStuff.getLevel(10);
                 if (level != 0) {
                     double p = 1 - Math.pow(10, Math.log(0.5) / (60 - level * 10));
                     double r = Math.random();
@@ -181,7 +180,7 @@ public class PassiveOperator {
         if (event.getEntity() instanceof Player player) {
             if (event.getSource() == player.level().damageSources().magic() && player.hasEffect(MobEffects.POISON)) {
                 player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                    int level = myStuff.hasPassiveStuff(12);
+                    int level = myStuff.getLevel(12);
                     float setDamage = event.getAmount() * (1 + level / 3f);
                     if (player.getHealth() > setDamage)  {
                         event.setAmount(setDamage);
@@ -195,7 +194,7 @@ public class PassiveOperator {
     }
     public static void phantom_eye(PlayerSleepInBedEvent event) {
         event.getEntity().getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-            int level = myStuff.hasPassiveStuff(13);
+            int level = myStuff.getLevel(13);
             if (level > 0) {
                 Player player = event.getEntity();
                 ServerLevel world = (ServerLevel) player.level();
@@ -211,16 +210,15 @@ public class PassiveOperator {
         if (event.getEntity() instanceof Player player) {
             if (event.getSource() == player.level().damageSources().onFire()) {
                 player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                    int level = myStuff.hasPassiveStuff(14);
+                    int level = myStuff.getLevel(14);
                     event.setAmount(event.getAmount() * (1 + level / 3f));
                 });
             }
         }
     }
     public static void pig_nose(TickEvent.PlayerTickEvent event) {
-        System.out.println(event.player.getFoodData().getExhaustionLevel());
         event.player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-            int level = myStuff.hasPassiveStuff(15);
+            int level = myStuff.getLevel(15);
             if (level > 0) {
                 if (Math.floor(event.player.getFoodData().getExhaustionLevel() % 2) == 1) {
                     event.player.getFoodData().setExhaustion(event.player.getFoodData().getExhaustionLevel() * (1 + level / 3f));

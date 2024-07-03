@@ -1,0 +1,48 @@
+
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "jwn_s_odds_and_ends:light_feather",
+          "weight": 5,
+          "quality": 2,
+          "conditions": [
+            {
+              "condition": "killed_by_player"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:air",
+          "weight": 95,
+          "quality": -2
+        }
+      ],
+      "rolls": 1.0
+    }
+
+"weight": 1, "quality": 0.4 / 1% ~ 3%
+"weight": 5, "quality": 1 / 5% ~ 10%
+"weight": 10, "quality": 4 / 10% ~ 30%
+"weight": 30, "quality": 4 / 30% ~ 50%
+"weight": 50, "quality": 4 / 50% ~ 70%
+"weight": 70, "quality": 4 / 70% ~ 90%
+
+---------- DONE ----------
+endermite
+zombified piglin, piglin, piglin brute
+creeper
+chicken
+parrot
+enderman
+bat, bee, vex, allay
+cow, mooshroom, horse, donkey, mule, llama, trader llama, rabbit
+zombie, husk, zombie villager, drowned
+turtle
+pufferfish
+phantom
+hoglin
+pig
+wandering trader

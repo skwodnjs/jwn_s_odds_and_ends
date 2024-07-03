@@ -3,9 +3,13 @@ package net.jwn.mod.stuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.Functions;
+import net.jwn.mod.util.StuffRank;
 import net.jwn.mod.util.StuffType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AutoRegisterCapability
 public class MyStuff {
@@ -13,7 +17,6 @@ public class MyStuff {
     public int[] myActiveStuffLevels = new int[AllOfStuff.MAX_ACTIVE_STUFF];
     public int[] myPassiveStuffIds = new int[AllOfStuff.MAX_PASSIVE_STUFF];
     public int[] myPassiveStuffLevels = new int[AllOfStuff.MAX_PASSIVE_STUFF];
-
     /**
      * @return 0 for success, -1 for full, 1 for max level
      */
@@ -27,10 +30,10 @@ public class MyStuff {
                     break;
                 }
             }
-            if (index == -1) return -1;
+            if (index == -1) return -1; // FULL
             else {
                 if (myActiveStuffLevels[index] < stuff.rank.max_level) myActiveStuffLevels[index] += 1;
-                else return 1;
+                else return 1;  // MAX LEVEL
             }
         } else if (stuff.type == StuffType.PASSIVE) {
             int index = -1;
@@ -47,7 +50,6 @@ public class MyStuff {
                 else return 1;
             }
         }
-
         return 0;
     }
     public void init() {
@@ -73,10 +75,15 @@ public class MyStuff {
     /**
      * @return level of stuff, 0 for has not
      */
-    public int hasPassiveStuff(int id) {
+    public int getLevel(int id) {
         for (int i = 0; i < myPassiveStuffIds.length; i++) {
             if (myPassiveStuffIds[i] == id) {
                 return myPassiveStuffLevels[i];
+            }
+        }
+        for (int i = 0; i < myActiveStuffIds.length; i++) {
+            if (myActiveStuffIds[i] == id) {
+                return myActiveStuffLevels[i];
             }
         }
         return 0;
@@ -99,6 +106,49 @@ public class MyStuff {
             }
         }
     }
+    public List<Integer> getRandomIdPool(StuffRank rank, StuffType type) {
+        List<Integer> list = new ArrayList<>();
+        if (type == StuffType.ACTIVE) {
+            for (int id = 1; id < AllOfStuff.MAX_STUFF + 1; id++) {
+                Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
+                if (stuff == null) break;
+                if (stuff.rank == rank && stuff.type == type) {
+                    boolean hasId = false;
+                    for (int myId : myActiveStuffIds) {
+                        if (myId == id) {
+                            hasId = true;
+                            break;
+                        }
+                    }
+                    if (!hasId) list.add(id);
+                }
+            }
+            return list;
+        }
+        else if (type == StuffType.PASSIVE) {
+            for (int id = 1; id < AllOfStuff.MAX_STUFF + 1; id++) {
+                Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
+                if (stuff == null) break;
+                if (stuff.rank == rank && stuff.type == type) {
+                    boolean hasId = false;
+                    for (int myId : myPassiveStuffIds) {
+                        if (myId == id) {
+                            hasId = true;
+                            break;
+                        }
+                    }
+                    if (!hasId) list.add(id);
+                }
+            }
+            return list;
+        }
+        return new ArrayList<>();
+    }
+    public boolean canUpgrade(int id) {
+        StuffRank rank = AllOfStuff.ALL_OF_STUFF.get(id).rank;
+        StuffType type = AllOfStuff.ALL_OF_STUFF.get(id).type;
+        return !getRandomIdPool(rank.next(), type).isEmpty();
+    }
     public void set(int[] myActiveStuffIds, int[] myActiveStuffLevels,
                     int[] myPassiveStuffIds, int[] myPassiveStuffLevels) {
         this.myActiveStuffIds = myActiveStuffIds;
@@ -112,14 +162,12 @@ public class MyStuff {
         this.myPassiveStuffIds = myStuff.myPassiveStuffIds;
         this.myPassiveStuffLevels = myStuff.myPassiveStuffLevels;
     }
-
     public void saveNBTData(CompoundTag nbt) {
         nbt.putIntArray("my_active_stuff_ids", myActiveStuffIds);
         nbt.putIntArray("my_active_stuff_levels", myActiveStuffLevels);
         nbt.putIntArray("my_passive_stuff_ids", myPassiveStuffIds);
         nbt.putIntArray("my_passive_stuff_levels", myPassiveStuffLevels);
     }
-
     public void loadNBTData(CompoundTag nbt) {
         myActiveStuffIds = nbt.getIntArray("my_active_stuff_ids");
         myActiveStuffLevels = nbt.getIntArray("my_active_stuff_levels");

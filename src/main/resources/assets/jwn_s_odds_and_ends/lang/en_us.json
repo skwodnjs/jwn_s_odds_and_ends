@@ -16,6 +16,17 @@
   "item.jwn_s_odds_and_ends.phantom_eye": "Phantom's eye",
   "item.jwn_s_odds_and_ends.hoglin_tusk": "Hoglin's Tusk",
   "item.jwn_s_odds_and_ends.pig_nose": "Pig nose",
+  "item.jwn_s_odds_and_ends.dice_i": "Dice I",
+  "item.jwn_s_odds_and_ends.dice_ii": "Dice II",
+  "item.jwn_s_odds_and_ends.dice_iii": "Dice III",
+  "item.jwn_s_odds_and_ends.dice_100": "Dice 100",
+  "item.jwn_s_odds_and_ends.dice_999": "Dice 999",
+  "item.jwn_s_odds_and_ends.guardian_thorn": "Guardian's Thorn",
+  "item.jwn_s_odds_and_ends.star": "Star",
+  "item.jwn_s_odds_and_ends.witch_wand": "Witch's Wand",
+  "item.jwn_s_odds_and_ends.shiny_something": "Shiny Something",
+  "item.jwn_s_odds_and_ends.laziness": "Laziness",
+  "item.jwn_s_odds_and_ends.alcohol": "Alcohol",
 
   "item.jwn_s_odds_and_ends.max_stat_item": "Max Stat Item",
 
@@ -34,5 +45,16 @@
   "tooltip.jwn_s_odds_and_ends.turtle_shell": "Turtle's Shell",
   "tooltip.jwn_s_odds_and_ends.puffer_skin": "Puffer's Skin",
   "tooltip.jwn_s_odds_and_ends.hoglin_tusk": "Hoglin's Tusk",
-  "tooltip.jwn_s_odds_and_ends.pig_nose": "Pig nose"
+  "tooltip.jwn_s_odds_and_ends.pig_nose": "Pig nose",
+  "tooltip.jwn_s_odds_and_ends.dice_i": "Dice I",
+  "tooltip.jwn_s_odds_and_ends.dice_ii": "Dice II",
+  "tooltip.jwn_s_odds_and_ends.dice_iii": "Dice III",
+  "tooltip.jwn_s_odds_and_ends.dice_100": "Dice 100",
+  "tooltip.jwn_s_odds_and_ends.dice_999": "Dice 999",
+  "tooltip.jwn_s_odds_and_ends.guardian_thorn": "Guardian's Thorn",
+  "tooltip.jwn_s_odds_and_ends.star": "Star",
+  "tooltip.jwn_s_odds_and_ends.witch_wand": "Witch's Wand",
+  "tooltip.jwn_s_odds_and_ends.shiny_something": "Shiny Something",
+  "tooltip.jwn_s_odds_and_ends.laziness": "Laziness",
+  "tooltip.jwn_s_odds_and_ends.alcohol": "Alcohol"
 }

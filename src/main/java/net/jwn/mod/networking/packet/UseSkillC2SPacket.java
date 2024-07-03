@@ -42,12 +42,19 @@ public class UseSkillC2SPacket {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
                     if (stuff instanceof ActiveStuff activeStuff) {
                         boolean success = false;
+
                         // ---------- ACTIVE OPERATOR  ----------
 
                         if (id == 1) success = ActiveOperator.poop(player);
                         else if (id == 3) success = ActiveOperator.cellPhone(player);
                         else if (id == 5) success = ActiveOperator.dynamite(player);
                         else if (id == 7) success = ActiveOperator.wormhole(player, level);
+                        else if (id == 16) success = ActiveOperator.dice_i(player);
+                        else if (id == 17) success = ActiveOperator.dice_ii(player);
+                        else if (id == 18) success = ActiveOperator.dice_iii(player);
+                        else if (id == 19) success = ActiveOperator.dice_100(player);
+                        else if (id == 20) success = ActiveOperator.dice_999(player, level);
+                        else if (id == 24) success = ActiveOperator.witch_wand(player, level);
 
                         // --------------------------------------
 

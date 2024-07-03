@@ -17,6 +17,18 @@
   "item.jwn_s_odds_and_ends.phantom_eye": "펜텀의 눈",
   "item.jwn_s_odds_and_ends.hoglin_tusk": "호글린의 뿔",
   "item.jwn_s_odds_and_ends.pig_nose": "돼지코",
+  "item.jwn_s_odds_and_ends.dice_i": "주사위 I",
+  "item.jwn_s_odds_and_ends.dice_ii": "주사위 II",
+  "item.jwn_s_odds_and_ends.dice_iii": "주사위 III",
+  "item.jwn_s_odds_and_ends.dice_100": "주사위 100",
+  "item.jwn_s_odds_and_ends.dice_999": "주사위 999",
+  "item.jwn_s_odds_and_ends.guardian_thorn": "가디언의 가시",
+  "item.jwn_s_odds_and_ends.elder_guardian_thorn": "엘더가디언의 가시",
+  "item.jwn_s_odds_and_ends.star": "별",
+  "item.jwn_s_odds_and_ends.witch_wand": "마녀의 마술지팡이",
+  "item.jwn_s_odds_and_ends.shiny_something": "빛나는 무언가",
+  "item.jwn_s_odds_and_ends.laziness": "이름짓기 귀찮은거 아님",
+  "item.jwn_s_odds_and_ends.alcohol": "술",
 
   "item.jwn_s_odds_and_ends.max_stat_item": "최대 스텟",
 
@@ -36,5 +48,17 @@
   "tooltip.jwn_s_odds_and_ends.puffer_skin": "복어 피부",
   "tooltip.jwn_s_odds_and_ends.phantom_eye": "펜텀의 눈",
   "tooltip.jwn_s_odds_and_ends.hoglin_tusk": "호글린의 뿔",
-  "tooltip.jwn_s_odds_and_ends.pig_nose": "돼지코"
+  "tooltip.jwn_s_odds_and_ends.pig_nose": "돼지코",
+  "tooltip.jwn_s_odds_and_ends.dice_i": "주사위 I",
+  "tooltip.jwn_s_odds_and_ends.dice_ii": "주사위 II",
+  "tooltip.jwn_s_odds_and_ends.dice_iii": "주사위 III",
+  "tooltip.jwn_s_odds_and_ends.dice_100": "주사위 100",
+  "tooltip.jwn_s_odds_and_ends.dice_999": "주사위 999",
+  "tooltip.jwn_s_odds_and_ends.guardian_thorn": "가디언의 가시",
+  "tooltip.jwn_s_odds_and_ends.elder_guardian_thorn": "엘더가디언의 가시",
+  "tooltip.jwn_s_odds_and_ends.star": "별",
+  "tooltip.jwn_s_odds_and_ends.witch_wand": "마녀의 마술지팡이",
+  "tooltip.jwn_s_odds_and_ends.shiny_something": "빛나는 무언가",
+  "tooltip.jwn_s_odds_and_ends.laziness": "이름짓기 귀찮은거 아님",
+  "tooltip.jwn_s_odds_and_ends.alcohol": "술"
 }
