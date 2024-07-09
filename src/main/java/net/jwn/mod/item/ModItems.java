@@ -16,7 +16,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MOD_ID);
-    public static final RegistryObject<Item> POOP = ITEMS.register("poop_item",
+    public static final RegistryObject<Item> POO = ITEMS.register("poo_item",
             () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10 * 20, 0));
     public static final RegistryObject<Item> AMULET = ITEMS.register("amulet",
             () -> new PassiveStuff(new Item.Properties(), 2, StuffRank.EPIC));
@@ -29,53 +29,17 @@ public class ModItems {
     public static final RegistryObject<Item> LIGHT_STEP = ITEMS.register("light_step",
             () -> new PassiveStuff(new Item.Properties(), 6, StuffRank.RARE));
     public static final RegistryObject<Item> WORMHOLE = ITEMS.register("wormhole",
-            () -> new ActiveStuff(new Item.Properties(), 7, StuffRank.EPIC, 50 * 20, 10 * 20));
-    public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon",
-            () -> new PassiveStuff(new Item.Properties(), 8, StuffRank.EPIC));
+            () -> new ActiveStuff(new Item.Properties(), 7, StuffRank.EPIC, 40 * 20, 5 * 20));
+    public static final RegistryObject<Item> SENSE_OF_BALANCE = ITEMS.register("sense_of_balance",
+            () -> new PassiveStuff(new Item.Properties(), 8, StuffRank.UNIQUE));
     public static final RegistryObject<Item> MYSTERIOUS_YELLOW_LIQUID = ITEMS.register("mysterious_yellow_liquid",
-            () -> new PassiveStuff(new Item.Properties(), 9, StuffRank.RARE));
+            () -> new PassiveStuff(new Item.Properties(), 9, StuffRank.UNIQUE));
     public static final RegistryObject<Item> CAN = ITEMS.register("can",
             () -> new PassiveStuff(new Item.Properties(), 10, StuffRank.RARE));
-    public static final RegistryObject<Item> TURTLE_SHELL = ITEMS.register("turtle_shell",
-            () -> new PassiveStuff(new Item.Properties(), 11, StuffRank.RARE, new Stat(StatType.SPEED, -2.0f)));
-    public static final RegistryObject<Item> PUFFER_SKIN = ITEMS.register("puffer_skin",
-            () -> new PassiveStuff(new Item.Properties(), 12, StuffRank.RARE));
-    public static final RegistryObject<Item> PHANTOM_EYE = ITEMS.register("phantom_eye",
-            () -> new PassiveStuff(new Item.Properties(), 13, StuffRank.RARE));
-    public static final RegistryObject<Item> HOGLIN_TUSK = ITEMS.register("hoglin_tusk",
-            () -> new PassiveStuff(new Item.Properties(), 14, StuffRank.RARE));
-    public static final RegistryObject<Item> PIG_NOSE = ITEMS.register("pig_nose",
-            () -> new PassiveStuff(new Item.Properties(), 15, StuffRank.RARE));
-    public static final RegistryObject<Item> DICE_I = ITEMS.register("dice_i",
-            () -> new ActiveStuff(new Item.Properties(), 16, StuffRank.RARE, 120 * 20, 20 * 20));
-    public static final RegistryObject<Item> DICE_II = ITEMS.register("dice_ii",
-            () -> new ActiveStuff(new Item.Properties(), 17, StuffRank.RARE, 120 * 20, 20 * 20));
-    public static final RegistryObject<Item> DICE_III = ITEMS.register("dice_iii",
-            () -> new ActiveStuff(new Item.Properties(), 18, StuffRank.EPIC, 120 * 20, 20 * 20));
-    public static final RegistryObject<Item> DICE_100 = ITEMS.register("dice_100",
-            () -> new ActiveStuff(new Item.Properties(), 19, StuffRank.UNIQUE, 120 * 20, 20 * 20));
-    public static final RegistryObject<Item> DICE_999 = ITEMS.register("dice_999",
-            () -> new ActiveStuff(new Item.Properties(), 20, StuffRank.UNIQUE, 120 * 20, 20 * 20));
-    public static final RegistryObject<Item> GUARDIAN_THORN = ITEMS.register("guardian_thorn",
-            () -> new PassiveStuff(new Item.Properties(), 21, StuffRank.EPIC, new Stat(StatType.KNOCKBACK_RESISTANCE, 2.66f)));
-    public static final RegistryObject<Item> ELDER_GUARDIAN_THORN = ITEMS.register("elder_guardian_thorn",
-            () -> new PassiveStuff(new Item.Properties(), 22, StuffRank.UNIQUE, new Stat(StatType.MINING_SPEED, 3.61f)));
-    public static final RegistryObject<Item> STAR = ITEMS.register("star",
-            () -> new PassiveStuff(new Item.Properties(), 23, StuffRank.UNIQUE,
-                    new Stat(StatType.HEALTH, 2.25f),
-                    new Stat(StatType.SPEED, 2.25f),
-                    new Stat(StatType.MINING_SPEED, 2.25f),
-                    new Stat(StatType.ATTACK_DAMAGE, 2.25f),
-                    new Stat(StatType.KNOCKBACK_RESISTANCE, 2.25f),
-                    new Stat(StatType.LUCK, 2.25f)));
-    public static final RegistryObject<Item> WITCH_WAND = ITEMS.register("witch_wand",
-            () -> new ActiveStuff(new Item.Properties(), 24, StuffRank.EPIC, 90 * 20, 0));
-    public static final RegistryObject<Item> SHINY_SOMETHING = ITEMS.register("shiny_something",
-            () -> new PassiveStuff(new Item.Properties(), 25, StuffRank.EPIC, new Stat(StatType.LUCK, 2.55f)));
-    public static final RegistryObject<Item> LAZINESS = ITEMS.register("laziness",
-            () -> new PassiveStuff(new Item.Properties(), 26, StuffRank.UNIQUE, new Stat(StatType.SPEED, 3.24f)));
-    public static final RegistryObject<Item> ALCOHOL = ITEMS.register("alcohol",
-            () -> new PassiveStuff(new Item.Properties(), 27, StuffRank.EPIC, new Stat(StatType.ATTACK_DAMAGE, 2.73f)));
+    public static final RegistryObject<Item> THANK_YOU_FOR_THE_MEAL = ITEMS.register("thank_you_for_the_meal",
+            () -> new ActiveStuff(new Item.Properties(), 11, StuffRank.EPIC, 90 * 20, 10 * 20));
+    public static final RegistryObject<Item> HOOF = ITEMS.register("hoof",
+            () -> new PassiveStuff(new Item.Properties(), 12, StuffRank.EPIC, new Stat(StatType.SPEED, 2.0f)));
 
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",

@@ -1,7 +1,6 @@
 package net.jwn.mod.networking.packet;
 
-import net.jwn.mod.networking.packet.handler.SyncStuffS2CPacketHandler;
-import net.jwn.mod.stuff.MyStuff;
+import net.jwn.mod.networking.packet.handler.SyncStuffIFoundS2CPacketHandler;
 import net.jwn.mod.stuff.StuffIFound;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
@@ -10,27 +9,19 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class SyncStuffS2CPacket {
-    MyStuff m;
+public class SyncStuffIFoundS2CPacket {
     StuffIFound s;
 
-    public SyncStuffS2CPacket(MyStuff myStuff, StuffIFound stuffIFound) {
-        this.m = myStuff;
+    public SyncStuffIFoundS2CPacket(StuffIFound stuffIFound) {
         this.s = stuffIFound;
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeVarIntArray(m.myActiveStuffIds);
-        buf.writeVarIntArray(m.myActiveStuffLevels);
-        buf.writeVarIntArray(m.myPassiveStuffIds);
-        buf.writeVarIntArray(m.myPassiveStuffLevels);
         buf.writeVarIntArray(s.stuffIFound);
     }
 
-    public SyncStuffS2CPacket(FriendlyByteBuf buf) {
-        m = new MyStuff();
+    public SyncStuffIFoundS2CPacket(FriendlyByteBuf buf) {
         s = new StuffIFound();
-        m.set(buf.readVarIntArray(), buf.readVarIntArray(), buf.readVarIntArray(), buf.readVarIntArray());
         s.set(buf.readVarIntArray());
     }
 
@@ -39,7 +30,7 @@ public class SyncStuffS2CPacket {
         context.enqueueWork(() -> {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 // HERE WE ARE ON THE CLIENT!
-                SyncStuffS2CPacketHandler.handlePacket(m, s);
+                SyncStuffIFoundS2CPacketHandler.handlePacket(s);
             });
         });
         context.setPacketHandled(true);

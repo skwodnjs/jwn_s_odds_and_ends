@@ -2,9 +2,6 @@ package net.jwn.mod.gui;
 
 import net.jwn.mod.Main;
 import net.jwn.mod.item.Stuff;
-import net.jwn.mod.networking.ModMessages;
-import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
-import net.jwn.mod.networking.packet.SyncStuffRequestC2SPacket;
 import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.KeyBinding;
@@ -102,15 +99,15 @@ public class StuffIFoundScreen extends Screen {
         });
 
         if (page != 0) {
-            previousButton = new ArrowButton(leftPos + 26, topPos + 156, 18, 10,
-                    0, 194, 0, windowResource, 256, 256, pButton -> {
+            previousButton = new ImageButton(leftPos + 26, topPos + 156, 18, 10,
+                    0, 181, 13, windowResource, 256, 256, pButton -> {
                 page -= 1;
             });
             addRenderableWidget(previousButton);
         }
         if ((page + 1) * 65 + 1 <= AllOfStuff.MAX_STUFF) {
-            nextButton = new ArrowButton(leftPos + 212, topPos + 156, 18, 10,
-                    0, 181, 0, windowResource, 256, 256, pButton -> {
+            nextButton = new ImageButton(leftPos + 212, topPos + 156, 18, 10,
+                    23, 181, 13, windowResource, 256, 256, pButton -> {
                 page += 1;
             });
             addRenderableWidget(nextButton);

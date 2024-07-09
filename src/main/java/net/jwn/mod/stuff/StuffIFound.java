@@ -10,6 +10,9 @@ public class StuffIFound {
     
     public int[] stuffIFound = new int[AllOfStuff.MAX_STUFF];
     public void updateStuffIFound(int id, int max) {
+        // PICK UP / CONTAINER: 1
+        // USE: 2
+        // 3
         stuffIFound[id - 1] = Math.max(stuffIFound[id - 1], max);
     }
     public void init() {

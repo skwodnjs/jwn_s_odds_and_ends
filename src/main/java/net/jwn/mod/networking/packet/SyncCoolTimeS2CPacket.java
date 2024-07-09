@@ -2,6 +2,7 @@ package net.jwn.mod.networking.packet;
 
 import net.jwn.mod.networking.packet.handler.SyncCoolTimeS2CPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
@@ -13,6 +14,9 @@ public class SyncCoolTimeS2CPacket {
 
     public SyncCoolTimeS2CPacket(int coolTime) {
         this.coolTime = coolTime;
+    }
+    public SyncCoolTimeS2CPacket(Player player) {
+        this.coolTime = player.getPersistentData().getInt("cool_time");
     }
 
     public void toBytes(FriendlyByteBuf buf) {

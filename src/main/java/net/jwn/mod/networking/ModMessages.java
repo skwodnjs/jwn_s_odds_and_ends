@@ -35,20 +35,32 @@ public class ModMessages {
                 .encoder(MainActiveSwitchC2SPacket::toBytes)
                 .consumerMainThread(MainActiveSwitchC2SPacket::handle)
                 .add();
-        net.messageBuilder(SyncStuffS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(SyncStuffS2CPacket::new)
-                .encoder(SyncStuffS2CPacket::toBytes)
-                .consumerMainThread(SyncStuffS2CPacket::handle)
-                .add();
-        net.messageBuilder(SyncStuffRequestC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(SyncStuffRequestC2SPacket::new)
-                .encoder(SyncStuffRequestC2SPacket::toBytes)
-                .consumerMainThread(SyncStuffRequestC2SPacket::handle)
-                .add();
+
         net.messageBuilder(RemoveStuffC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RemoveStuffC2SPacket::new)
                 .encoder(RemoveStuffC2SPacket::toBytes)
                 .consumerMainThread(RemoveStuffC2SPacket::handle)
+                .add();
+        // ------------------------------- SYNC -------------------------------
+        net.messageBuilder(SyncMyStuffS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncMyStuffS2CPacket::new)
+                .encoder(SyncMyStuffS2CPacket::toBytes)
+                .consumerMainThread(SyncMyStuffS2CPacket::handle)
+                .add();
+        net.messageBuilder(SyncMyStuffRequestC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SyncMyStuffRequestC2SPacket::new)
+                .encoder(SyncMyStuffRequestC2SPacket::toBytes)
+                .consumerMainThread(SyncMyStuffRequestC2SPacket::handle)
+                .add();
+        net.messageBuilder(SyncStuffIFoundS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncStuffIFoundS2CPacket::new)
+                .encoder(SyncStuffIFoundS2CPacket::toBytes)
+                .consumerMainThread(SyncStuffIFoundS2CPacket::handle)
+                .add();
+        net.messageBuilder(SyncStuffIFoundRequestC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SyncStuffIFoundRequestC2SPacket::new)
+                .encoder(SyncStuffIFoundRequestC2SPacket::toBytes)
+                .consumerMainThread(SyncStuffIFoundRequestC2SPacket::handle)
                 .add();
         net.messageBuilder(SyncCoolTimeS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(SyncCoolTimeS2CPacket::new)

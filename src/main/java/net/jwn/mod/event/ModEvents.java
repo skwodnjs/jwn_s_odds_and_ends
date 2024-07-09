@@ -42,19 +42,34 @@ public class ModEvents {
         event.getEntity().getCapability(MyStuffProvider.MY_STUFF).ifPresent(MyStuff::init);
         event.getEntity().getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(StuffIFound::init);
 
-        // STAT & COOL TIME
+        // COOL TIME needs to be synchronized with the client because it must be displayed on the client's HUD.
+        // STAT needs to be synchronized with the client because of the MINING SPEED
         Map<String, Float> map = new HashMap<>();
         for (StatType type : StatType.values()) {
             map.put(type.name, event.getEntity().getPersistentData().getFloat(type.name));
         }
         ModMessages.sendToPlayer(new SyncStatS2CPacket(map), (ServerPlayer) event.getEntity());
-        ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity().getPersistentData().getInt("cool_time")), (ServerPlayer) event.getEntity());
+//        ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity().getPersistentData().getInt("cool_time")), (ServerPlayer) event.getEntity());
+        ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
+    }
+    @SubscribeEvent
+    public static void onAttachCapabilitiesEvent(AttachCapabilitiesEvent<Entity> event) {
+        // ATTACH CAPABILITIES : STUFF I FOUNT / MY STUFF
+        if (event.getObject() instanceof Player) {
+            if (!event.getObject().getCapability(StuffIFoundProvider.STUFF_I_FOUND).isPresent()) {
+                event.addCapability(new ResourceLocation(Main.MOD_ID, "stuff_i_found"), new StuffIFoundProvider());
+            }
+            if (!event.getObject().getCapability(MyStuffProvider.MY_STUFF).isPresent()) {
+                event.addCapability(new ResourceLocation(Main.MOD_ID, "my_stuff"), new MyStuffProvider());
+            }
+        }
     }
     @SubscribeEvent
     public static void onPlayerChangedDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event) {
         // ONLY SERVER
 
-        // STAT & COOL TIME
+        // COOL TIME needs to be synchronized with the client because it must be displayed on the client's HUD.
+        // STAT needs to be synchronized with the client because of the MINING SPEED
         Map<String, Float> map = new HashMap<>();
         for (StatType type : StatType.values()) {
             map.put(type.name, event.getEntity().getPersistentData().getFloat(type.name));
@@ -66,7 +81,8 @@ public class ModEvents {
     public static void onClone(PlayerEvent.Clone event) {
         // ONLY SERVER
 
-        // STUFF
+        // Capabilities are removed when player cloned
+        // STUFF data have to be preserved.
         event.getOriginal().reviveCaps();
         event.getOriginal().getCapability(MyStuffProvider.MY_STUFF).ifPresent(oldStore -> {
             event.getEntity().getCapability(MyStuffProvider.MY_STUFF).ifPresent(newStore -> {
@@ -80,7 +96,8 @@ public class ModEvents {
         });
         event.getOriginal().invalidateCaps();
 
-        // STAT & COOL TIME
+        // COOL TIME needs to be synchronized with the client because it must be displayed on the client's HUD.
+        // STAT needs to be synchronized with the client because of the MINING SPEED
         Map<String, Float> map = new HashMap<>();
         for (StatType type : StatType.values()) {
             map.put(type.name, event.getEntity().getPersistentData().getFloat(type.name));
@@ -114,23 +131,6 @@ public class ModEvents {
         }
     }
     @SubscribeEvent
-    public static void onItemCraftedEvent (PlayerEvent.ItemCraftedEvent event) {
-        // CLIENT: 만들 때 한 번 발생
-        // SERVER: 만들어지는 결과물이 중첩된 횟수만큼 발생
-    }
-    @SubscribeEvent
-    public static void onAttachCapabilitiesEvent(AttachCapabilitiesEvent<Entity> event) {
-        // ATTACH CAPABILITIES : STUFF I FOUNT / MY STUFF
-        if (event.getObject() instanceof Player) {
-            if (!event.getObject().getCapability(StuffIFoundProvider.STUFF_I_FOUND).isPresent()) {
-                event.addCapability(new ResourceLocation(Main.MOD_ID, "stuff_i_found"), new StuffIFoundProvider());
-            }
-            if (!event.getObject().getCapability(MyStuffProvider.MY_STUFF).isPresent()) {
-                event.addCapability(new ResourceLocation(Main.MOD_ID, "my_stuff"), new MyStuffProvider());
-            }
-        }
-    }
-    @SubscribeEvent
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
         // BOTH SIDE
 
@@ -143,9 +143,6 @@ public class ModEvents {
         if (!event.player.level().isClientSide && event.phase == TickEvent.Phase.START) {
             // 10 : CAN
             PassiveOperator.can(event);
-
-            // 15 : PIG NOSE
-            PassiveOperator.pig_nose(event);
         }
     }
     @SubscribeEvent
@@ -154,12 +151,6 @@ public class ModEvents {
 
         // 2 : AMULET
         PassiveOperator.amulet(event);
-
-        // 12 : PUFFER SKIN
-        PassiveOperator.puffer_skin(event);
-
-        // 14 : HOGLIN'S TUSK
-        PassiveOperator.hoglin_tusk(event);
     }
     @SubscribeEvent
     public static void onBreakEvent(BlockEvent.BreakEvent event) {
@@ -229,8 +220,6 @@ public class ModEvents {
             speedMultiplier /= 5.0f;
         }
 
-        System.out.println((event.getEntity().level().isClientSide ? "CLIENT: " : "SERVER: ") + event.getNewSpeed());
-        System.out.println("NEW SPEED: "+ speedMultiplier);
         event.setNewSpeed(speedMultiplier);
     }
     @SubscribeEvent

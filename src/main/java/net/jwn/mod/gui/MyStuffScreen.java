@@ -6,8 +6,8 @@ import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
 import net.jwn.mod.networking.packet.RemoveStuffC2SPacket;
+import net.jwn.mod.networking.packet.SyncMyStuffRequestC2SPacket;
 import net.jwn.mod.networking.packet.SyncStatRequestC2SPacket;
-import net.jwn.mod.networking.packet.SyncStuffRequestC2SPacket;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.KeyBinding;
@@ -176,9 +176,8 @@ public class MyStuffScreen extends Screen {
                     }
                 }
             }
-
-            trashCanButton = new TrashCanButton(leftPos + 109, topPos + 156, 10, 11,
-                    removeMode ? 56 : 45, 181, 0, windowResource, 256, 256, pButton -> {
+            trashCanButton = new ImageButton(leftPos + 109, topPos + 156, 10, 11,
+                    0, removeMode ? 181 : 193, 12, windowResource, 256, 256, pButton -> {
                 removeMode = !removeMode;
             });
             addRenderableWidget(trashCanButton);
@@ -218,7 +217,7 @@ public class MyStuffScreen extends Screen {
 
                 if (removeId != 0) {
                     ModMessages.sendToServer(new RemoveStuffC2SPacket(removeId));
-                    ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
+                    ModMessages.sendToServer(new SyncMyStuffRequestC2SPacket());
 
                     ModMessages.sendToServer(new SyncStatRequestC2SPacket());
                     removeMode = !removeMode;
@@ -234,7 +233,7 @@ public class MyStuffScreen extends Screen {
             return true;
         } else if (pKeyCode == KeyBinding.ACTIVE_STUFF_SWITCH_KEY.getKey().getValue()) {
             ModMessages.sendToServer(new MainActiveSwitchC2SPacket());
-            ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
+            ModMessages.sendToServer(new SyncMyStuffRequestC2SPacket());
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }

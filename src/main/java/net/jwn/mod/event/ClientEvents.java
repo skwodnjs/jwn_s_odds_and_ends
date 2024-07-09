@@ -4,10 +4,7 @@ import net.jwn.mod.Main;
 import net.jwn.mod.gui.MyStuffScreen;
 import net.jwn.mod.gui.StuffIFoundScreen;
 import net.jwn.mod.networking.ModMessages;
-import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
-import net.jwn.mod.networking.packet.SyncCoolTimeRequestC2SPacket;
-import net.jwn.mod.networking.packet.SyncStuffRequestC2SPacket;
-import net.jwn.mod.networking.packet.UseSkillC2SPacket;
+import net.jwn.mod.networking.packet.*;
 import net.jwn.mod.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
@@ -26,27 +23,26 @@ public class ClientEvents {
             assert player != null;
             if (KeyBinding.MY_STUFF_KEY.consumeClick()) {
                 // MY STUFF SCREEN : I KEY
-                ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
+                // SYNC MY_STUFF -> OPEN SCREEN
+                ModMessages.sendToServer(new SyncMyStuffRequestC2SPacket());
                 Minecraft.getInstance().setScreen(new MyStuffScreen());
             } else if (KeyBinding.STUFF_I_FOUND_KEY.consumeClick()) {
                 // STUFF I FOUND SCREEN : O KEY
-                ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
+                // SYNC STUFF_I_FOUND -> OPEN SCREEN
+                ModMessages.sendToServer(new SyncStuffIFoundRequestC2SPacket());
                 Minecraft.getInstance().setScreen(new StuffIFoundScreen());
             } else if (KeyBinding.HINT_KEY.consumeClick()) {
                 // HINT SCREEN : H KEY
-            } else if (KeyBinding.TEST_3_KEY.consumeClick()) {
-
-            } else if (KeyBinding.TEST_4_KEY.consumeClick()) {
-
             } else if (KeyBinding.ACTIVE_SKILL_KEY.consumeClick()) {
                 // ACTIVE SKILL : R KEY
+                // USE SKILL(COOL TIME IS MODIFIED IN SERVER) -> SYNC COOL_TIME TO CLIENT
                 ModMessages.sendToServer(new UseSkillC2SPacket());
                 ModMessages.sendToServer(new SyncCoolTimeRequestC2SPacket());
-                ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
             } else if (KeyBinding.ACTIVE_STUFF_SWITCH_KEY.consumeClick()) {
                 // ACTIVE STUFF SWITCH : Z KEY
+                // SWITCH (IN SERVER) -> SYNC MY_STUFF
                 ModMessages.sendToServer(new MainActiveSwitchC2SPacket());
-                ModMessages.sendToServer(new SyncStuffRequestC2SPacket());
+                ModMessages.sendToServer(new SyncMyStuffRequestC2SPacket());
             }
         }
     }
@@ -56,8 +52,6 @@ public class ClientEvents {
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
             event.register(KeyBinding.MY_STUFF_KEY);
             event.register(KeyBinding.HINT_KEY);
-            event.register(KeyBinding.TEST_3_KEY);
-            event.register(KeyBinding.TEST_4_KEY);
             event.register(KeyBinding.ACTIVE_SKILL_KEY);
             event.register(KeyBinding.ACTIVE_STUFF_SWITCH_KEY);
         }

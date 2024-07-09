@@ -9,15 +9,15 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class SyncStuffRequestC2SPacket {
+public class SyncMyStuffRequestC2SPacket {
 
-    public SyncStuffRequestC2SPacket() {
+    public SyncMyStuffRequestC2SPacket() {
     }
 
     public void toBytes(FriendlyByteBuf buf) {
     }
 
-    public SyncStuffRequestC2SPacket(FriendlyByteBuf buf) {
+    public SyncMyStuffRequestC2SPacket(FriendlyByteBuf buf) {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
@@ -27,9 +27,7 @@ public class SyncStuffRequestC2SPacket {
             ServerPlayer player = context.getSender();
             assert player != null;
             player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(m -> {
-                player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(s -> {
-                    ModMessages.sendToPlayer(new SyncStuffS2CPacket(m, s), player);
-                });
+                ModMessages.sendToPlayer(new SyncMyStuffS2CPacket(m), player);
             });
         });
     }
