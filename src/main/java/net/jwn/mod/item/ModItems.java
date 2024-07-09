@@ -16,20 +16,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MOD_ID);
-    public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
-            () -> new FirstTestItem(new Item.Properties()));
-    public static final RegistryObject<Item> SECOND_TEST_ITEM = ITEMS.register("second_test",
-            () -> new SecondTestItem(new Item.Properties()));
-    public static final RegistryObject<Item> THIRD_TEST_ITEM = ITEMS.register("third_test",
-            () -> new ThirdTestItem(new Item.Properties()));
-    public static final RegistryObject<Item> MAX_STAT_ITEM = ITEMS.register("max_stat_item",
-            () -> new PassiveStuff(new Item.Properties(), AllOfStuff.MAX_STUFF, StuffRank.RARE,
-                    new Stat(StatType.HEALTH, 40f),
-                    new Stat(StatType.SPEED, 20f),
-                    new Stat(StatType.MINING_SPEED, 20f),
-                    new Stat(StatType.ATTACK_DAMAGE, 20f),
-                    new Stat(StatType.KNOCKBACK_RESISTANCE, 20f),
-                    new Stat(StatType.LUCK, 20f)));
     public static final RegistryObject<Item> POOP = ITEMS.register("poop_item",
             () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10 * 20, 0));
     public static final RegistryObject<Item> AMULET = ITEMS.register("amulet",
@@ -40,13 +26,13 @@ public class ModItems {
             () -> new PassiveStuff(new Item.Properties(), 4, StuffRank.RARE, new Stat(StatType.LUCK, 1.1f)));
     public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite",
             () -> new ActiveStuff(new Item.Properties(), 5, StuffRank.EPIC, 75 * 20, 15 * 20));
-    public static final RegistryObject<Item> LIGHT_FEATHER = ITEMS.register("light_feather",
+    public static final RegistryObject<Item> LIGHT_STEP = ITEMS.register("light_step",
             () -> new PassiveStuff(new Item.Properties(), 6, StuffRank.RARE));
     public static final RegistryObject<Item> WORMHOLE = ITEMS.register("wormhole",
             () -> new ActiveStuff(new Item.Properties(), 7, StuffRank.EPIC, 50 * 20, 10 * 20));
     public static final RegistryObject<Item> BALLOON = ITEMS.register("balloon",
             () -> new PassiveStuff(new Item.Properties(), 8, StuffRank.EPIC));
-    public static final RegistryObject<Item> LEATHER_WALLET = ITEMS.register("leather_wallet",
+    public static final RegistryObject<Item> MYSTERIOUS_YELLOW_LIQUID = ITEMS.register("mysterious_yellow_liquid",
             () -> new PassiveStuff(new Item.Properties(), 9, StuffRank.RARE));
     public static final RegistryObject<Item> CAN = ITEMS.register("can",
             () -> new PassiveStuff(new Item.Properties(), 10, StuffRank.RARE));
@@ -91,8 +77,21 @@ public class ModItems {
     public static final RegistryObject<Item> ALCOHOL = ITEMS.register("alcohol",
             () -> new PassiveStuff(new Item.Properties(), 27, StuffRank.EPIC, new Stat(StatType.ATTACK_DAMAGE, 2.73f)));
 
-    // ------ dummy ------
-
+    // ------------------ TEST ------------------
+    public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
+            () -> new FirstTestItem(new Item.Properties()));
+    public static final RegistryObject<Item> SECOND_TEST_ITEM = ITEMS.register("second_test",
+            () -> new SecondTestItem(new Item.Properties()));
+    public static final RegistryObject<Item> THIRD_TEST_ITEM = ITEMS.register("third_test",
+            () -> new ThirdTestItem(new Item.Properties()));
+    public static final RegistryObject<Item> MAX_STAT_ITEM = ITEMS.register("max_stat_item",
+            () -> new PassiveStuff(new Item.Properties(), AllOfStuff.MAX_STUFF, StuffRank.RARE,
+                    new Stat(StatType.HEALTH, 40f),
+                    new Stat(StatType.SPEED, 20f),
+                    new Stat(StatType.MINING_SPEED, 20f),
+                    new Stat(StatType.ATTACK_DAMAGE, 20f),
+                    new Stat(StatType.KNOCKBACK_RESISTANCE, 20f),
+                    new Stat(StatType.LUCK, 20f)));
     public static final RegistryObject<Item> DUMMY_PASSIVE_1 = ITEMS.register("dummy_passive_1",
             () -> new PassiveStuff(new Item.Properties(), AllOfStuff.MAX_STUFF - 40, StuffRank.EPIC));  // 59
     public static final RegistryObject<Item> DUMMY_PASSIVE_2 = ITEMS.register("dummy_passive_2",
