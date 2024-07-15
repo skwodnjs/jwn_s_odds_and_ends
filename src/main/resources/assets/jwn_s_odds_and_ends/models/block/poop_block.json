@@ -1,7 +1,0 @@
-{
-  "render_type": "minecraft:translucent",
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "jwn_s_odds_and_ends:block/poop_block"
-  }
-}

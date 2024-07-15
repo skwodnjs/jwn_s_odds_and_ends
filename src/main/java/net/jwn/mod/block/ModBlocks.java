@@ -18,6 +18,8 @@ public class ModBlocks {
     // CUSTOM BLOCKS
     public static final RegistryObject<Block> POO_BLOCK = registerBlock("poo_block",
             () -> new Block(BlockBehaviour.Properties.of().noOcclusion()));
+    public static final RegistryObject<Block> GOLD_POO_BLOCK = registerBlock("gold_poo_block",
+            () -> new Block(BlockBehaviour.Properties.of().noOcclusion()));
     // REGISTER METHODS
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

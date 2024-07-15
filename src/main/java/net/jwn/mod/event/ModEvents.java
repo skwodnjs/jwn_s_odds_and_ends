@@ -1,6 +1,7 @@
 package net.jwn.mod.event;
 
 import net.jwn.mod.Main;
+import net.jwn.mod.effect.ModEffects;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.SyncCoolTimeS2CPacket;
@@ -9,12 +10,13 @@ import net.jwn.mod.stuff.MyStuff;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFound;
 import net.jwn.mod.stuff.StuffIFoundProvider;
-import net.jwn.mod.util.PassiveOperator;
+import net.jwn.mod.stuff.PassiveOperator;
 import net.jwn.mod.util.StatType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
@@ -164,7 +166,7 @@ public class ModEvents {
         // ONLY SERVER
 
         // 6 : LIGHT FEATHER
-        PassiveOperator.lightFeather(event);
+        PassiveOperator.lightStep(event);
     }
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
@@ -227,21 +229,25 @@ public class ModEvents {
         // ONLY SERVER
 
         // 8 : LIGHT FEATHER
-        PassiveOperator.balloon(event);
+        PassiveOperator.senseOfBalance(event);
     }
     @SubscribeEvent
     public static void onPickupXp(PlayerXpEvent.PickupXp event) {
         // ONLY SERVER
 
-        // 9 : LEATHER WALLET
-        PassiveOperator.leather_wallet(event);
+        Player player = event.getEntity();
+        if (player.hasEffect(ModEffects.EXP_BOOST.get())) {
+            int level = player.getEffect(ModEffects.EXP_BOOST.get()).getAmplifier();
+            ExperienceOrb orb = event.getOrb();
+            int originalXp = orb.getValue();
+            event.getEntity().giveExperiencePoints(originalXp * (level + 9));
+            orb.remove(Entity.RemovalReason.DISCARDED);
+        }
     }
     @SubscribeEvent
     public static void onPlayerSleepInBedEvent(PlayerSleepInBedEvent event) {
         // ONLY SERVER
 //        System.out.println(event.getEntity().level().isClientSide ? "CLIENT" : "SERVER");
 
-        // 13 : PHANTOM'S EYE
-        PassiveOperator.phantom_eye(event);
     }
 }

@@ -17,29 +17,31 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MOD_ID);
     public static final RegistryObject<Item> POO = ITEMS.register("poo_item",
-            () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 10 * 20, 0));
+            () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 30 * 20, 10 * 20));
     public static final RegistryObject<Item> AMULET = ITEMS.register("amulet",
             () -> new PassiveStuff(new Item.Properties(), 2, StuffRank.EPIC));
     public static final RegistryObject<Item> CELL_PHONE = ITEMS.register("cell_phone",
-            () -> new ActiveStuff(new Item.Properties(), 3, StuffRank.EPIC, 300 * 20, 60 * 20));
+            () -> new ActiveStuff(new Item.Properties(), 3, StuffRank.EPIC, 180 * 20, 30 * 20));
     public static final RegistryObject<Item> FOUR_LEAF_CLOVER = ITEMS.register("four_leaf_clover",
             () -> new PassiveStuff(new Item.Properties(), 4, StuffRank.RARE, new Stat(StatType.LUCK, 1.1f)));
     public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite",
             () -> new ActiveStuff(new Item.Properties(), 5, StuffRank.EPIC, 75 * 20, 15 * 20));
-    public static final RegistryObject<Item> LIGHT_STEP = ITEMS.register("light_step",
+    public static final RegistryObject<Item> LIGHT_STEPS = ITEMS.register("light_steps",
             () -> new PassiveStuff(new Item.Properties(), 6, StuffRank.RARE));
     public static final RegistryObject<Item> WORMHOLE = ITEMS.register("wormhole",
             () -> new ActiveStuff(new Item.Properties(), 7, StuffRank.EPIC, 40 * 20, 5 * 20));
     public static final RegistryObject<Item> SENSE_OF_BALANCE = ITEMS.register("sense_of_balance",
             () -> new PassiveStuff(new Item.Properties(), 8, StuffRank.UNIQUE));
     public static final RegistryObject<Item> MYSTERIOUS_YELLOW_LIQUID = ITEMS.register("mysterious_yellow_liquid",
-            () -> new PassiveStuff(new Item.Properties(), 9, StuffRank.UNIQUE));
+            () -> new ActiveStuff(new Item.Properties(), 9, StuffRank.UNIQUE, 180 * 20, 0));
     public static final RegistryObject<Item> CAN = ITEMS.register("can",
             () -> new PassiveStuff(new Item.Properties(), 10, StuffRank.RARE));
     public static final RegistryObject<Item> THANK_YOU_FOR_THE_MEAL = ITEMS.register("thank_you_for_the_meal",
-            () -> new ActiveStuff(new Item.Properties(), 11, StuffRank.EPIC, 90 * 20, 10 * 20));
+            () -> new ActiveStuff(new Item.Properties(), 11, StuffRank.UNIQUE, 90 * 20, 10 * 20));
     public static final RegistryObject<Item> HOOF = ITEMS.register("hoof",
             () -> new PassiveStuff(new Item.Properties(), 12, StuffRank.EPIC, new Stat(StatType.SPEED, 2.0f)));
+    public static final RegistryObject<Item> WITCH_WAND = ITEMS.register("witch_wand",
+            () -> new ActiveStuff(new Item.Properties(), 13, StuffRank.EPIC, 90 * 20, 0));
 
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
@@ -136,8 +138,6 @@ public class ModItems {
             () -> new ActiveStuff(new Item.Properties(), AllOfStuff.MAX_STUFF - 2, StuffRank.LEGENDARY, 20, 0));
     public static final RegistryObject<Item> DUMMY_ACTIVE_20 = ITEMS.register("dummy_active_20",
             () -> new ActiveStuff(new Item.Properties(), AllOfStuff.MAX_STUFF - 1, StuffRank.LEGENDARY, 20, 0));
-
-
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

@@ -2,6 +2,7 @@ package net.jwn.mod;
 
 import com.mojang.logging.LogUtils;
 import net.jwn.mod.block.ModBlocks;
+import net.jwn.mod.effect.ModEffects;
 import net.jwn.mod.item.ModItems;
 import net.jwn.mod.networking.ModMessages;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,6 +29,7 @@ public class Main {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModEffects.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "jwn_s_odds_and_ends:item/leather_wallet"
-  }
-}

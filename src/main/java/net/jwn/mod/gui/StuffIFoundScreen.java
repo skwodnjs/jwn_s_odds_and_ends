@@ -20,8 +20,6 @@ public class StuffIFoundScreen extends Screen {
     private static final ResourceLocation windowResource = new ResourceLocation(Main.MOD_ID, "textures/gui/stuff_i_found_gui.png");
     private int leftPos, topPos;
     private int page = 0;
-    private ImageButton previousButton;
-    private ImageButton nextButton;
 
     public StuffIFoundScreen() {
         super(Component.literal("STUFF I FOUND"));
@@ -40,13 +38,7 @@ public class StuffIFoundScreen extends Screen {
 
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
-        if (previousButton != null) {
-            this.removeWidget(previousButton);
-        }
-
-        if (nextButton != null) {
-            this.removeWidget(nextButton);
-        }
+        this.clearWidgets();
 
         Player player = Minecraft.getInstance().player;
         assert player != null;
@@ -69,7 +61,9 @@ public class StuffIFoundScreen extends Screen {
                     pY = topPos + 24 + (index / 5 - 6) * 19;
                 }
                 if (stuffIFound[id - 1] != 0) {
-                    pGuiGraphics.blit(AllOfStuff.getResources(id), pX, pY, 0, 0, 16, 16, 16, 16);
+                    ImageButton stuffButton = new ImageButton(pX, pY, 16, 16, 0, 0, 0,
+                            AllOfStuff.getResources(id), 16, 16, button -> {});
+                    addRenderableWidget(stuffButton);
 
                     if (pX <= pMouseX && pMouseX < pX + 16 && pY <= pMouseY && pMouseY < pY + 16) {
                         Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
@@ -99,14 +93,14 @@ public class StuffIFoundScreen extends Screen {
         });
 
         if (page != 0) {
-            previousButton = new ImageButton(leftPos + 26, topPos + 156, 18, 10,
+            ImageButton previousButton = new ImageButton(leftPos + 26, topPos + 156, 18, 10,
                     0, 181, 13, windowResource, 256, 256, pButton -> {
                 page -= 1;
             });
             addRenderableWidget(previousButton);
         }
         if ((page + 1) * 65 + 1 <= AllOfStuff.MAX_STUFF) {
-            nextButton = new ImageButton(leftPos + 212, topPos + 156, 18, 10,
+            ImageButton nextButton = new ImageButton(leftPos + 212, topPos + 156, 18, 10,
                     23, 181, 13, windowResource, 256, 256, pButton -> {
                 page += 1;
             });
@@ -120,5 +114,9 @@ public class StuffIFoundScreen extends Screen {
             return true;
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+    }
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 }

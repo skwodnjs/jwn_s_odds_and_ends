@@ -61,6 +61,7 @@ public class MyStuffScreen extends Screen {
         pGuiGraphics.blit(new ResourceLocation(Main.MOD_ID, "textures/gui/luck.png"),
                 leftPos + 73, topPos + 47, 0, 0, 6, 6, 6, 6);
 
+        // STAT TOOLTIP
         if (topPos + 41 <= pMouseY && pMouseY < topPos + 41 + 6) {
             if (leftPos + 21 <= pMouseX && pMouseX < leftPos + 21 + 20) {
                 pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.literal("체력")), pMouseX, pMouseY);
@@ -84,7 +85,7 @@ public class MyStuffScreen extends Screen {
         Player player = Minecraft.getInstance().player;
         assert player != null;
 
-        // STAT NUMBER & COOL TIME
+        // STAT VALUE & COOL TIME VALUE
         float scale = 0.5f;
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().scale(scale, scale, scale);
@@ -125,6 +126,7 @@ public class MyStuffScreen extends Screen {
         }
 
         player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
+            // ACTIVE STUFF
             for (int i = 0; i < myStuff.myActiveStuffIds.length; i++) {
                 int id = myStuff.myActiveStuffIds[i];
                 int level = myStuff.myActiveStuffLevels[i];
@@ -137,20 +139,22 @@ public class MyStuffScreen extends Screen {
                 pGuiGraphics.blit(AllOfStuff.getResources(id), pX, pY, 0, 0, 12, 12, 12, 12);
                 pGuiGraphics.blit(levelResource, pX + 8, pY + 7, (level - 1) * 5, 0, 5, 6, 25, 6);
 
-                if (pX <= pMouseX && pMouseX < pX + 16 && pY <= pMouseY && pMouseY < pY + 16) {
+                // STUFF TOOLTIP
+                if (pX < pMouseX && pMouseX < pX + 16 && pY < pMouseY && pMouseY < pY + 16) {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
                     String name = I18n.get("item." + Main.MOD_ID + "." + stuff);
 
-                    Component[] components = {Component.literal("id: " + id),
-                            Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
-                            Component.literal("level: " + level)};
                     if (!removeMode) {
+                        Component[] components = {Component.literal("id: " + id),
+                                Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
+                                Component.literal("level: " + level)};
                         pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
                     } else {
                         pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.translatable("tooltip." + Main.MOD_ID + ".remove")) , pMouseX, pMouseY);
                     }
                 }
             }
+            // PASSIVE STUFF
             for (int i = 0; i < myStuff.myPassiveStuffIds.length; i++) {
                 int id = myStuff.myPassiveStuffIds[i];
                 int level = myStuff.myPassiveStuffLevels[i];
@@ -162,14 +166,16 @@ public class MyStuffScreen extends Screen {
                 // STUFF IMAGE & LEVEL
                 pGuiGraphics.blit(AllOfStuff.getResources(id), pX, pY, 0, 0, 12, 12, 12, 12);
                 pGuiGraphics.blit(levelResource, pX + 8, pY + 7, (level - 1) * 5, 0, 5, 6, 25, 6);
-                if (pX <= pMouseX && pMouseX < pX + 16 && pY <= pMouseY && pMouseY < pY + 16) {
+
+                // STUFF TOOLTIP
+                if (pX < pMouseX && pMouseX < pX + 16 && pY < pMouseY && pMouseY < pY + 16) {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
                     String name = I18n.get("item." + Main.MOD_ID + "." + stuff);
 
-                    Component[] components = {Component.literal("id: " + id),
-                            Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
-                            Component.literal("level: " + level)};
                     if (!removeMode) {
+                        Component[] components = {Component.literal("id: " + id),
+                                Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
+                                Component.literal("level: " + level)};
                         pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
                     } else {
                         pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(Component.translatable("tooltip." + Main.MOD_ID + ".remove")) , pMouseX, pMouseY);
@@ -177,7 +183,7 @@ public class MyStuffScreen extends Screen {
                 }
             }
             trashCanButton = new ImageButton(leftPos + 109, topPos + 156, 10, 11,
-                    0, removeMode ? 181 : 193, 12, windowResource, 256, 256, pButton -> {
+                    0, removeMode ? 193 : 181, removeMode ? 0 : 12, windowResource, 256, 256, pButton -> {
                 removeMode = !removeMode;
             });
             addRenderableWidget(trashCanButton);
@@ -236,5 +242,9 @@ public class MyStuffScreen extends Screen {
             ModMessages.sendToServer(new SyncMyStuffRequestC2SPacket());
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+    }
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 }

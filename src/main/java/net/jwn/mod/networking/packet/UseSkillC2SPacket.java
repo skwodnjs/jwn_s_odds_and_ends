@@ -4,7 +4,7 @@ import net.jwn.mod.item.ActiveStuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFoundProvider;
-import net.jwn.mod.util.ActiveOperator;
+import net.jwn.mod.stuff.ActiveOperator;
 import net.jwn.mod.util.AllOfStuff;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -45,16 +45,13 @@ public class UseSkillC2SPacket {
 
                         // ---------- ACTIVE OPERATOR  ----------
 
-                        if (id == 1) success = ActiveOperator.poop(player);
+                        if (id == 1) success = ActiveOperator.poo(player, level);
                         else if (id == 3) success = ActiveOperator.cellPhone(player);
                         else if (id == 5) success = ActiveOperator.dynamite(player);
                         else if (id == 7) success = ActiveOperator.wormhole(player, level);
-//                        else if (id == 16) success = ActiveOperator.dice_i(player);
-//                        else if (id == 17) success = ActiveOperator.dice_ii(player);
-//                        else if (id == 18) success = ActiveOperator.dice_iii(player);
-//                        else if (id == 19) success = ActiveOperator.dice_100(player);
-//                        else if (id == 20) success = ActiveOperator.dice_999(player, level);
-                        else if (id == 24) success = ActiveOperator.witch_wand(player, level);
+                        else if (id == 9) success = ActiveOperator.mysterious_yellow_liquid(player, level);
+                        else if (id == 11) success = ActiveOperator.thank_you_for_the_meal(player);
+                        else if (id == 13) success = ActiveOperator.witch_wand(player, level);
 
                         // --------------------------------------
 

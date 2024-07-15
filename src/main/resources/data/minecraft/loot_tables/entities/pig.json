@@ -6,29 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "jwn_s_odds_and_ends:pig_nose",
-          "weight": 5,
-          "quality": 2,
-          "conditions": [
-            {
-              "condition": "killed_by_player"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:air",
-          "weight": 95,
-          "quality": -2
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
           "functions": [
             {
               "add": false,
