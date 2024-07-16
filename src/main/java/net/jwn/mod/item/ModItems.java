@@ -1,6 +1,7 @@
 package net.jwn.mod.item;
 
 import net.jwn.mod.Main;
+import net.jwn.mod.item.disposable.*;
 import net.jwn.mod.item.test.FirstTestItem;
 import net.jwn.mod.item.test.SecondTestItem;
 import net.jwn.mod.item.test.ThirdTestItem;
@@ -42,6 +43,18 @@ public class ModItems {
             () -> new PassiveStuff(new Item.Properties(), 12, StuffRank.EPIC, new Stat(StatType.SPEED, 2.0f)));
     public static final RegistryObject<Item> WITCH_WAND = ITEMS.register("witch_wand",
             () -> new ActiveStuff(new Item.Properties(), 13, StuffRank.EPIC, 90 * 20, 0));
+    public static final RegistryObject<Item> DICE_LEVEL_ONE = ITEMS.register("dice_level_one",
+            () -> new DiceLevelOne(new Item.Properties(), 14, StuffRank.RARE));
+    public static final RegistryObject<Item> DICE_LEVEL_TWO = ITEMS.register("dice_level_two",
+            () -> new DiceLevelTwo(new Item.Properties(), 15, StuffRank.RARE));
+    public static final RegistryObject<Item> DICE_LEVEL_THREE = ITEMS.register("dice_level_three",
+            () -> new DiceLevelThree(new Item.Properties(), 16, StuffRank.EPIC));
+    public static final RegistryObject<Item> DICE_LEVEL_FOUR = ITEMS.register("dice_level_four",
+            () -> new DiceLevelFour(new Item.Properties(), 17, StuffRank.UNIQUE));
+    public static final RegistryObject<Item> DICE_LEVEL_FIVE = ITEMS.register("dice_level_five",
+            () -> new DiceLevelFive(new Item.Properties(), 18, StuffRank.LEGENDARY));
+    public static final RegistryObject<Item> PIGGY_BANK = ITEMS.register("piggy_bank",
+            () -> new ActiveStuff(new Item.Properties(), 19, StuffRank.RARE, 30 * 20, 5 * 20));
 
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",

@@ -1,7 +1,9 @@
 package net.jwn.mod.networking.packet;
 
 import net.jwn.mod.networking.packet.handler.SyncStatS2CPacketHandler;
+import net.jwn.mod.util.StatType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
@@ -16,7 +18,13 @@ public class SyncStatS2CPacket {
     public SyncStatS2CPacket(Map<String, Float> map) {
         this.map = map;
     }
-
+    public SyncStatS2CPacket(Player player) {
+        Map<String, Float> map = new HashMap<>();
+        for (StatType type : StatType.values()) {
+            map.put(type.name, player.getPersistentData().getFloat(type.name));
+        }
+        this.map = map;
+    }
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(map.size());
         for (Map.Entry<String, Float> entry : map.entrySet()) {

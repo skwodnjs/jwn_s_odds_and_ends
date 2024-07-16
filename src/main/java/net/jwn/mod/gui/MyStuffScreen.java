@@ -146,7 +146,7 @@ public class MyStuffScreen extends Screen {
 
                     if (!removeMode) {
                         Component[] components = {Component.literal("id: " + id),
-                                Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
+                                Component.literal(name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")").withStyle(stuff.rank.color),
                                 Component.literal("level: " + level)};
                         pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
                     } else {
@@ -174,7 +174,7 @@ public class MyStuffScreen extends Screen {
 
                     if (!removeMode) {
                         Component[] components = {Component.literal("id: " + id),
-                                Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
+                                Component.literal(name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")").withStyle(stuff.rank.color),
                                 Component.literal("level: " + level)};
                         pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, List.of(components), pMouseX, pMouseY);
                     } else {

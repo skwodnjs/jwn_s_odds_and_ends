@@ -20,7 +20,7 @@ public class MyStuff {
     /**
      * @return 0 for success, -1 for full, 1 for max level
      */
-    public int register(Stuff stuff) {
+    public int put(Stuff stuff) {
         if (stuff.type == StuffType.ACTIVE) {
             int index = -1;
             for (int i = 0; i < myActiveStuffIds.length; i++) {
@@ -102,6 +102,23 @@ public class MyStuff {
                 if (myPassiveStuffIds[i] == id) {
                     Functions.remove(myPassiveStuffIds, i);
                     Functions.remove(myPassiveStuffLevels, i);
+                }
+            }
+        }
+    }
+    public void replace(int oldId, int newId) {
+        if (AllOfStuff.ALL_OF_STUFF.get(oldId).type == StuffType.ACTIVE) {
+            for (int i = 0; i < myActiveStuffIds.length; i++) {
+                if (myActiveStuffIds[i] == oldId) {
+                    myActiveStuffIds[i] = newId;
+                    break;
+                }
+            }
+        } else if (AllOfStuff.ALL_OF_STUFF.get(oldId).type == StuffType.PASSIVE) {
+            for (int i = 0; i < myPassiveStuffIds.length; i++) {
+                if (myPassiveStuffIds[i] == oldId) {
+                    myPassiveStuffIds[i] = newId;
+                    break;
                 }
             }
         }

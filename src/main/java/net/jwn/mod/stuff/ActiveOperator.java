@@ -24,6 +24,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class ActiveOperator {
     // ID: 1
@@ -163,220 +164,32 @@ public class ActiveOperator {
         player.addEffect(new MobEffectInstance(mobEffect, (10 + 2 * level) * 20, (int) (Math.random() * 2 + 1)));
         return true;
     }
-//    public static boolean dice_i(ServerPlayer player) {
-//        List<Integer> list = new ArrayList<>();
-//        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-//            if (player.getInventory().getItem(i).getItem() instanceof Stuff) list.add(i);
-//        }
-//        int index = (int) (Math.random() * list.size());
-//
-//        Stuff stuff = (Stuff) player.getInventory().getItem(index).getItem();
-//        int count = player.getInventory().getItem(index).getCount();
-//        ItemStack newStuff = AllOfStuff.getRandomDowngrade(stuff.rank).getDefaultInstance();
-//        newStuff.setCount(count);
-//        player.getInventory().setItem(index, newStuff);
-//        return true;
-//    }
-//    public static boolean dice_ii(ServerPlayer player) {
-//        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-//            if (player.getInventory().getItem(i).getItem() instanceof Stuff stuff) {
-//                int count = player.getInventory().getItem(i).getCount();
-//                ItemStack newStuff = AllOfStuff.getRandomDowngrade(stuff.rank).getDefaultInstance();
-//                newStuff.setCount(count);
-//                player.getInventory().setItem(i, newStuff);
-//            }
-//        }
-//        return true;
-//    }
-//    public static boolean dice_iii(ServerPlayer player) {
-//        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-//            if (player.getInventory().getItem(i).getItem() instanceof Stuff stuff) {
-//                int count = player.getInventory().getItem(i).getCount();
-//                ItemStack newStuff = AllOfStuff.getRandom(stuff.rank).getDefaultInstance();
-//                newStuff.setCount(count);
-//                player.getInventory().setItem(i, newStuff);
-//            }
-//        }
-//        return true;
-//    }
-//    public static boolean dice_100(ServerPlayer player) {
-//        AtomicBoolean success = new AtomicBoolean(true);
-//        player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-//            List<Integer> list = new ArrayList<>();
-//            for (int id : myStuff.myActiveStuffIds) {
-//                if (id == 0) break;
-//                if (AllOfStuff.ALL_OF_STUFF.get(id).rank != StuffRank.LEGENDARY) {
-//                    if (myStuff.canUpgrade(id)) list.add(id);
-//                }
-//            }
-//            for (int id : myStuff.myPassiveStuffIds) {
-//                if (id == 0) break;
-//                if (AllOfStuff.ALL_OF_STUFF.get(id).rank != StuffRank.LEGENDARY) {
-//                    if (myStuff.canUpgrade(id)) list.add(id);
-//                }
-//            }
-//            if (list.isEmpty()) {
-//                player.sendSystemMessage(Component.literal("아이템을 업그레이드 할 수 없습니다."));
-//                success.set(false);
-//            } else {
-//                int index = (int) (Math.random() * list.size());
-//                int oldId = list.get(index);
-//                int oldLevel = myStuff.getLevel(oldId);
-//
-//                Stuff oldStuff = AllOfStuff.ALL_OF_STUFF.get(oldId);
-//                List<Integer> pool = myStuff.getRandomIdPool(oldStuff.rank.next(), oldStuff.type);
-//
-//                int newId = pool.get((int) (Math.random() * pool.size()));
-//                Stuff newStuff = AllOfStuff.ALL_OF_STUFF.get(newId);
-//
-//                System.out.println(oldId + " -> " + newId);
-//
-//                myStuff.remove(oldId);
-//                for (int i = 0; i < oldLevel; i++) {
-//                    myStuff.register(newStuff);
-//                }
-//
-//                player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
-//                    if (newStuff.type == StuffType.ACTIVE) {
-//                        stuffIFound.updateStuffIFound(newStuff.id, 2);
-//                    } else if (newStuff.type == StuffType.PASSIVE){
-//                        stuffIFound.updateStuffIFound(newStuff.id, 3);
-//                    }
-//                });
-//
-//                StatOperator.reCalculate(player);
-//                Map<String, Float> map = new HashMap<>();
-//                for (StatType type : StatType.values()) {
-//                    map.put(type.name, player.getPersistentData().getFloat(type.name));
-//                }
-//                ModMessages.sendToPlayer(new SyncStatS2CPacket(map), player);
-//
-//                player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
-//                    ModMessages.sendToPlayer(new SyncMyStuffS2CPacket(myStuff, stuffIFound), player);
-//                });
-//            }
-//        });
-//        return success.get();
-//    }
-//    public static boolean dice_999(ServerPlayer player, int level) {
-//        AtomicBoolean success = new AtomicBoolean(true);
-//        player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-//            int activeToEpic = 0, activeToUnique = 0, activeToLegendary = 0;
-//            for (int id : myStuff.myActiveStuffIds) {
-//                if (id == 0) break;
-//                switch (AllOfStuff.ALL_OF_STUFF.get(id).rank) {
-//                    case RARE -> activeToEpic += 1;
-//                    case EPIC -> activeToUnique += 1;
-//                    case UNIQUE -> activeToLegendary += 1;
-//                }
-//            }
-//            int passiveToEpic = 0, passiveToUnique = 0, passiveToLegendary = 0;
-//            for (int id : myStuff.myPassiveStuffIds) {
-//                if (id == 0) break;
-//                switch (AllOfStuff.ALL_OF_STUFF.get(id).rank) {
-//                    case RARE -> passiveToEpic += 1;
-//                    case EPIC -> passiveToUnique += 1;
-//                    case UNIQUE -> passiveToLegendary += 1;
-//                }
-//            }
-//            if (AllOfStuff.getStuffCount(StuffRank.EPIC, StuffType.PASSIVE) < passiveToEpic
-//                    || AllOfStuff.getStuffCount(StuffRank.UNIQUE, StuffType.PASSIVE) < passiveToUnique
-//                    || AllOfStuff.getStuffCount(StuffRank.LEGENDARY, StuffType.PASSIVE) < passiveToLegendary
-//                    || AllOfStuff.getStuffCount(StuffRank.EPIC, StuffType.ACTIVE) < activeToEpic
-//                    || AllOfStuff.getStuffCount(StuffRank.UNIQUE, StuffType.ACTIVE) < activeToUnique
-//                    || AllOfStuff.getStuffCount(StuffRank.LEGENDARY, StuffType.ACTIVE) < activeToLegendary) {
-//                success.set(false);
-//            }
-//            if (!success.get()) {
-//                player.sendSystemMessage(Component.literal("아이템을 업그레이드 할 수 없습니다."));
-//            } else {
-//                int[] activeIds = myStuff.myActiveStuffIds;
-//                int[] passiveIds = myStuff.myPassiveStuffIds;
-//                myStuff.myActiveStuffIds = new int[AllOfStuff.MAX_ACTIVE_STUFF];
-//                myStuff.myPassiveStuffIds = new int[AllOfStuff.MAX_PASSIVE_STUFF];
-//                for (int index = 0; index < activeIds.length; index++) {
-//                    int oldId = activeIds[index];
-//                    if (oldId == 0) break;
-//
-//                    int oldLevel = myStuff.myActiveStuffLevels[index];
-//                    Stuff oldStuff = AllOfStuff.ALL_OF_STUFF.get(oldId);
-//                    if (oldStuff.rank == StuffRank.LEGENDARY) break;
-//
-//
-//                    List<Integer> pool;
-//                    double r = Math.random();
-//                    System.out.println(r);
-//                    if (r < 0.4 + 0.05 * level) {
-//                        pool = myStuff.getRandomIdPool(oldStuff.rank.next(), oldStuff.type);
-//                    } else {
-//                        pool = myStuff.getRandomIdPool(oldStuff.rank, oldStuff.type);
-//                    }
-//
-//                    int newId = pool.get((int) (Math.random() * pool.size()));
-//                    Stuff newStuff = AllOfStuff.ALL_OF_STUFF.get(newId);
-//
-//                    System.out.println(oldId + " -> " + newId);
-//
-//                    myStuff.myActiveStuffLevels[index] = 0;
-//                    for (int i = 0; i < oldLevel; i++) {
-//                        myStuff.register(newStuff);
-//                    }
-//
-//                    player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
-//                        if (newStuff.type == StuffType.ACTIVE) {
-//                            stuffIFound.updateStuffIFound(newStuff.id, 2);
-//                        } else if (newStuff.type == StuffType.PASSIVE){
-//                            stuffIFound.updateStuffIFound(newStuff.id, 3);
-//                        }
-//                    });
-//                }
-//                for (int index = 0; index < passiveIds.length; index++) {
-//                    int oldId = passiveIds[index];
-//                    if (oldId == 0) break;
-//
-//                    int oldLevel = myStuff.myPassiveStuffLevels[index];
-//                    Stuff oldStuff = AllOfStuff.ALL_OF_STUFF.get(oldId);
-//                    if (oldStuff.rank == StuffRank.LEGENDARY) break;
-//
-//                    List<Integer> pool;
-//                    double r = Math.random();
-//                    if (r < 0.4 + 0.1 * level) {
-//                        pool = myStuff.getRandomIdPool(oldStuff.rank.next(), oldStuff.type);
-//                    } else {
-//                        pool = myStuff.getRandomIdPool(oldStuff.rank, oldStuff.type);
-//                    }
-//                    System.out.println(r);
-//                    int newId = pool.get((int) (Math.random() * pool.size()));
-//                    Stuff newStuff = AllOfStuff.ALL_OF_STUFF.get(newId);
-//
-//                    System.out.println(oldId + " -> " + newId);
-//
-//                    myStuff.myPassiveStuffLevels[index] = 0;
-//                    for (int i = 0; i < oldLevel; i++) {
-//                        myStuff.register(newStuff);
-//                    }
-//
-//                    player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
-//                        if (newStuff.type == StuffType.ACTIVE) {
-//                            stuffIFound.updateStuffIFound(newStuff.id, 2);
-//                        } else if (newStuff.type == StuffType.PASSIVE){
-//                            stuffIFound.updateStuffIFound(newStuff.id, 3);
-//                        }
-//                    });
-//                }
-//
-//                StatOperator.reCalculate(player);
-//                Map<String, Float> map = new HashMap<>();
-//                for (StatType type : StatType.values()) {
-//                    map.put(type.name, player.getPersistentData().getFloat(type.name));
-//                }
-//                ModMessages.sendToPlayer(new SyncStatS2CPacket(map), player);
-//
-//                player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
-//                    ModMessages.sendToPlayer(new SyncMyStuffS2CPacket(myStuff, stuffIFound), player);
-//                });
-//            }
-//        });
-//        return success.get();
-//    }
+    // ID: 19
+    public static boolean piggy_bank(ServerPlayer player, int level) {
+        Random random = new Random();
+        double r = random.nextDouble() * 100;
+        int count = (level * 4 - 3) + random.nextInt(6);
+        if (r < 20) {
+            player.addItem(new ItemStack(Items.COAL, count));
+        } else if (r < 40) {
+            player.addItem(new ItemStack(Items.COPPER_INGOT, count));
+        } else if (r < 56) {
+            player.addItem(new ItemStack(Items.IRON_INGOT, count));
+        } else if (r < 66) {
+            player.addItem(new ItemStack(Items.REDSTONE, count));
+        } else if (r < 76) {
+            player.addItem(new ItemStack(Items.LAPIS_LAZULI, count));
+        } else if (r < 86) {
+            player.addItem(new ItemStack(Items.EMERALD, count));
+        } else if (r < 91) {
+            player.addItem(new ItemStack(Items.QUARTZ, count));
+        } else if (r < 96) {
+            player.addItem(new ItemStack(Items.AMETHYST_SHARD, count));
+        } else if (r < 99) {
+            player.addItem(new ItemStack(Items.DIAMOND, count));
+        } else {
+            player.addItem(new ItemStack(Items.NETHERITE_INGOT, count));
+        }
+        return true;
+    }
 }

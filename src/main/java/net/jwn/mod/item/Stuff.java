@@ -35,47 +35,54 @@ public abstract class Stuff extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pUsedHand);
-
         if (!pLevel.isClientSide) {
-            pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                if (myStuff.register(this) == 0) {
-                    pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
-                        if (this.type == StuffType.ACTIVE) {
-                            stuffIFound.updateStuffIFound(this.id, 2);
-                        } else if (this.type == StuffType.PASSIVE){
-                            stuffIFound.updateStuffIFound(this.id, 3);
+            if (this.type == StuffType.DISPOSABLE) {
+                pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
+                    stuffIFound.updateStuffIFound(this.id, 3);
+                });
+            } else {
+                pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
+                    if (myStuff.put(this) == 0) {
+                        pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
+                            if (this.type == StuffType.ACTIVE) {
+                                stuffIFound.updateStuffIFound(this.id, 2);
+                            } else if (this.type == StuffType.PASSIVE) {
+                                stuffIFound.updateStuffIFound(this.id, 3);
+                            }
+                        });
+
+                        StatOperator.reCalculate(pPlayer);
+                        ModMessages.sendToPlayer(new SyncStatS2CPacket(pPlayer), (ServerPlayer) pPlayer);
+
+                        for (Stat stat : stats) {
+                            if (stat.type().equals(StatType.HEALTH)) {
+                                pPlayer.heal(stat.value());
+                            }
                         }
-                    });
 
-                    StatOperator.reCalculate(pPlayer);
-                    Map<String, Float> map = new HashMap<>();
-                    for (StatType type : StatType.values()) {
-                        map.put(type.name, pPlayer.getPersistentData().getFloat(type.name));
-                    }
-                    ModMessages.sendToPlayer(new SyncStatS2CPacket(map), (ServerPlayer) pPlayer);
-
-                    for (Stat stat : stats) {
-                        if (stat.type().equals(StatType.HEALTH)) {
-                            pPlayer.heal(stat.value());
+                        if (!pPlayer.getAbilities().instabuild) {
+                            itemstack.shrink(1);
                         }
-                    }
+                    } else if (myStuff.put(this) == 1) {
+                        pPlayer.sendSystemMessage(Component.literal("§c이미 최대로 강화하였습니다."));
+                    } else if (myStuff.put(this) == -1) {
+                        if (type == StuffType.ACTIVE) {
+                            pPlayer.sendSystemMessage(Component.literal("§c액티브 아이템은 최대 3개까지 가질 수 있습니다."));
+                        } else if (type == StuffType.PASSIVE) {
+                            pPlayer.sendSystemMessage(Component.literal("§c패시브 아이템은 최대 16개까지 가질 수 있습니다."));
+                        }
 
-                    if (!pPlayer.getAbilities().instabuild) {
-                        itemstack.shrink(1);
                     }
-                } else if (myStuff.register(this) == 1) {
-                    pPlayer.sendSystemMessage(Component.literal("§c이미 최대로 강화하였습니다."));
-                } else if (myStuff.register(this) == -1) {
-                    if (type == StuffType.ACTIVE) {
-                        pPlayer.sendSystemMessage(Component.literal("§c액티브 아이템은 최대 3개까지 가질 수 있습니다."));
-                    } else if (type == StuffType.PASSIVE) {
-                        pPlayer.sendSystemMessage(Component.literal("§c패시브 아이템은 최대 16개까지 가질 수 있습니다."));
-                    }
-
-                }
-            });
+                });
+            }
         }
 
         return InteractionResultHolder.sidedSuccess(itemstack, pLevel.isClientSide());
+    }
+
+    @Override
+    public Component getName(ItemStack pStack) {
+        return Component.translatable(this.getDescriptionId(pStack)).withStyle(rank.color);
+
     }
 }

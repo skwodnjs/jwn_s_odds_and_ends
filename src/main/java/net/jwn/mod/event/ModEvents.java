@@ -5,6 +5,7 @@ import net.jwn.mod.effect.ModEffects;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.SyncCoolTimeS2CPacket;
+import net.jwn.mod.networking.packet.SyncMyStuffS2CPacket;
 import net.jwn.mod.networking.packet.SyncStatS2CPacket;
 import net.jwn.mod.stuff.MyStuff;
 import net.jwn.mod.stuff.MyStuffProvider;
@@ -46,12 +47,7 @@ public class ModEvents {
 
         // COOL TIME needs to be synchronized with the client because it must be displayed on the client's HUD.
         // STAT needs to be synchronized with the client because of the MINING SPEED
-        Map<String, Float> map = new HashMap<>();
-        for (StatType type : StatType.values()) {
-            map.put(type.name, event.getEntity().getPersistentData().getFloat(type.name));
-        }
-        ModMessages.sendToPlayer(new SyncStatS2CPacket(map), (ServerPlayer) event.getEntity());
-//        ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity().getPersistentData().getInt("cool_time")), (ServerPlayer) event.getEntity());
+        ModMessages.sendToPlayer(new SyncStatS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
         ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
     }
     @SubscribeEvent

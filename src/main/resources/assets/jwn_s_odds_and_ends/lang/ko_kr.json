@@ -17,6 +17,12 @@
   "item.jwn_s_odds_and_ends.thank_you_for_the_meal": "잘먹겠습니다!",
   "item.jwn_s_odds_and_ends.hoof": "말발굽",
   "item.jwn_s_odds_and_ends.witch_wand": "마녀의 마술지팡이",
+  "item.jwn_s_odds_and_ends.dice_level_one": "주사위 LV.1",
+  "item.jwn_s_odds_and_ends.dice_level_two": "주사위 LV.2",
+  "item.jwn_s_odds_and_ends.dice_level_three": "주사위 LV.3",
+  "item.jwn_s_odds_and_ends.dice_level_four": "주사위 LV.4",
+  "item.jwn_s_odds_and_ends.dice_level_five": "주사위 LV.5",
+  "item.jwn_s_odds_and_ends.piggy_bank": "돼지 저금통",
 
   "block.jwn_s_odds_and_ends.poo_block": "똥",
   "block.jwn_s_odds_and_ends.gold_poo_block": "황금 똥",
@@ -36,9 +42,17 @@
   "tooltip.jwn_s_odds_and_ends.thank_you_for_the_meal": "잘먹겠습니다!",
   "tooltip.jwn_s_odds_and_ends.hoof": "말발굽",
   "tooltip.jwn_s_odds_and_ends.witch_wand": "마녀의 마술지팡이",
+  "tooltip.jwn_s_odds_and_ends.dice_level_one": "주사위 LV.1",
+  "tooltip.jwn_s_odds_and_ends.dice_level_two": "주사위 LV.2",
+  "tooltip.jwn_s_odds_and_ends.dice_level_three": "주사위 LV.3",
+  "tooltip.jwn_s_odds_and_ends.dice_level_four": "주사위 LV.4",
+  "tooltip.jwn_s_odds_and_ends.dice_level_five": "주사위 LV.5",
+  "tooltip.jwn_s_odds_and_ends.piggy_bank": "돼지 저금통",
 
   "message.jwn_s_odds_and_ends.cell_phone.overworld": "현재 위치를 저장합니다.",
-  "message.jwn_s_odds_and_ends.cell_phone.no_save": "§c먼저 오버월드에서 장소를 저장해야 합니다!§c",
+  "message.jwn_s_odds_and_ends.cell_phone.no_save": "§c먼저 오버월드에서 장소를 저장해야 합니다!",
+
+  "message.jwn_s_odds_and_ends.dice_level_four.cannot_use": "§c업그레이드 할 수 있는 아이템이 없습니다.",
 
   "effect.jwn_s_odds_and_ends.exp_boost": "경험치 부스트"
 }

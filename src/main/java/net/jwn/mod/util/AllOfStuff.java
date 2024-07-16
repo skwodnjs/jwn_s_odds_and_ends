@@ -4,10 +4,8 @@ import net.jwn.mod.Main;
 import net.jwn.mod.item.Stuff;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class AllOfStuff {
     public static final int MAX_STUFF = 99; // id: 1 ~ MAX_STUFF, index < MAX_STUFF
@@ -17,46 +15,25 @@ public class AllOfStuff {
     public static ResourceLocation getResources(int id) {
         return new ResourceLocation(Main.MOD_ID, "textures/item/" + ALL_OF_STUFF.get(id) + ".png");
     }
-    public static Stuff getRandom(StuffRank rank) {
+    public static Stuff getRandom(StuffRank rank, StuffType type, int[] ids) {
+        // id : 제외할 id
         List<Stuff> list = new ArrayList<>();
-        for (int i = 0; i < MAX_STUFF; i++) {
-            Stuff stuff = ALL_OF_STUFF.get(i+1);
-            if (stuff == null) break;
-            if (stuff.rank == rank) list.add(stuff);
+        for (int id = 1; id <= MAX_STUFF; id++) {
+            Stuff stuff = ALL_OF_STUFF.get(id);
+            if (stuff == null) continue;
+            if (stuff.rank != rank) continue;
+            if (stuff.type != type) continue;
+            if (stuff.type == StuffType.DISPOSABLE) continue;
+            int ID = id;
+            if (Arrays.stream(ids).anyMatch(num -> num == ID)) continue;
+            list.add(stuff);
         }
         int index = (int) (Math.random() * list.toArray().length);
         return list.get(index);
     }
-    public static Stuff getRandom(StuffRank rank, StuffType type) {
-        List<Stuff> list = new ArrayList<>();
-        for (int i = 0; i < MAX_STUFF; i++) {
-            Stuff stuff = ALL_OF_STUFF.get(i+1);
-            if (stuff == null) break;
-            if (stuff.rank == rank && stuff.type == type) list.add(stuff);
-        }
-        int index = (int) (Math.random() * list.toArray().length);
-        return list.get(index);
-    }
-    public static Stuff getRandomDowngrade(StuffRank rank) {
-        List<Stuff> list = new ArrayList<>();
-        for (int i = 0; i < MAX_STUFF; i++) {
-            System.out.println(ALL_OF_STUFF.get(i+1));
-            Stuff stuff = ALL_OF_STUFF.get(i+1);
-            if (stuff == null) break;
-            if (stuff.rank.ordinal() <= rank.ordinal()) list.add(stuff);
-        }
-        int index = (int) (Math.random() * list.toArray().length);
-        return list.get(index);
-    }
-    public static Stuff getRandomDowngrade(StuffRank rank, StuffType type) {
-        List<Stuff> list = new ArrayList<>();
-        for (int i = 0; i < MAX_STUFF; i++) {
-            Stuff stuff = ALL_OF_STUFF.get(i+1);
-            if (stuff == null) break;
-            if (stuff.rank.ordinal() <= rank.ordinal() && stuff.type == type) list.add(stuff);
-        }
-        int index = (int) (Math.random() * list.toArray().length);
-        return list.get(index);
+    public static Stuff getRandom(StuffRank rank, StuffType type, int id) {
+        int[] ids = {id};
+        return getRandom(rank, type, ids);
     }
     public static int getStuffCount(StuffRank rank) {
         int count = 0;

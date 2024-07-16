@@ -76,11 +76,11 @@ public class StuffIFoundScreen extends Screen {
                             components = new Component[] {Component.literal("??")};
                         } else if (stuffIFound[id - 1] == 2) {
                             components = new Component[] {Component.literal("id: " + id),
-                                    Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
+                                    Component.literal(name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")").withStyle(stuff.rank.color),
                                     Component.literal("??")};
                         } else {
                             components = new Component[] {Component.literal("id: " + id),
-                                    Component.literal(stuff.rank.color_tag + name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")" + "§f"),
+                                    Component.literal(name + " (" + String.valueOf(stuff.rank).toLowerCase() + ")").withStyle(stuff.rank.color),
                                     Component.literal(tooltip)};
                         }
 
