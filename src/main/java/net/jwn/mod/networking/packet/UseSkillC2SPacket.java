@@ -4,7 +4,7 @@ import net.jwn.mod.item.ActiveStuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFoundProvider;
-import net.jwn.mod.stuff.ActiveOperator;
+import net.jwn.mod.util.ActiveOperator;
 import net.jwn.mod.util.AllOfStuff;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -53,6 +53,7 @@ public class UseSkillC2SPacket {
                         else if (id == 11) success = ActiveOperator.thank_you_for_the_meal(player);
                         else if (id == 13) success = ActiveOperator.witch_wand(player, level);
                         else if (id == 19) success = ActiveOperator.piggy_bank(player, level);
+                        else if (id == 20) success = ActiveOperator.storage_box(player);
 
                         // --------------------------------------
 

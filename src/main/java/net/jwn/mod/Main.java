@@ -3,8 +3,11 @@ package net.jwn.mod;
 import com.mojang.logging.LogUtils;
 import net.jwn.mod.block.ModBlocks;
 import net.jwn.mod.effect.ModEffects;
+import net.jwn.mod.gui.ModMenuTypes;
+import net.jwn.mod.gui.StorageBoxScreen;
 import net.jwn.mod.item.ModItems;
 import net.jwn.mod.networking.ModMessages;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -30,6 +33,7 @@ public class Main {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModEffects.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -57,6 +61,7 @@ public class Main {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            MenuScreens.register(ModMenuTypes.STORAGE_BOX_MENU.get(), StorageBoxScreen::new);
         }
     }
 }

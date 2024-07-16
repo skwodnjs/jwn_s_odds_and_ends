@@ -35,7 +35,6 @@ public class ModMessages {
                 .encoder(MainActiveSwitchC2SPacket::toBytes)
                 .consumerMainThread(MainActiveSwitchC2SPacket::handle)
                 .add();
-
         net.messageBuilder(RemoveStuffC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RemoveStuffC2SPacket::new)
                 .encoder(RemoveStuffC2SPacket::toBytes)

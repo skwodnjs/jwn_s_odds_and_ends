@@ -1,8 +1,10 @@
-package net.jwn.mod.stuff;
+package net.jwn.mod.util;
 
 import net.jwn.mod.Main;
 import net.jwn.mod.block.ModBlocks;
 import net.jwn.mod.effect.ModEffects;
+import net.jwn.mod.gui.StorageBoxMenu;
+import net.jwn.mod.stuff.StuffDataProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -10,6 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -49,28 +52,30 @@ public class ActiveOperator {
     public static boolean cellPhone(ServerPlayer player) {
         if (player.level().dimension() == Level.OVERWORLD) {
             player.sendSystemMessage(Component.translatable("message." + Main.MOD_ID + ".cell_phone.overworld"));
-            BlockPos pos = player.getOnPos().offset(0, 1, 0);
-            int[] posArray = {pos.getX(), pos.getY(), pos.getZ()};
-            float yaw = player.getYRot();
-            float pitch = player.getXRot();
-            player.getPersistentData().putIntArray("cell_phone_pos", posArray);
-            player.getPersistentData().putFloat("cell_phone_yaw", yaw);
-            player.getPersistentData().putFloat("cell_phone_pitch", pitch);
+            player.getCapability(StuffDataProvider.STUFF_DATA).ifPresent(stuffData -> {
+                BlockPos pos = player.getOnPos().offset(0, 1, 0);
+                int[] posArray = {pos.getX(), pos.getY(), pos.getZ()};
+                float yaw = player.getYRot();
+                float pitch = player.getXRot();
+                stuffData.putCellPhoneData(posArray, yaw, pitch);
+            });
 
             return false;
         } else {
-            int[] pos = player.getPersistentData().getIntArray("cell_phone_pos");
-            float yaw = player.getPersistentData().getFloat("cell_phone_yaw");
-            float pitch = player.getPersistentData().getFloat("cell_phone_pitch");
-            if (pos.length == 3) {
-                ServerLevel overWorld = player.getServer().getLevel(Level.OVERWORLD);
-                // 띠리링 전화 소리
-                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ROOTED_DIRT_BREAK,
-                        SoundSource.PLAYERS, 1F, 0.2F);
-                player.teleportTo(overWorld, pos[0], pos[1], pos[2], yaw, pitch);
-            } else {
-                player.sendSystemMessage(Component.translatable("message." + Main.MOD_ID + ".cell_phone.no_save"));
-            }
+            player.getCapability(StuffDataProvider.STUFF_DATA).ifPresent(stuffData -> {
+                int[] pos = stuffData.getCellPhonePos();
+                float yaw = stuffData.getCellPhoneYaw();
+                float pitch = stuffData.getCellPhonePitch();
+                if (pos[1] > Integer.MIN_VALUE) {
+                    ServerLevel overWorld = player.getServer().getLevel(Level.OVERWORLD);
+                    // 띠리링 전화 소리
+                    player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ROOTED_DIRT_BREAK,
+                            SoundSource.PLAYERS, 1F, 0.2F);
+                    player.teleportTo(overWorld, pos[0], pos[1], pos[2], yaw, pitch);
+                } else {
+                    player.sendSystemMessage(Component.translatable("message." + Main.MOD_ID + ".cell_phone.no_save"));
+                }
+            });
             return true;
         }
     }
@@ -190,6 +195,12 @@ public class ActiveOperator {
         } else {
             player.addItem(new ItemStack(Items.NETHERITE_INGOT, count));
         }
+        return true;
+    }
+    // ID: 20
+    public static boolean storage_box(ServerPlayer player) {
+        player.openMenu(new SimpleMenuProvider((id, playerInventory, playerEntity) ->
+                    new StorageBoxMenu(id, playerInventory), Component.literal("menu")));
         return true;
     }
 }

@@ -11,7 +11,6 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import java.util.ArrayList;
 import java.util.List;
 
-@AutoRegisterCapability
 public class MyStuff {
     public int[] myActiveStuffIds = new int[AllOfStuff.MAX_ACTIVE_STUFF];
     public int[] myActiveStuffLevels = new int[AllOfStuff.MAX_ACTIVE_STUFF];

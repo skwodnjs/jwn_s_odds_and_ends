@@ -55,7 +55,8 @@ public class ModItems {
             () -> new DiceLevelFive(new Item.Properties(), 18, StuffRank.LEGENDARY));
     public static final RegistryObject<Item> PIGGY_BANK = ITEMS.register("piggy_bank",
             () -> new ActiveStuff(new Item.Properties(), 19, StuffRank.RARE, 30 * 20, 5 * 20));
-
+    public static final RegistryObject<Item> STORAGE_BOX = ITEMS.register("storage_box",
+            () -> new ActiveStuff(new Item.Properties(), 20, StuffRank.UNIQUE, 0, 0));
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
             () -> new FirstTestItem(new Item.Properties()));

@@ -5,13 +5,9 @@ import net.jwn.mod.effect.ModEffects;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.SyncCoolTimeS2CPacket;
-import net.jwn.mod.networking.packet.SyncMyStuffS2CPacket;
 import net.jwn.mod.networking.packet.SyncStatS2CPacket;
-import net.jwn.mod.stuff.MyStuff;
-import net.jwn.mod.stuff.MyStuffProvider;
-import net.jwn.mod.stuff.StuffIFound;
-import net.jwn.mod.stuff.StuffIFoundProvider;
-import net.jwn.mod.stuff.PassiveOperator;
+import net.jwn.mod.stuff.*;
+import net.jwn.mod.util.PassiveOperator;
 import net.jwn.mod.util.StatType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -52,13 +48,16 @@ public class ModEvents {
     }
     @SubscribeEvent
     public static void onAttachCapabilitiesEvent(AttachCapabilitiesEvent<Entity> event) {
-        // ATTACH CAPABILITIES : STUFF I FOUNT / MY STUFF
+        // ATTACH CAPABILITIES
         if (event.getObject() instanceof Player) {
             if (!event.getObject().getCapability(StuffIFoundProvider.STUFF_I_FOUND).isPresent()) {
                 event.addCapability(new ResourceLocation(Main.MOD_ID, "stuff_i_found"), new StuffIFoundProvider());
             }
             if (!event.getObject().getCapability(MyStuffProvider.MY_STUFF).isPresent()) {
                 event.addCapability(new ResourceLocation(Main.MOD_ID, "my_stuff"), new MyStuffProvider());
+            }
+            if (!event.getObject().getCapability(StuffDataProvider.STUFF_DATA).isPresent()) {
+                event.addCapability(new ResourceLocation(Main.MOD_ID, "stuff_data"), new StuffDataProvider());
             }
         }
     }
@@ -89,6 +88,11 @@ public class ModEvents {
         });
         event.getOriginal().getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(oldStore -> {
             event.getEntity().getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(newStore -> {
+                newStore.copyFrom(oldStore);
+            });
+        });
+        event.getOriginal().getCapability(StuffDataProvider.STUFF_DATA).ifPresent(oldStore -> {
+            event.getEntity().getCapability(StuffDataProvider.STUFF_DATA).ifPresent(newStore -> {
                 newStore.copyFrom(oldStore);
             });
         });

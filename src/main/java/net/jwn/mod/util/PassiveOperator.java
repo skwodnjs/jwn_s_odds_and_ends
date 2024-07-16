@@ -1,5 +1,6 @@
-package net.jwn.mod.stuff;
+package net.jwn.mod.util;
 
+import net.jwn.mod.stuff.MyStuffProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;

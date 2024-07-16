@@ -5,7 +5,6 @@ import net.jwn.mod.util.Functions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
-@AutoRegisterCapability
 public class StuffIFound {
     
     public int[] stuffIFound = new int[AllOfStuff.MAX_STUFF];

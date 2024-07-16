@@ -1,9 +1,6 @@
 package net.jwn.mod.item.test;
 
-import net.jwn.mod.stuff.MyStuff;
-import net.jwn.mod.stuff.MyStuffProvider;
-import net.jwn.mod.util.StatOperator;
-import net.minecraft.network.chat.Component;
+import net.jwn.mod.stuff.StuffDataProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -18,9 +15,9 @@ public class SecondTestItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        if (!pLevel.isClientSide) {
-            pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                pPlayer.sendSystemMessage(Component.literal(myStuff.print()));
+        if (pLevel.isClientSide) {
+            pPlayer.getCapability(StuffDataProvider.STUFF_DATA).ifPresent(stuffData -> {
+                System.out.println(stuffData.print());
             });
         }
         return super.use(pLevel, pPlayer, pUsedHand);
