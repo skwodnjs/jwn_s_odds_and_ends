@@ -36,7 +36,7 @@ public class StatOperator {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(myStuff.myPassiveStuffIds[i]);
                     for (Stat stat : stuff.stats) {
                         float value = map.get(stat.type().name);
-                        value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * myStuff.myPassiveStuffLevels[i] / stuff.rank.max_level);
+                        value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * (myStuff.myPassiveStuffLevels[i] - 1) / (stuff.rank.max_level - 1));
                         map.put(stat.type().name, value);
                     }
                 }
@@ -47,7 +47,7 @@ public class StatOperator {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(myStuff.myActiveStuffIds[i]);
                     for (Stat stat : stuff.stats) {
                         float value = map.get(stat.type().name);
-                        value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * myStuff.myActiveStuffLevels[i] / stuff.rank.max_level);
+                        value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * (myStuff.myActiveStuffLevels[i] - 1) / (stuff.rank.max_level - 1));
                         map.put(stat.type().name, value);
                     }
                 }

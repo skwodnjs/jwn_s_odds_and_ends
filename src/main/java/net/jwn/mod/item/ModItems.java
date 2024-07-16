@@ -40,7 +40,7 @@ public class ModItems {
     public static final RegistryObject<Item> THANK_YOU_FOR_THE_MEAL = ITEMS.register("thank_you_for_the_meal",
             () -> new ActiveStuff(new Item.Properties(), 11, StuffRank.UNIQUE, 90 * 20, 10 * 20));
     public static final RegistryObject<Item> HOOF = ITEMS.register("hoof",
-            () -> new PassiveStuff(new Item.Properties(), 12, StuffRank.EPIC, new Stat(StatType.SPEED, 2.0f)));
+            () -> new PassiveStuff(new Item.Properties(), 12, StuffRank.EPIC, new Stat(StatType.SPEED, 2.7f)));
     public static final RegistryObject<Item> WITCH_WAND = ITEMS.register("witch_wand",
             () -> new ActiveStuff(new Item.Properties(), 13, StuffRank.EPIC, 90 * 20, 0));
     public static final RegistryObject<Item> DICE_LEVEL_ONE = ITEMS.register("dice_level_one",
@@ -57,6 +57,10 @@ public class ModItems {
             () -> new ActiveStuff(new Item.Properties(), 19, StuffRank.RARE, 30 * 20, 5 * 20));
     public static final RegistryObject<Item> STORAGE_BOX = ITEMS.register("storage_box",
             () -> new ActiveStuff(new Item.Properties(), 20, StuffRank.UNIQUE, 0, 0));
+    public static final RegistryObject<Item> TURTLE_SHELL = ITEMS.register("turtle_shell",
+            () -> new PassiveStuff(new Item.Properties(), 21, StuffRank.EPIC, new Stat(StatType.KNOCKBACK_RESISTANCE, 2.8f)));
+    public static final RegistryObject<Item> ORB_OF_ETERNAL_LIFE = ITEMS.register("orb_of_eternal_life",
+            () -> new PassiveStuff(new Item.Properties(), 22, StuffRank.EPIC, new Stat(StatType.HEALTH, 5f)));
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
             () -> new FirstTestItem(new Item.Properties()));
@@ -65,7 +69,7 @@ public class ModItems {
     public static final RegistryObject<Item> THIRD_TEST_ITEM = ITEMS.register("third_test",
             () -> new ThirdTestItem(new Item.Properties()));
     public static final RegistryObject<Item> MAX_STAT_ITEM = ITEMS.register("max_stat_item",
-            () -> new PassiveStuff(new Item.Properties(), AllOfStuff.MAX_STUFF, StuffRank.RARE,
+            () -> new PassiveStuff(new Item.Properties(), AllOfStuff.MAX_STUFF, StuffRank.LEGENDARY,
                     new Stat(StatType.HEALTH, 40f),
                     new Stat(StatType.SPEED, 20f),
                     new Stat(StatType.MINING_SPEED, 20f),

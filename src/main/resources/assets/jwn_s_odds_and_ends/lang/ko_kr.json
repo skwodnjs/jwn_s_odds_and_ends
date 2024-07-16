@@ -24,6 +24,8 @@
   "item.jwn_s_odds_and_ends.dice_level_five": "주사위 LV.5",
   "item.jwn_s_odds_and_ends.piggy_bank": "돼지 저금통",
   "item.jwn_s_odds_and_ends.storage_box": "수상한 보관함",
+  "item.jwn_s_odds_and_ends.turtle_shell": "거북이 등껍질",
+  "item.jwn_s_odds_and_ends.orb_of_eternal_life": "영생의 구슬",
 
   "block.jwn_s_odds_and_ends.poo_block": "똥",
   "block.jwn_s_odds_and_ends.gold_poo_block": "황금 똥",
@@ -49,7 +51,9 @@
   "tooltip.jwn_s_odds_and_ends.dice_level_four": "주사위 LV.4",
   "tooltip.jwn_s_odds_and_ends.dice_level_five": "주사위 LV.5",
   "tooltip.jwn_s_odds_and_ends.piggy_bank": "돼지 저금통",
-  "tooltip.jwn_s_odds_and_ends.storage_box": "상인의 주머니",
+  "tooltip.jwn_s_odds_and_ends.storage_box": "수상한 보관함",
+  "tooltip.jwn_s_odds_and_ends.turtle_shell": "거북이 등껍질",
+  "tooltip.jwn_s_odds_and_ends.orb_of_eternal_life": "영생의 구슬",
 
   "message.jwn_s_odds_and_ends.cell_phone.overworld": "현재 위치를 저장합니다.",
   "message.jwn_s_odds_and_ends.cell_phone.no_save": "§c먼저 오버월드에서 장소를 저장해야 합니다!",
