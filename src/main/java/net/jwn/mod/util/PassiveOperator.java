@@ -151,20 +151,6 @@ public class PassiveOperator {
             });
         }
     }
-    public static void mysterious_yellow_liquid(PlayerXpEvent.PickupXp event) {
-        event.getEntity().getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-//            int stuffLevel = myStuff.getLevel(9);
-//            int playerLevel = event.getEntity().experienceLevel;
-//
-//            ExperienceOrb orb = event.getOrb();
-//            int originalXp = orb.getValue();
-//            double multiplier = 1 + Math.log10(playerLevel <= 0 ? 1 : playerLevel) + stuffLevel / 2.0;
-//            int newXp = (int) Math.round(originalXp * multiplier);
-//
-//            event.getEntity().giveExperiencePoints(newXp);
-//            orb.remove(Entity.RemovalReason.DISCARDED);
-        });
-    }
     public static void can(TickEvent.PlayerTickEvent event) {
         if (event.player.hasEffect(MobEffects.HUNGER)) {
             event.player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
@@ -177,22 +163,6 @@ public class PassiveOperator {
                     }
                 }
             });
-        }
-    }
-    public static void puffer_skin(LivingHurtEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            if (event.getSource() == player.level().damageSources().magic() && player.hasEffect(MobEffects.POISON)) {
-                player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                    int level = myStuff.getLevel(12);
-                    float setDamage = event.getAmount() * (1 + level / 3f);
-                    if (player.getHealth() > setDamage)  {
-                        event.setAmount(setDamage);
-                    } else {
-                        if (player.getHealth() - 1 != 0) event.setAmount(player.getHealth() - 1);
-                        else event.setCanceled(true);
-                    }
-                });
-            }
         }
     }
     public static void phantom_eye(PlayerSleepInBedEvent event) {

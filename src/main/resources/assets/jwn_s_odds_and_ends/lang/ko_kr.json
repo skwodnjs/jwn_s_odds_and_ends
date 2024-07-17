@@ -27,6 +27,8 @@
   "item.jwn_s_odds_and_ends.turtle_shell": "거북이 등껍질",
   "item.jwn_s_odds_and_ends.stone_of_life": "생명의 돌",
   "item.jwn_s_odds_and_ends.glow_ink": "발광 먹물",
+  "item.jwn_s_odds_and_ends.death_scythe": "데스 사이드",
+  "item.jwn_s_odds_and_ends.phantom_eye": "펜텀의 눈",
 
   "block.jwn_s_odds_and_ends.poo_block": "똥",
   "block.jwn_s_odds_and_ends.gold_poo_block": "황금 똥",
@@ -35,7 +37,7 @@
 
   "tooltip.jwn_s_odds_and_ends.poo_item": "똥 블록을 생성합니다. 똥 블록은 50%%의 확률로 rare 등급의 아이템을 드롭합니다.",
   "tooltip.jwn_s_odds_and_ends.amulet": "앤더맨에게 공격을 받으면 일정 확률로 공격한 엔더맨이 사망합니다. 단, 데미지는 막지 못합니다.",
-  "tooltip.jwn_s_odds_and_ends.cell_phone": "(Overworld에서 사용 시) 현재 위치를 핸드폰에 저장합니다. (Nether 또는 Ender에서 사용 시) 저장된 위치로 순간이동합니다.",
+  "tooltip.jwn_s_odds_and_ends.cell_phone": "(오버월드에서 사용 시) 현재 위치를 핸드폰에 저장합니다. (네더 또는 엔드에서 사용 시) 저장된 위치로 순간이동합니다.",
   "tooltip.jwn_s_odds_and_ends.four_leaf_clover": "광물을 캐면 일정 확률로 추가 광물 하나를 더 획득할 수 있습니다. 행운이 증가합니다.",
   "tooltip.jwn_s_odds_and_ends.dynamite": "점화된 TNT를 설치합니다.",
   "tooltip.jwn_s_odds_and_ends.light_steps": "신발을 신고 있으면 경작지를 손상시키지 않습니다.",
@@ -56,6 +58,8 @@
   "tooltip.jwn_s_odds_and_ends.turtle_shell": "넉백 저항이 증가합니다.",
   "tooltip.jwn_s_odds_and_ends.stone_of_life": "체력이 증가합니다.",
   "tooltip.jwn_s_odds_and_ends.glow_ink": "채굴 속도가 증가합니다.",
+  "tooltip.jwn_s_odds_and_ends.death_scythe": "공격력이 크게 증가합니다.",
+  "tooltip.jwn_s_odds_and_ends.phantom_eye": "오버월드에서도 침대에서 잠을 잘 수 없습니다.",
 
   "tooltip.details.jwn_s_odds_and_ends.poo_item": "똥 블록을 생성합니다. 똥 블록은 50%%의 확률로 rare 등급의 아이템을 드롭합니다. 아이템을 최대로 강화할 경우 30%% 확률로 똥 블록 대신 황금 똥 블록을 생성합니다. 황금 똥 블록은 50%%의 확률로 최대 unique 등급의 아이템을 드롭합니다.",
   "tooltip.details.jwn_s_odds_and_ends.amulet": "앤더맨에게 공격을 받으면 (50/60/70/80/90)%% 확률로 공격한 엔더맨이 사망합니다. 단, 데미지는 막지 못합니다.",
@@ -80,6 +84,8 @@
   "tooltip.details.jwn_s_odds_and_ends.turtle_shell": "넉백 저항이 2.8만큼 증가합니다.",
   "tooltip.details.jwn_s_odds_and_ends.stone_of_life": "체력이 2.5하트만큼 증가합니다.",
   "tooltip.details.jwn_s_odds_and_ends.glow_ink": "채굴 속도가 2.6만큼 증가합니다.",
+  "tooltip.details.jwn_s_odds_and_ends.death_scythe": "채굴 속도가 11만큼 증가합니다.",
+  "tooltip.details.jwn_s_odds_and_ends.phantom_eye": "오버월드에서 침대에 누우려고 하면 침대가 폭발합니다! (이런 아이템을 왜 끝까지 강화하려고 하는 걸까요?)",
 
   "text.jwn_s_odds_and_ends.stuff_i_found.name": "아이템 이름: ",
   "text.jwn_s_odds_and_ends.stuff_i_found.rank": "아이템 등급: ",
