@@ -59,8 +59,10 @@ public class ModItems {
             () -> new ActiveStuff(new Item.Properties(), 20, StuffRank.UNIQUE, 0, 0));
     public static final RegistryObject<Item> TURTLE_SHELL = ITEMS.register("turtle_shell",
             () -> new PassiveStuff(new Item.Properties(), 21, StuffRank.EPIC, new Stat(StatType.KNOCKBACK_RESISTANCE, 2.8f)));
-    public static final RegistryObject<Item> ORB_OF_ETERNAL_LIFE = ITEMS.register("orb_of_eternal_life",
+    public static final RegistryObject<Item> STONE_OF_LIFE = ITEMS.register("stone_of_life",
             () -> new PassiveStuff(new Item.Properties(), 22, StuffRank.EPIC, new Stat(StatType.HEALTH, 5f)));
+    public static final RegistryObject<Item> GLOW_INC = ITEMS.register("glow_inc",
+            () -> new PassiveStuff(new Item.Properties(), 23, StuffRank.EPIC, new Stat(StatType.MINING_SPEED, 2.6f)));
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
             () -> new FirstTestItem(new Item.Properties()));
