@@ -8,4 +8,7 @@ public class PassiveStuff extends Stuff {
     public PassiveStuff(Properties pProperties, int id, StuffRank rank, Stat... stats) {
         super(pProperties, id, StuffType.PASSIVE, rank, stats);
     }
+    public PassiveStuff(Properties pProperties, int id, StuffRank rank, boolean max_level, Stat... stats) {
+        super(pProperties, id, StuffType.PASSIVE, rank, max_level, stats);
+    }
 }

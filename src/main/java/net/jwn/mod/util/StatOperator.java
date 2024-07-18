@@ -30,25 +30,41 @@ public class StatOperator {
             for (StatType type : StatType.values()) {
                 map.put(type.name, 0.0f);
             }
-            for (int i = 0; i < AllOfStuff.MAX_PASSIVE_STUFF; i++) {
-                if (myStuff.myPassiveStuffIds[i] == 0) break;
-                else {
-                    Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(myStuff.myPassiveStuffIds[i]);
-                    for (Stat stat : stuff.stats) {
-                        float value = map.get(stat.type().name);
-                        value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * (myStuff.myPassiveStuffLevels[i] - 1) / (stuff.rank.max_level - 1));
-                        map.put(stat.type().name, value);
-                    }
-                }
-            }
             for (int i = 0; i < AllOfStuff.MAX_ACTIVE_STUFF; i++) {
                 if (myStuff.myActiveStuffIds[i] == 0) break;
                 else {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(myStuff.myActiveStuffIds[i]);
-                    for (Stat stat : stuff.stats) {
-                        float value = map.get(stat.type().name);
-                        value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * (myStuff.myActiveStuffLevels[i] - 1) / (stuff.rank.max_level - 1));
-                        map.put(stat.type().name, value);
+                    if (!stuff.max_level) {
+                        for (Stat stat : stuff.stats) {
+                            float value = map.get(stat.type().name);
+                            value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * (myStuff.myActiveStuffLevels[i] - 1) / (stuff.rank.max_level - 1));
+                            map.put(stat.type().name, value);
+                        }
+                    } else if (myStuff.myActiveStuffLevels[i] == stuff.rank.max_level) {
+                        for (Stat stat : stuff.stats) {
+                            float value = map.get(stat.type().name);
+                            value += stat.value();
+                            map.put(stat.type().name, value);
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < AllOfStuff.MAX_PASSIVE_STUFF; i++) {
+                if (myStuff.myPassiveStuffIds[i] == 0) break;
+                else {
+                    Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(myStuff.myPassiveStuffIds[i]);
+                    if (!stuff.max_level) {
+                        for (Stat stat : stuff.stats) {
+                            float value = map.get(stat.type().name);
+                            value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * (myStuff.myPassiveStuffLevels[i] - 1) / (stuff.rank.max_level - 1));
+                            map.put(stat.type().name, value);
+                        }
+                    } else if (myStuff.myPassiveStuffLevels[i] == stuff.rank.max_level) {
+                        for (Stat stat : stuff.stats) {
+                            float value = map.get(stat.type().name);
+                            value += stat.value();
+                            map.put(stat.type().name, value);
+                        }
                     }
                 }
             }
@@ -57,7 +73,6 @@ public class StatOperator {
                     player.getPersistentData().putFloat(entry.getKey(), Math.min(entry.getValue(), MAX_HEALTH_STAT));
                 } else {
                     player.getPersistentData().putFloat(entry.getKey(), Math.min(entry.getValue(), MAX_STAT));
-
                 }
             }
             operate(player);

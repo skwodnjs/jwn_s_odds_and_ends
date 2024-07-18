@@ -1,6 +1,7 @@
 package net.jwn.mod.item;
 
 import net.jwn.mod.networking.ModMessages;
+import net.jwn.mod.networking.packet.SyncMyStuffS2CPacket;
 import net.jwn.mod.networking.packet.SyncStatS2CPacket;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFoundProvider;
@@ -15,22 +16,26 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Stuff extends Item {
     public int id;
     public StuffType type;
     public StuffRank rank;
     public List<Stat> stats = new ArrayList<>(); // 최대 레벨일 때 스텟 상승치
-    public Stuff(Properties pProperties, int id, StuffType type, StuffRank rank, Stat... stats) {
+    public boolean max_level;
+    public Stuff(Properties pProperties, int id, StuffType type, StuffRank rank, boolean max_level, Stat... stats) {
         super(pProperties);
         this.id = id;
         this.type = type;
         this.rank = rank;
+        this.max_level = max_level;
         this.stats.addAll(List.of(stats));
         AllOfStuff.ALL_OF_STUFF.put(id, this);
+    }
+
+    public Stuff(Properties pProperties, int id, StuffType type, StuffRank rank, Stat... stats) {
+        this(pProperties, id, type, rank, false, stats);
     }
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
@@ -63,6 +68,8 @@ public abstract class Stuff extends Item {
                         if (!pPlayer.getAbilities().instabuild) {
                             itemstack.shrink(1);
                         }
+
+                        ModMessages.sendToPlayer(new SyncMyStuffS2CPacket(pPlayer), (ServerPlayer) pPlayer);
                     } else if (myStuff.put(this) == 1) {
                         pPlayer.sendSystemMessage(Component.literal("§c이미 최대로 강화하였습니다."));
                     } else if (myStuff.put(this) == -1) {
@@ -71,7 +78,6 @@ public abstract class Stuff extends Item {
                         } else if (type == StuffType.PASSIVE) {
                             pPlayer.sendSystemMessage(Component.literal("§c패시브 아이템은 최대 16개까지 가질 수 있습니다."));
                         }
-
                     }
                 });
             }

@@ -5,20 +5,24 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -179,6 +183,40 @@ public class PassiveOperator {
             }
         });
     }
+    public static void smart_guy(PlayerEvent.BreakSpeed event) {
+        event.getEntity().getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
+            int level = myStuff.getLevel(26);
+            if (level == 0) return;
+
+            int i1 = 0;
+            if (0 < level && level < 5) {
+                i1 = 9;
+            } else if (level == 5) {
+                i1 = 36;
+            }
+            Inventory inventory = event.getEntity().getInventory();
+            ItemStack heldItem = event.getEntity().getMainHandItem();
+            BlockState blockState = event.getState();
+
+            if (heldItem.isCorrectToolForDrops(blockState)) {
+                return;
+            }
+            for (int i = 0; i < i1; i++) {
+                ItemStack checkItem = inventory.getItem(i);
+                if (checkItem.isCorrectToolForDrops(blockState)) {
+                    if (i < 9) {
+                        event.getEntity().getInventory().selected = i;
+                    }
+                    else {
+                        event.getEntity().getInventory().setItem(event.getEntity().getInventory().selected, checkItem);
+                        event.getEntity().getInventory().setItem(i, heldItem);
+                    }
+                    return;
+                }
+            }
+        });
+    }
+
     public static void hoglin_tusk(LivingHurtEvent event) {
         if (event.getEntity() instanceof Player player) {
             if (event.getSource() == player.level().damageSources().onFire()) {

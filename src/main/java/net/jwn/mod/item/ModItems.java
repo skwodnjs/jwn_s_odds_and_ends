@@ -67,7 +67,10 @@ public class ModItems {
             () -> new PassiveStuff(new Item.Properties(), 24, StuffRank.LEGENDARY, new Stat(StatType.ATTACK_DAMAGE, 11f)));
     public static final RegistryObject<Item> PHANTOM_EYE = ITEMS.register("phantom_eye",
             () -> new PassiveStuff(new Item.Properties(), 25, StuffRank.RARE));
-
+    public static final RegistryObject<Item> SMART_GUY = ITEMS.register("smart_guy",
+            () -> new PassiveStuff(new Item.Properties(), 26, StuffRank.LEGENDARY, true, new Stat(StatType.MINING_SPEED, 4.2f)));
+    public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",
+            () -> new Battery(new Item.Properties(), 27, StuffRank.RARE));
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
             () -> new FirstTestItem(new Item.Properties()));

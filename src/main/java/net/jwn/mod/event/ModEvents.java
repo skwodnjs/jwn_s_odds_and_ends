@@ -11,13 +11,19 @@ import net.jwn.mod.util.PassiveOperator;
 import net.jwn.mod.util.StatType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.GlowLichenBlock;
+import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.level.block.WebBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -173,56 +179,32 @@ public class ModEvents {
         // BOTH SIDE
 
         // STAT: MINING SPEED
-        Map<String, Float> materialSpeedMap = new HashMap<>();
-        materialSpeedMap.put("WOOD", 2.0f);
-        materialSpeedMap.put("STONE", 4.0f);
-        materialSpeedMap.put("IRON", 6.0f);
-        materialSpeedMap.put("DIAMOND", 8.0f);
-        materialSpeedMap.put("GOLD", 12.0f);
-        materialSpeedMap.put("NETHERITE", 9.0f);
-
         Player player = event.getEntity();
         BlockState blockState = event.getState();
         ItemStack mainHandItem = player.getMainHandItem();
 
-        float speedMultiplier = 1.0f + player.getPersistentData().getFloat(StatType.MINING_SPEED.name) * 3 / 20;
-
-        boolean canHarvest = blockState.requiresCorrectToolForDrops() && mainHandItem.isCorrectToolForDrops(blockState);
-
-        if (canHarvest) {
-            if (mainHandItem.getItem() instanceof TieredItem tieredItem) {
-                String materialName = tieredItem.getTier().toString();
-                if (materialSpeedMap.containsKey(materialName)) {
-                    speedMultiplier = materialSpeedMap.get(materialName);
-                }
-            }
-            if (mainHandItem.isEnchanted()) {
-                int efficiencyLevel = mainHandItem.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
-                if (efficiencyLevel > 0) {
-                    speedMultiplier += (efficiencyLevel * efficiencyLevel) + 1;
-                }
-            }
-        }
-
+        float speedMultiplier = mainHandItem.getDestroySpeed(blockState) + player.getPersistentData().getFloat(StatType.MINING_SPEED.name) * 3 / 20;
         if (player.hasEffect(MobEffects.DIG_SPEED)) {
             int hasteLevel = player.getEffect(MobEffects.DIG_SPEED).getAmplifier() + 1;
             speedMultiplier *= 0.2f * hasteLevel + 1;
         }
-
         if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
             int fatigueLevel = player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier();
             speedMultiplier *= (float) Math.pow(0.3f, Math.min(fatigueLevel, 4));
         }
-
         if (player.isInWater() && mainHandItem.getEnchantmentLevel(Enchantments.AQUA_AFFINITY) == 0) {
             speedMultiplier /= 5.0f;
         }
-
         if (!player.onGround()) {
             speedMultiplier /= 5.0f;
         }
 
         event.setNewSpeed(speedMultiplier);
+
+        // 26 : SMART GUY
+        PassiveOperator.smart_guy(event);
+
+        System.out.println(event.getNewSpeed());
     }
     @SubscribeEvent
     public static void onLivingDeathEvent(LivingDeathEvent event) {
@@ -235,6 +217,7 @@ public class ModEvents {
     public static void onPickupXp(PlayerXpEvent.PickupXp event) {
         // ONLY SERVER
 
+        // EXP_BOOST effect
         Player player = event.getEntity();
         if (player.hasEffect(ModEffects.EXP_BOOST.get())) {
             int level = player.getEffect(ModEffects.EXP_BOOST.get()).getAmplifier();
@@ -249,5 +232,7 @@ public class ModEvents {
         // ONLY SERVER
 //        System.out.println(event.getEntity().level().isClientSide ? "CLIENT" : "SERVER");
 
+        // 25 : PHANTOM EYE
+        PassiveOperator.phantom_eye(event);
     }
 }
