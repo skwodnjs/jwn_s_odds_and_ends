@@ -2,6 +2,7 @@ package net.jwn.mod.util;
 
 import net.jwn.mod.Main;
 import net.jwn.mod.block.ModBlocks;
+import net.jwn.mod.effect.MilkBoyEffect;
 import net.jwn.mod.effect.ModEffects;
 import net.jwn.mod.gui.StorageBoxMenu;
 import net.jwn.mod.stuff.StuffDataProvider;
@@ -201,6 +202,12 @@ public class ActiveOperator {
     public static boolean storage_box(ServerPlayer player) {
         player.openMenu(new SimpleMenuProvider((id, playerInventory, playerEntity) ->
                     new StorageBoxMenu(id, playerInventory), Component.literal("menu")));
+        return true;
+    }
+
+    // ID: 30
+    public static boolean milk_boy(ServerPlayer player, int level) {
+        player.addEffect(new MobEffectInstance(ModEffects.MILK_BOY.get(), 10 * level * 20));
         return true;
     }
 }

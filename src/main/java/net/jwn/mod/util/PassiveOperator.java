@@ -1,21 +1,22 @@
 package net.jwn.mod.util;
 
+import net.jwn.mod.effect.ModEffects;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrownEgg;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,7 +25,6 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.level.BlockEvent;
 
 public class PassiveOperator {
@@ -239,5 +239,27 @@ public class PassiveOperator {
                 }
             }
         });
+    }
+
+    public static void wool_coat(LivingHurtEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (player.level().getBiome(player.getOnPos()).value().getBaseTemperature() < 0.15f) {
+                player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
+                    int level = myStuff.getLevel(28);
+                    event.setAmount(event.getAmount() * (1 - 0.1f * level));
+                });
+            };
+        }
+    }
+
+    public static void fortified_egg(LivingHurtEvent event) {
+        if (event.getSource().getEntity() instanceof Player player && event.getSource().getDirectEntity() instanceof ThrownEgg) {
+            player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
+                int level = myStuff.getLevel(29);
+                if (level > 0) {
+                    event.getEntity().addEffect(new MobEffectInstance(ModEffects.STUN.get(), 20 + level * 10));
+                }
+            });
+        }
     }
 }

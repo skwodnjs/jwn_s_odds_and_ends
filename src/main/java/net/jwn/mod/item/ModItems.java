@@ -71,6 +71,12 @@ public class ModItems {
             () -> new PassiveStuff(new Item.Properties(), 26, StuffRank.LEGENDARY, true, new Stat(StatType.MINING_SPEED, 4.2f)));
     public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",
             () -> new Battery(new Item.Properties(), 27, StuffRank.RARE));
+    public static final RegistryObject<Item> WOOL_COAT = ITEMS.register("wool_coat",
+            () -> new PassiveStuff(new Item.Properties(), 28, StuffRank.EPIC));
+    public static final RegistryObject<Item> FORTIFIED_EGG = ITEMS.register("fortified_egg",
+            () -> new PassiveStuff(new Item.Properties(), 29, StuffRank.RARE));
+    public static final RegistryObject<Item> MILK_BOY = ITEMS.register("milk_boy",
+            () -> new ActiveStuff(new Item.Properties(), 30, StuffRank.UNIQUE, 180 * 20, 0));
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
             () -> new FirstTestItem(new Item.Properties()));

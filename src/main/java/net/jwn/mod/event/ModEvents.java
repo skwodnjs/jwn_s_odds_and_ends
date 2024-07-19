@@ -2,6 +2,7 @@ package net.jwn.mod.event;
 
 import net.jwn.mod.Main;
 import net.jwn.mod.effect.ModEffects;
+import net.jwn.mod.item.PassiveStuff;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.SyncCoolTimeS2CPacket;
@@ -155,6 +156,12 @@ public class ModEvents {
 
         // 2 : AMULET
         PassiveOperator.amulet(event);
+
+        // 28 : WOOL COAT
+        PassiveOperator.wool_coat(event);
+
+        // 29 : FORTIFIED EGG
+        PassiveOperator.fortified_egg(event);
     }
     @SubscribeEvent
     public static void onBreakEvent(BlockEvent.BreakEvent event) {

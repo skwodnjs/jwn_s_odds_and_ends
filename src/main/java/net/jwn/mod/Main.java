@@ -20,6 +20,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
+/*
+When resources not loaded problem occurs, use "./gradlew clean"
+ */
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Main.MOD_ID)
 public class Main {

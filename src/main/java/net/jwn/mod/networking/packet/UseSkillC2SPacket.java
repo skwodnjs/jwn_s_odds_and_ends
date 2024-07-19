@@ -57,6 +57,7 @@ public class UseSkillC2SPacket {
                             else if (id == 13) success = ActiveOperator.witch_wand(player, level);
                             else if (id == 19) success = ActiveOperator.piggy_bank(player, level);
                             else if (id == 20) success = ActiveOperator.storage_box(player);
+                            else if (id == 30) success = ActiveOperator.milk_boy(player, level);
 
                             // --------------------------------------
 

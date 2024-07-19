@@ -1,9 +1,6 @@
 package net.jwn.mod.item.test;
 
-import net.jwn.mod.stuff.MyStuff;
-import net.jwn.mod.stuff.MyStuffProvider;
-import net.jwn.mod.stuff.StuffIFound;
-import net.jwn.mod.stuff.StuffIFoundProvider;
+import net.jwn.mod.stuff.*;
 import net.jwn.mod.util.StatOperator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -23,7 +20,7 @@ public class ThirdTestItem extends Item {
         pPlayer.sendSystemMessage(Component.literal("reset"));
         pPlayer.getCapability(MyStuffProvider.MY_STUFF).ifPresent(MyStuff::reset);
         pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(StuffIFound::reset);
-        pPlayer.getPersistentData().putInt("cool_time", 0);
+        pPlayer.getCapability(CoolTimeProvider.CoolTime).ifPresent(CoolTime::reset);
         StatOperator.reset(pPlayer);
 
         return super.use(pLevel, pPlayer, pUsedHand);

@@ -13,6 +13,9 @@ public class CoolTime {
     public void sub() {
         if (cool_time > 0) cool_time -= 1;
     }
+    public void reset() {
+        cool_time = 0;
+    }
     public void copyFrom(CoolTime coolTime) {
         this.cool_time = coolTime.cool_time;
     }

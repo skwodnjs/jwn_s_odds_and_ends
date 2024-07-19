@@ -1,6 +1,8 @@
 package net.jwn.mod.item.disposable;
 
 import net.jwn.mod.item.Stuff;
+import net.jwn.mod.stuff.CoolTime;
+import net.jwn.mod.stuff.CoolTimeProvider;
 import net.jwn.mod.util.StuffRank;
 import net.jwn.mod.util.StuffType;
 import net.minecraft.world.InteractionHand;
@@ -16,7 +18,7 @@ public class Battery extends Stuff {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        pPlayer.getPersistentData().putInt("cool_time", 0);
+        pPlayer.getCapability(CoolTimeProvider.CoolTime).ifPresent(CoolTime::reset);
         return InteractionResultHolder.pass(pPlayer.getItemInHand(pUsedHand));
     }
 }
