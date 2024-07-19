@@ -1,6 +1,7 @@
 package net.jwn.mod.networking.packet;
 
 import net.jwn.mod.networking.ModMessages;
+import net.jwn.mod.stuff.CoolTimeProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
@@ -24,7 +25,9 @@ public class SyncCoolTimeRequestC2SPacket {
             // HERE WE ARE ON THE SERVER!
             ServerPlayer player = context.getSender();
             assert player != null;
-            ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(player.getPersistentData().getInt("cool_time")), player);
+            player.getCapability(CoolTimeProvider.CoolTime).ifPresent(coolTime -> {
+                ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(coolTime.get()), player);
+            });
         });
     }
 }

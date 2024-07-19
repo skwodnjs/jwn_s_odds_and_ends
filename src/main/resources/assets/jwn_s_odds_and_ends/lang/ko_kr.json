@@ -99,6 +99,7 @@
   "text.jwn_s_odds_and_ends.stuff_i_found.description": "아이템 설명: ",
 
   "message.jwn_s_odds_and_ends.stuff_i_found.cannot_see": "§c아직은 볼 수 없습니다!",
+  "message.jwn_s_odds_and_ends.cool_time.cannot_use": "§c아직 스킬을 사용할 수 없습니다.",
 
   "message.jwn_s_odds_and_ends.cell_phone.overworld": "현재 위치를 저장합니다.",
   "message.jwn_s_odds_and_ends.cell_phone.no_save": "§c먼저 오버월드에서 장소를 저장해야 합니다!",

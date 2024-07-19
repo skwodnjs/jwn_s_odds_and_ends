@@ -1,7 +1,9 @@
 package net.jwn.mod.networking.packet;
 
+import net.jwn.mod.Main;
 import net.jwn.mod.item.ActiveStuff;
 import net.jwn.mod.item.Stuff;
+import net.jwn.mod.stuff.CoolTimeProvider;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.stuff.StuffIFoundProvider;
 import net.jwn.mod.util.ActiveOperator;
@@ -31,42 +33,44 @@ public class UseSkillC2SPacket {
             ServerPlayer player = context.getSender();
             assert player != null;
 
-            int coolTime = player.getPersistentData().getInt("cool_time");
-            if (coolTime != 0) {
-                player.sendSystemMessage(Component.literal("§c아직 스킬을 사용할 수 없습니다."));
-            } else {
-                player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                    int id = myStuff.myActiveStuffIds[0];
-                    int level = myStuff.myActiveStuffLevels[0];
+            player.getCapability(CoolTimeProvider.CoolTime).ifPresent(coolTime -> {
+                int cool_time = coolTime.get();
+                if (cool_time != 0) {
+                    player.sendSystemMessage(Component.translatable("message." + Main.MOD_ID + ".cool_time.cannot_use"));
+                } else {
+                    player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
+                        int id = myStuff.myActiveStuffIds[0];
+                        int level = myStuff.myActiveStuffLevels[0];
 
-                    Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
-                    if (stuff instanceof ActiveStuff activeStuff) {
-                        boolean success = false;
+                        Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(id);
+                        if (stuff instanceof ActiveStuff activeStuff) {
+                            boolean success = false;
 
-                        // ---------- ACTIVE OPERATOR  ----------
+                            // ---------- ACTIVE OPERATOR  ----------
 
-                        if (id == 1) success = ActiveOperator.poo(player, level);
-                        else if (id == 3) success = ActiveOperator.cellPhone(player);
-                        else if (id == 5) success = ActiveOperator.dynamite(player);
-                        else if (id == 7) success = ActiveOperator.wormhole(player, level);
-                        else if (id == 9) success = ActiveOperator.mysterious_yellow_liquid(player, level);
-                        else if (id == 11) success = ActiveOperator.thank_you_for_the_meal(player);
-                        else if (id == 13) success = ActiveOperator.witch_wand(player, level);
-                        else if (id == 19) success = ActiveOperator.piggy_bank(player, level);
-                        else if (id == 20) success = ActiveOperator.storage_box(player);
+                            if (id == 1) success = ActiveOperator.poo(player, level);
+                            else if (id == 3) success = ActiveOperator.cellPhone(player);
+                            else if (id == 5) success = ActiveOperator.dynamite(player);
+                            else if (id == 7) success = ActiveOperator.wormhole(player, level);
+                            else if (id == 9) success = ActiveOperator.mysterious_yellow_liquid(player, level);
+                            else if (id == 11) success = ActiveOperator.thank_you_for_the_meal(player);
+                            else if (id == 13) success = ActiveOperator.witch_wand(player, level);
+                            else if (id == 19) success = ActiveOperator.piggy_bank(player, level);
+                            else if (id == 20) success = ActiveOperator.storage_box(player);
 
-                        // --------------------------------------
+                            // --------------------------------------
 
-                        if (success) {
-                            player.getPersistentData().putInt("cool_time", activeStuff.t0 - activeStuff.weight * (level - 1));
+                            if (success) {
+                                coolTime.set(activeStuff.t0 - activeStuff.weight * (level - 1));
+                            }
+
+                            player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
+                                stuffIFound.updateStuffIFound(id, 3);
+                            });
                         }
-
-                        player.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
-                            stuffIFound.updateStuffIFound(id, 3);
-                        });
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
     }
 }

@@ -156,17 +156,20 @@ public class PassiveOperator {
         }
     }
     public static void can(TickEvent.PlayerTickEvent event) {
-        if (event.player.hasEffect(MobEffects.HUNGER)) {
-            event.player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
-                int level = myStuff.getLevel(10);
-                if (level != 0) {
-                    double p = 1 - Math.pow(10, Math.log(0.2) / (60 - level * 20));
-                    double r = Math.random();
-                    if (r < p) {
-                        event.player.removeEffect(MobEffects.HUNGER);
+        if (!event.player.level().isClientSide && event.phase == TickEvent.Phase.START) {
+            // 10 : CAN
+            if (event.player.hasEffect(MobEffects.HUNGER)) {
+                event.player.getCapability(MyStuffProvider.MY_STUFF).ifPresent(myStuff -> {
+                    int level = myStuff.getLevel(10);
+                    if (level != 0) {
+                        double p = 1 - Math.pow(10, Math.log(0.2) / (60 - level * 20));
+                        double r = Math.random();
+                        if (r < p) {
+                            event.player.removeEffect(MobEffects.HUNGER);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
     public static void phantom_eye(PlayerSleepInBedEvent event) {

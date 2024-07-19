@@ -1,6 +1,7 @@
 package net.jwn.mod.networking.packet;
 
 import net.jwn.mod.networking.packet.handler.SyncCoolTimeS2CPacketHandler;
+import net.jwn.mod.stuff.CoolTimeProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -10,21 +11,23 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class SyncCoolTimeS2CPacket {
-    int coolTime;
+    int cool_time;
 
     public SyncCoolTimeS2CPacket(int coolTime) {
-        this.coolTime = coolTime;
+        this.cool_time = coolTime;
     }
     public SyncCoolTimeS2CPacket(Player player) {
-        this.coolTime = player.getPersistentData().getInt("cool_time");
+        player.getCapability(CoolTimeProvider.CoolTime).ifPresent(coolTime -> {
+            cool_time = coolTime.get();
+        });
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeInt(coolTime);
+        buf.writeInt(cool_time);
     }
 
     public SyncCoolTimeS2CPacket(FriendlyByteBuf buf) {
-        coolTime = buf.readInt();
+        cool_time = buf.readInt();
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
@@ -32,7 +35,7 @@ public class SyncCoolTimeS2CPacket {
         context.enqueueWork(() -> {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 // HERE WE ARE ON THE CLIENT!
-                SyncCoolTimeS2CPacketHandler.handlePacket(coolTime);
+                SyncCoolTimeS2CPacketHandler.handlePacket(cool_time);
             });
         });
         context.setPacketHandled(true);

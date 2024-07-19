@@ -8,6 +8,7 @@ import net.jwn.mod.networking.packet.MainActiveSwitchC2SPacket;
 import net.jwn.mod.networking.packet.RemoveStuffC2SPacket;
 import net.jwn.mod.networking.packet.SyncMyStuffRequestC2SPacket;
 import net.jwn.mod.networking.packet.SyncStatRequestC2SPacket;
+import net.jwn.mod.stuff.CoolTimeProvider;
 import net.jwn.mod.stuff.MyStuffProvider;
 import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.KeyBinding;
@@ -115,7 +116,9 @@ public class MyStuffScreen extends Screen {
                         + "%.1f".formatted(player.getPersistentData().getFloat(StatType.LUCK.name)),
                 (leftPos + 73 + 8) / scale, (topPos + 47 + 2) / scale, 0xFFdecc99, false);
 
-        pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("%.1f sec", player.getPersistentData().getInt("cool_time") / 20f), (leftPos + 55) / scale, (topPos + 62) / scale, 0xFFdecc99, false);
+        player.getCapability(CoolTimeProvider.CoolTime).ifPresent(coolTime -> {
+            pGuiGraphics.drawString(Minecraft.getInstance().font, String.format("%.1f sec", coolTime.get() / 20f), (leftPos + 55) / scale, (topPos + 62) / scale, 0xFFdecc99, false);
+        });
 
         pGuiGraphics.pose().popPose();
 

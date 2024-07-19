@@ -5,25 +5,19 @@ import net.jwn.mod.effect.ModEffects;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.SyncCoolTimeS2CPacket;
+import net.jwn.mod.networking.packet.SyncMyStuffS2CPacket;
 import net.jwn.mod.networking.packet.SyncStatS2CPacket;
 import net.jwn.mod.stuff.*;
 import net.jwn.mod.util.PassiveOperator;
 import net.jwn.mod.util.StatType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShearsItem;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.block.GlowLichenBlock;
-import net.minecraft.world.level.block.VineBlock;
-import net.minecraft.world.level.block.WebBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -49,8 +43,11 @@ public class ModEvents {
 
         // COOL TIME needs to be synchronized with the client because it must be displayed on the client's HUD.
         // STAT needs to be synchronized with the client because of the MINING SPEED
+        // MY STUFF needs to be synchronized with the client because some stuff operates on the client side
         ModMessages.sendToPlayer(new SyncStatS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
         ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
+        ModMessages.sendToPlayer(new SyncMyStuffS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
+
     }
     @SubscribeEvent
     public static void onAttachCapabilitiesEvent(AttachCapabilitiesEvent<Entity> event) {
@@ -65,6 +62,9 @@ public class ModEvents {
             if (!event.getObject().getCapability(StuffDataProvider.STUFF_DATA).isPresent()) {
                 event.addCapability(new ResourceLocation(Main.MOD_ID, "stuff_data"), new StuffDataProvider());
             }
+            if (!event.getObject().getCapability(CoolTimeProvider.CoolTime).isPresent()) {
+                event.addCapability(new ResourceLocation(Main.MOD_ID, "cool_time"), new CoolTimeProvider());
+            }
         }
     }
     @SubscribeEvent
@@ -73,12 +73,10 @@ public class ModEvents {
 
         // COOL TIME needs to be synchronized with the client because it must be displayed on the client's HUD.
         // STAT needs to be synchronized with the client because of the MINING SPEED
-        Map<String, Float> map = new HashMap<>();
-        for (StatType type : StatType.values()) {
-            map.put(type.name, event.getEntity().getPersistentData().getFloat(type.name));
-        }
-        ModMessages.sendToPlayer(new SyncStatS2CPacket(map), (ServerPlayer) event.getEntity());
-        ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity().getPersistentData().getInt("cool_time")), (ServerPlayer) event.getEntity());
+        // MY STUFF needs to be synchronized with the client because some stuff operates on the client side
+        ModMessages.sendToPlayer(new SyncStatS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
+        ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
+        ModMessages.sendToPlayer(new SyncMyStuffS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
     }
     @SubscribeEvent
     public static void onClone(PlayerEvent.Clone event) {
@@ -102,16 +100,17 @@ public class ModEvents {
                 newStore.copyFrom(oldStore);
             });
         });
-        event.getOriginal().invalidateCaps();
 
         // COOL TIME needs to be synchronized with the client because it must be displayed on the client's HUD.
+        event.getOriginal().getCapability(CoolTimeProvider.CoolTime).ifPresent(oldStore -> {
+            event.getEntity().getCapability(CoolTimeProvider.CoolTime).ifPresent(newStore -> {
+                newStore.copyFrom(oldStore);
+            });
+        });
+        event.getOriginal().invalidateCaps();
+
         // STAT needs to be synchronized with the client because of the MINING SPEED
-        Map<String, Float> map = new HashMap<>();
-        for (StatType type : StatType.values()) {
-            map.put(type.name, event.getEntity().getPersistentData().getFloat(type.name));
-        }
-        ModMessages.sendToPlayer(new SyncStatS2CPacket(map), (ServerPlayer) event.getEntity());
-        ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity().getPersistentData().getInt("cool_time")), (ServerPlayer) event.getEntity());
+        ModMessages.sendToPlayer(new SyncStatS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
     }
 
     @SubscribeEvent
@@ -143,15 +142,12 @@ public class ModEvents {
         // BOTH SIDE
 
         // COOL TIME
-        int cool_time = event.player.getPersistentData().getInt("cool_time");
-        if (cool_time > 0 && event.phase == TickEvent.Phase.END) {
-            event.player.getPersistentData().putInt("cool_time", cool_time - 1);
+        if (event.phase == TickEvent.Phase.END) {
+            event.player.getCapability(CoolTimeProvider.CoolTime).ifPresent(CoolTime::sub);
         }
 
-        if (!event.player.level().isClientSide && event.phase == TickEvent.Phase.START) {
-            // 10 : CAN
-            PassiveOperator.can(event);
-        }
+        // 10 : CAN
+        PassiveOperator.can(event);
     }
     @SubscribeEvent
     public static void onLivingHurtEvent(LivingHurtEvent event) {
