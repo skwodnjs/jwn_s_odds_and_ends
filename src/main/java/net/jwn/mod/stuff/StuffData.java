@@ -2,7 +2,6 @@ package net.jwn.mod.stuff;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class StuffData {
@@ -39,12 +38,24 @@ public class StuffData {
         }
         return s.toString();
     }
+    // ID: 27 BATTERY
+    private int battery_timer;
+    public int getBatteryTimer() {
+        return battery_timer;
+    }
+    public void putBatteryTimer(int i) {
+        battery_timer = i;
+    }
+    public void subBatteryTimer() {
+        if (battery_timer > 0) battery_timer -= 1;
+    }
 
     public void copyFrom(StuffData data) {
         this.cell_phone_pos = data.cell_phone_pos;
         this.cell_phone_yaw = data.cell_phone_yaw;
         this.cell_phone_pitch = data.cell_phone_pitch;
         this.storageBox = data.storageBox;
+        this.battery_timer = data.battery_timer;
     }
     public void saveNBTData(CompoundTag nbt) {
         nbt.putIntArray("cell_phone_pos", cell_phone_pos);
@@ -54,6 +65,7 @@ public class StuffData {
         for (ItemStack itemStack : storageBox) {
             nbt.put("storage_box_" + index++, itemStack.serializeNBT());
         }
+        nbt.putInt("battery_timer", battery_timer);
     }
 
     public void loadNBTData(CompoundTag nbt) {
@@ -63,5 +75,6 @@ public class StuffData {
         for (int index = 0; index < storageBox.size(); index++) {
             storageBox.set(index, ItemStack.of((CompoundTag) nbt.get("storage_box_" + index)));
         }
+        battery_timer = nbt.getInt("battery_timer");
     }
 }

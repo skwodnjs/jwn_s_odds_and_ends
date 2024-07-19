@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -52,13 +53,13 @@ public class DiceLevelFive extends Stuff {
                     Stuff newStuff;
                     if (stuff.rank == StuffRank.LEGENDARY) continue;
                     newStuff = AllOfStuff.getRandom(Math.random() < 0.4 ? stuff.rank.next() : stuff.rank, StuffType.PASSIVE,
-                            myActives.stream().mapToInt(Integer::intValue).toArray());
+                            myPassives.stream().mapToInt(Integer::intValue).toArray());
 
                     myStuff.replace(id, newStuff.id);
                     pPlayer.getCapability(StuffIFoundProvider.STUFF_I_FOUND).ifPresent(stuffIFound -> {
                         stuffIFound.updateStuffIFound(newStuff.id, 3);
                     });
-                    myActives.add(newStuff.id);
+                    myPassives.add(newStuff.id);
                 }
                 ModMessages.sendToPlayer(new SyncStatS2CPacket(pPlayer), (ServerPlayer) pPlayer);
                 ModMessages.sendToPlayer(new SyncMyStuffS2CPacket(pPlayer), (ServerPlayer) pPlayer);

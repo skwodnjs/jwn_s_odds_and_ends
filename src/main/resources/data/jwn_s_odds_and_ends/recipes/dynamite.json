@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "jwn_s_odds_and_ends:awkward_gunpowder"
+    },
+    {
+      "item": "minecraft:splash_potion",
+      "nbt": "{Potion:\"minecraft:awkward\"}"
+    }
+  ],
+  "result": {
+    "item": "jwn_s_odds_and_ends:dynamite",
+    "count": 1
+  }
+}

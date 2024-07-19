@@ -9,14 +9,22 @@ import net.jwn.mod.util.AllOfStuff;
 import net.jwn.mod.util.Stat;
 import net.jwn.mod.util.StatType;
 import net.jwn.mod.util.StuffRank;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MOD_ID);
+    // ------------------ STUFF ------------------
     public static final RegistryObject<Item> POO = ITEMS.register("poo_item",
             () -> new ActiveStuff(new Item.Properties(), 1, StuffRank.RARE, 30 * 20, 10 * 20));
     public static final RegistryObject<Item> AMULET = ITEMS.register("amulet",
@@ -44,15 +52,15 @@ public class ModItems {
     public static final RegistryObject<Item> WITCH_WAND = ITEMS.register("witch_wand",
             () -> new ActiveStuff(new Item.Properties(), 13, StuffRank.EPIC, 90 * 20, 0));
     public static final RegistryObject<Item> DICE_LEVEL_ONE = ITEMS.register("dice_level_one",
-            () -> new DiceLevelOne(new Item.Properties(), 14, StuffRank.RARE));
+            () -> new DiceLevelOne(new Item.Properties().stacksTo(4), 14, StuffRank.RARE));
     public static final RegistryObject<Item> DICE_LEVEL_TWO = ITEMS.register("dice_level_two",
-            () -> new DiceLevelTwo(new Item.Properties(), 15, StuffRank.RARE));
+            () -> new DiceLevelTwo(new Item.Properties().stacksTo(4), 15, StuffRank.RARE));
     public static final RegistryObject<Item> DICE_LEVEL_THREE = ITEMS.register("dice_level_three",
-            () -> new DiceLevelThree(new Item.Properties(), 16, StuffRank.EPIC));
+            () -> new DiceLevelThree(new Item.Properties().stacksTo(4), 16, StuffRank.EPIC));
     public static final RegistryObject<Item> DICE_LEVEL_FOUR = ITEMS.register("dice_level_four",
-            () -> new DiceLevelFour(new Item.Properties(), 17, StuffRank.UNIQUE));
+            () -> new DiceLevelFour(new Item.Properties().stacksTo(4), 17, StuffRank.UNIQUE));
     public static final RegistryObject<Item> DICE_LEVEL_FIVE = ITEMS.register("dice_level_five",
-            () -> new DiceLevelFive(new Item.Properties(), 18, StuffRank.LEGENDARY));
+            () -> new DiceLevelFive(new Item.Properties().stacksTo(4), 18, StuffRank.LEGENDARY));
     public static final RegistryObject<Item> PIGGY_BANK = ITEMS.register("piggy_bank",
             () -> new ActiveStuff(new Item.Properties(), 19, StuffRank.RARE, 30 * 20, 5 * 20));
     public static final RegistryObject<Item> STORAGE_BOX = ITEMS.register("storage_box",
@@ -70,13 +78,15 @@ public class ModItems {
     public static final RegistryObject<Item> SMART_GUY = ITEMS.register("smart_guy",
             () -> new PassiveStuff(new Item.Properties(), 26, StuffRank.LEGENDARY, true, new Stat(StatType.MINING_SPEED, 4.2f)));
     public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",
-            () -> new Battery(new Item.Properties(), 27, StuffRank.RARE));
+            () -> new Battery(new Item.Properties().stacksTo(4), 27, StuffRank.RARE));
     public static final RegistryObject<Item> WOOL_COAT = ITEMS.register("wool_coat",
             () -> new PassiveStuff(new Item.Properties(), 28, StuffRank.EPIC));
     public static final RegistryObject<Item> FORTIFIED_EGG = ITEMS.register("fortified_egg",
             () -> new PassiveStuff(new Item.Properties(), 29, StuffRank.RARE));
     public static final RegistryObject<Item> MILK_BOY = ITEMS.register("milk_boy",
             () -> new ActiveStuff(new Item.Properties(), 30, StuffRank.UNIQUE, 180 * 20, 0));
+    public static final RegistryObject<Item> AWKWARD_GUNPOWDER = ITEMS.register("awkward_gunpowder",
+            () -> new IngredientStuff(new Item.Properties(), 31, StuffRank.EPIC));
     // ------------------ TEST ------------------
     public static final RegistryObject<Item> FIRST_TEST_ITEM = ITEMS.register("first_test",
             () -> new FirstTestItem(new Item.Properties()));

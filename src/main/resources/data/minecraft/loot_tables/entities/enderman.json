@@ -29,6 +29,29 @@
         }
       ],
       "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "jwn_s_odds_and_ends:wormhole",
+          "weight": 5,
+          "quality": 1,
+          "conditions": [
+            {
+              "condition": "killed_by_player"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:air",
+          "weight": 95,
+          "quality": -1
+        }
+      ],
+      "rolls": 1.0
     }
   ],
   "random_sequence": "minecraft:entities/enderman"

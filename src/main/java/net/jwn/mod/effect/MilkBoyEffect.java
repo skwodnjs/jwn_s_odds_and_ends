@@ -4,8 +4,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 
 public class MilkBoyEffect extends MobEffect {
     protected MilkBoyEffect(MobEffectCategory pCategory, int pColor) {

@@ -1,27 +1,89 @@
+흙 기반 블록
+ - dirt
+ - coarse_dirt
+ - dirt_path
+ - farmland
+ - grass_block
+ - mycelium
+ - podzol
+풀
+- grass
+- tall_grass
+- fern
+- large_fern
+- dead_bush
 
+
+{
+  "bonus_rolls": 0.0,
+  "entries": [
     {
-      "bonus_rolls": 0.0,
-      "entries": [
+      "type": "minecraft:item",
+      "name": "jwn_s_odds_and_ends:light_feather",
+      "weight": 5,
+      "quality": 2,
+      "conditions": [
         {
-          "type": "minecraft:item",
-          "name": "jwn_s_odds_and_ends:light_feather",
-          "weight": 5,
-          "quality": 2,
-          "conditions": [
-            {
-              "condition": "killed_by_player"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:air",
-          "weight": 95,
-          "quality": -2
+          "condition": "killed_by_player"
         }
-      ],
-      "rolls": 1.0
+      ]
+    },
+    {
+      "type": "minecraft:item",
+      "name": "minecraft:air",
+      "weight": 95,
+      "quality": -2
     }
+  ],
+  "rolls": 1.0
+}
+
+---------- DICE & BATTERY ----------
+
+{
+  "bonus_rolls": 0.0,
+  "entries": [
+    {
+      "type": "minecraft:item",
+      "name": "jwn_s_odds_and_ends:dice_level_one",
+      "weight": 3,
+      "quality": 1
+    },
+    {
+      "type": "minecraft:item",
+      "name": "jwn_s_odds_and_ends:dice_level_two",
+      "weight": 3,
+      "quality": 1
+    },
+    {
+      "type": "minecraft:item",
+      "name": "jwn_s_odds_and_ends:dice_level_three",
+      "weight": 2.5,
+      "quality": 1
+    },
+    {
+      "type": "minecraft:item",
+      "name": "jwn_s_odds_and_ends:dice_level_four",
+      "weight": 1,
+      "quality": 1
+    },
+    {
+      "type": "minecraft:item",
+      "name": "jwn_s_odds_and_ends:dice_level_five",
+      "weight": 0.5,
+      "quality": 1
+    },
+    {
+      "type": "minecraft:item",
+      "name": "minecraft:air",
+      "weight": 990,
+      "quality": -5
+    }
+  ],
+  "rolls": 1.0
+}
+
+--------- CHANCE ---------
 
 "weight": 1, "quality": 0.4 / 1% ~ 3%
 "weight": 5, "quality": 1 / 5% ~ 10%
@@ -31,18 +93,4 @@
 "weight": 70, "quality": 4 / 70% ~ 90%
 
 ---------- DONE ----------
-endermite
-zombified piglin, piglin, piglin brute
-creeper
-chicken
-parrot
-enderman
-bat, bee, vex, allay
-cow, mooshroom, horse, donkey, mule, llama, trader llama, rabbit
-zombie, husk, zombie villager, drowned
-turtle
-pufferfish
-phantom
-hoglin
-pig
-wandering trader
+

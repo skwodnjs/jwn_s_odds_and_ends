@@ -2,7 +2,7 @@ package net.jwn.mod.event;
 
 import net.jwn.mod.Main;
 import net.jwn.mod.effect.ModEffects;
-import net.jwn.mod.item.PassiveStuff;
+import net.jwn.mod.item.ModItems;
 import net.jwn.mod.item.Stuff;
 import net.jwn.mod.networking.ModMessages;
 import net.jwn.mod.networking.packet.SyncCoolTimeS2CPacket;
@@ -16,6 +16,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -28,9 +30,6 @@ import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Main.MOD_ID)
 public class ModEvents {
@@ -49,6 +48,10 @@ public class ModEvents {
         ModMessages.sendToPlayer(new SyncCoolTimeS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
         ModMessages.sendToPlayer(new SyncMyStuffS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
 
+        if (!event.getEntity().getPersistentData().getBoolean("get_poo")) {
+            event.getEntity().addItem(ModItems.POO.get().getDefaultInstance());
+            event.getEntity().getPersistentData().putBoolean("get_poo", true);
+        }
     }
     @SubscribeEvent
     public static void onAttachCapabilitiesEvent(AttachCapabilitiesEvent<Entity> event) {
@@ -113,7 +116,6 @@ public class ModEvents {
         // STAT needs to be synchronized with the client because of the MINING SPEED
         ModMessages.sendToPlayer(new SyncStatS2CPacket(event.getEntity()), (ServerPlayer) event.getEntity());
     }
-
     @SubscribeEvent
     public static void onEntityItemPickupEvent(EntityItemPickupEvent event) {
         // ONLY SERVER
@@ -145,6 +147,7 @@ public class ModEvents {
         // COOL TIME
         if (event.phase == TickEvent.Phase.END) {
             event.player.getCapability(CoolTimeProvider.CoolTime).ifPresent(CoolTime::sub);
+            event.player.getCapability(StuffDataProvider.STUFF_DATA).ifPresent(StuffData::subBatteryTimer);
         }
 
         // 10 : CAN
@@ -206,12 +209,34 @@ public class ModEvents {
 
         // 26 : SMART GUY
         PassiveOperator.smart_guy(event);
-
-        System.out.println(event.getNewSpeed());
     }
     @SubscribeEvent
     public static void onLivingDeathEvent(LivingDeathEvent event) {
         // ONLY SERVER
+
+        // LOOT TABLES
+        if (event.getEntity() instanceof Mob mob && event.getSource().getEntity() instanceof Player player) {
+            double r = Math.random();
+            if (r < 0.0089) {
+                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
+                        ModItems.BATTERY.get().getDefaultInstance()));
+            } else if (r < 0.0121) {
+                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
+                        ModItems.DICE_LEVEL_FIVE.get().getDefaultInstance()));
+            } else if (r < 0.0165) {
+                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
+                        ModItems.DICE_LEVEL_FOUR.get().getDefaultInstance()));
+            } else if (r < 0.0242) {
+                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
+                        ModItems.DICE_LEVEL_THREE.get().getDefaultInstance()));
+            } else if (r < 0.0321) {
+                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
+                        ModItems.DICE_LEVEL_TWO.get().getDefaultInstance()));
+            } else if (r < 0.04) {
+                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
+                        ModItems.DICE_LEVEL_ONE.get().getDefaultInstance()));
+            }
+        }
 
         // 8 : LIGHT FEATHER
         PassiveOperator.senseOfBalance(event);
