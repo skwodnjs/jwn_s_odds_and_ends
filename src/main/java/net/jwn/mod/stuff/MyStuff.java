@@ -88,6 +88,10 @@ public class MyStuff {
         return 0;
     }
 
+    public boolean isMaxLevel(int id) {
+        return getLevel(id) == AllOfStuff.ALL_OF_STUFF.get(id).rank.max_level;
+    }
+
     public void remove(int id) {
         if (AllOfStuff.ALL_OF_STUFF.get(id).type == StuffType.ACTIVE) {
             for (int i = 0; i < myActiveStuffIds.length; i++) {

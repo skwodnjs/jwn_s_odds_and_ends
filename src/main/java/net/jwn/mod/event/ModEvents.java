@@ -16,8 +16,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -213,30 +211,6 @@ public class ModEvents {
     @SubscribeEvent
     public static void onLivingDeathEvent(LivingDeathEvent event) {
         // ONLY SERVER
-
-        // LOOT TABLES
-        if (event.getEntity() instanceof Mob mob && event.getSource().getEntity() instanceof Player player) {
-            double r = Math.random();
-            if (r < 0.0089) {
-                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
-                        ModItems.BATTERY.get().getDefaultInstance()));
-            } else if (r < 0.0121) {
-                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
-                        ModItems.DICE_LEVEL_FIVE.get().getDefaultInstance()));
-            } else if (r < 0.0165) {
-                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
-                        ModItems.DICE_LEVEL_FOUR.get().getDefaultInstance()));
-            } else if (r < 0.0242) {
-                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
-                        ModItems.DICE_LEVEL_THREE.get().getDefaultInstance()));
-            } else if (r < 0.0321) {
-                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
-                        ModItems.DICE_LEVEL_TWO.get().getDefaultInstance()));
-            } else if (r < 0.04) {
-                player.level().addFreshEntity(new ItemEntity(player.level(), mob.getX(), mob.getY(), mob.getZ(),
-                        ModItems.DICE_LEVEL_ONE.get().getDefaultInstance()));
-            }
-        }
 
         // 8 : LIGHT FEATHER
         PassiveOperator.senseOfBalance(event);

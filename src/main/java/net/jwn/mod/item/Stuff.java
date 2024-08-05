@@ -23,13 +23,13 @@ public abstract class Stuff extends Item {
     public StuffType type;
     public StuffRank rank;
     public List<Stat> stats = new ArrayList<>(); // 최대 레벨일 때 스텟 상승치
-    public boolean max_level;
+    public boolean max_level_stat_increase;
     public Stuff(Properties pProperties, int id, StuffType type, StuffRank rank, boolean max_level, Stat... stats) {
         super(pProperties);
         this.id = id;
         this.type = type;
         this.rank = rank;
-        this.max_level = max_level;
+        this.max_level_stat_increase = max_level;
         this.stats.addAll(List.of(stats));
         AllOfStuff.ALL_OF_STUFF.put(id, this);
     }

@@ -34,7 +34,7 @@ public class StatOperator {
                 if (myStuff.myActiveStuffIds[i] == 0) break;
                 else {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(myStuff.myActiveStuffIds[i]);
-                    if (!stuff.max_level) {
+                    if (!stuff.max_level_stat_increase) {
                         for (Stat stat : stuff.stats) {
                             float value = map.get(stat.type().name);
                             value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * (myStuff.myActiveStuffLevels[i] - 1) / (stuff.rank.max_level - 1));
@@ -53,7 +53,7 @@ public class StatOperator {
                 if (myStuff.myPassiveStuffIds[i] == 0) break;
                 else {
                     Stuff stuff = AllOfStuff.ALL_OF_STUFF.get(myStuff.myPassiveStuffIds[i]);
-                    if (!stuff.max_level) {
+                    if (!stuff.max_level_stat_increase) {
                         for (Stat stat : stuff.stats) {
                             float value = map.get(stat.type().name);
                             value += (float) (stat.value() * 0.5 + stat.value() * 0.5 * (myStuff.myPassiveStuffLevels[i] - 1) / (stuff.rank.max_level - 1));
